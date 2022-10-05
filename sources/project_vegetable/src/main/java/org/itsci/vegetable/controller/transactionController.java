@@ -36,7 +36,7 @@ public class transactionController {
 		String t = request.getParameter("id");
 		String td = request.getParameter("td");
 		transactionManager tm = new transactionManager();
-		tm.list_transaction_details(td);
+		tm.list_transaction_details(Integer.valueOf(td));
 		tm.transaction_by_date(t);
 		
 		return "editIncomeExpense";

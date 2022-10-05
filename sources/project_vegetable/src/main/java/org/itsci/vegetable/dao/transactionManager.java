@@ -256,7 +256,7 @@ public class transactionManager {
 		return a;
 	}
 	
-	public List<transaction_details> list_transaction_details(String tid) {
+	public List<transaction_details> list_transaction_details(int tid) {
 		List<transaction_details> tsd = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
