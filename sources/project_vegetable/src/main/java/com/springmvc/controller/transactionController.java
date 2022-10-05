@@ -1,13 +1,8 @@
 package com.springmvc.controller;
-
-import java.io.UnsupportedEncodingException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -15,80 +10,138 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import bean.assets;
 import bean.logins;
 import bean.member;
-import bean.projects;
-import bean.register;
 import bean.transaction;
 import bean.transaction_details;
-import util.RegisterManager;
 import util.memberManager;
-import util.projectsManager;
 import util.transactionManager;
 
 @Controller
 public class transactionController {
-/*addIncome
-	@RequestMapping(value="/goaddIncome", method=RequestMethod.GET)
-	public String goaddIncome(HttpServletRequest request,HttpSession session) {
-	return "addincome";
+	
+	/*listAll*/
+	@RequestMapping(value="/goListall", method=RequestMethod.GET)
+	public String goListall(HttpServletRequest request,HttpSession session) {
+		
+		logins log = (logins) session.getAttribute("login");
+		memberManager lmem = new memberManager();
+		System.out.println(log.getMember().getMember_id());
+		member listmember = lmem.getMember(log.getMember().getMember_id());
+		
+		session.setAttribute("member", listmember);
+		return "listIncomeandExpense";
+	}
+	/*Edit_income_expense*/
+	@RequestMapping(value="/goEdit_income_expense", method=RequestMethod.GET)
+	public String goEdit_income_expense(HttpServletRequest request,HttpSession session) {
+		String t = request.getParameter("id");
+		String td = request.getParameter("td");
+		transactionManager tm = new transactionManager();
+		tm.list_transaction_details(td);
+		tm.transaction_by_date(t);
+		
+		return "editIncomeExpense";
 	}
 
-	@RequestMapping(value="/insertIncome", method=RequestMethod.POST)
-	public String insertIncome(HttpServletRequest request,HttpSession session) {
-		try {
-			request.setCharacterEncoding("UTF-8");
-		} catch (UnsupportedEncodingException e1) {
-			// TODO Auto-generated catch block
-			e1.printStackTrace();
-		}
-		Calendar tcdate = Calendar.getInstance();
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm");
-        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-       /*ไอดี*/ 
-      /*  long unix = System.currentTimeMillis()/1000;
-	        String tid = "t"+Long.toString(unix);
-	        String asid = "a"+Long.toString(unix);
-	        String tsid = "r"+Long.toString(unix);
-	        
-	     String trem = request.getParameter("trem");   
-	     String type = request.getParameter("type");
-		 String product_name = request.getParameter("product_name");
-		 String asset_price = request.getParameter("asset_price");	 
-		 String amount = request.getParameter("amount");
-		 double str1 = Double.parseDouble(amount); 
-		 
-		 String sum = request.getParameter("sum");
-		 double str2 = Double.parseDouble(sum); 
-		 
-		 String product_unit = request.getParameter("product_unit");
-		 String member_id = request.getParameter("member_id");
-		 
-		 transactionManager tsac = new transactionManager();
-		 memberManager mm = new memberManager();	 
-		 RegisterManager rm = new RegisterManager();
-		 member m = new member();
-		 m.setMember_id(tid)
-		 assets as;
-		 projects pj;
-		 
-		 for(int i=0;i<pm.getProjects().size();i++) {
-			 if(pm.getProjects().get(i).getProject_id().equals(faculty)){
-			 pj = new projects(faculty,pm.getProjects().get(i).getName(),pm.getProjects().get(i).getCost_amount());
-		*/
-		 	/* transaction t = new transaction(tid,tcdate,trem,str2,m);
-		 	transaction_details td = new transaction_details(tsid,amount,sum,type,tid,asid); */
-			 /*logins log = new logins(email,password,0,mb);
-			 register reg = new register (regid,reason,rd,term,0,mb,pj);
-			
-			 
-			 
-			 mm.insertMembers(mb);
-			 rm.insertRegister(reg);
-			 mm.insertLogins(log, mb);
-			 session.setAttribute("message", "สมัครสมาชิกเสร็จสิ้น รอการอนุมัติ");
-		 
-			 }
-		 }
+	/*add income*/
+	@RequestMapping(value="/goaddIncome", method=RequestMethod.GET)
+	public String goaddIncome(HttpServletRequest request,HttpSession session) {
+		
+		logins log = (logins) session.getAttribute("login");
+		memberManager lmem = new memberManager();
+		System.out.println(log.getMember().getMember_id());
+		member listmember = lmem.getMember(log.getMember().getMember_id());
+		
+		session.setAttribute("member", listmember);
 		return "addincome";
+
 	}
-	*/
+	
+	@RequestMapping(value="/addIncome", method=RequestMethod.POST)
+		public String addIncome(HttpServletRequest request,HttpSession session) {
+		logins log = (logins) session.getAttribute("login");
+		memberManager lmem = new memberManager();
+		member member = lmem.getMember(log.getMember().getMember_id());
+		
+		 /*ไอดี*/ 
+        int tsid = (int) (System.currentTimeMillis()/1000);  
+	      //  String tsdgid = "r"+Long.toString(unix);
+		
+		int asset_id = Integer.parseInt( request.getParameter("product_name"));
+		String asset_price = request.getParameter("asset_price");
+		int amount = Integer.parseInt( request.getParameter("amount"));
+		Double sum = Double.parseDouble(request.getParameter("sum"));
+		
+		Calendar date = Calendar.getInstance(); 	
+		String term ;
+		if( date.get(Calendar.MONTH)>= 7 && date.get(Calendar.MONTH) <= 10 ) {
+			term = "1";
+		}else{
+			term = "2";
+		}
+		transaction tc = new transaction(tsid,date,sum,term,member);
+		
+		transactionManager t = new transactionManager();
+		t.addincome_transaction(tc);
+		
+		assets as = t.assetID(asset_id);
+		transaction_details tsd = new transaction_details(1,"สินค้า",amount,sum,tc,as);
+		t.addincome_tsac_detail(tsd);
+		
+		
+	
+		
+	return "addincome";
+	}
+	/*end addincome*/
+	
+	/*add expense*/
+	@RequestMapping(value="/goaddExpense", method=RequestMethod.GET)
+	public String goaddExpense(HttpServletRequest request,HttpSession session) {
+		
+		logins log = (logins) session.getAttribute("login");
+		memberManager lmem = new memberManager();
+		System.out.println(log.getMember().getMember_id());
+		member listmember = lmem.getMember(log.getMember().getMember_id());
+		
+		session.setAttribute("member", listmember);
+		return "addexpense";
+
+	}
+	
+	@RequestMapping(value="/addExpense", method=RequestMethod.POST)
+		public String addExpense(HttpServletRequest request,HttpSession session) {
+		logins log = (logins) session.getAttribute("login");
+		memberManager lmem = new memberManager();
+		member member = lmem.getMember(log.getMember().getMember_id());
+		
+		 /*ไอดี*/ 
+        int tsid = (int) (System.currentTimeMillis()/1000);  
+	      //  String tsdgid = "r"+Long.toString(unix);
+		
+		int asset_id = Integer.parseInt( request.getParameter("equipment_name"));
+		String asset_price = request.getParameter("asset_price");
+		int amount = Integer.parseInt( request.getParameter("amount"));
+		Double sum = Double.parseDouble(request.getParameter("sum"));
+		
+		Calendar date = Calendar.getInstance(); 	
+		String term ;
+		if( date.get(Calendar.MONTH)>= 7 && date.get(Calendar.MONTH) <= 10 ) {
+			term = "1";
+		}else{
+			term = "2";
+		}
+		transaction tc = new transaction(tsid,date,sum,term,member);
+		
+		transactionManager t = new transactionManager();
+		t.addExpense_transaction(tc);
+		
+		assets as = t.assetID(asset_id);
+		transaction_details tsd = new transaction_details(1,"อุปกรณ์",amount,sum,tc,as);
+		t.addExpense_tsac_detail(tsd);
+		
+		
+	
+		
+	return "addexpense";
+	}
 }

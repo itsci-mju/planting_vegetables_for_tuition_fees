@@ -1,0 +1,11 @@
+@charset "UTF-8";
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mitr', sans-serif;
+ }
+.container{
+	margin-top:180px;
+	margin-bottom:200px;
+}

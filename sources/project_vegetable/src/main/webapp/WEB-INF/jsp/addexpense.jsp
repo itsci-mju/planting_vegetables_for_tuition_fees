@@ -2,7 +2,7 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,util.*,bean.*,java.text.SimpleDateFormat" %>
-	    <%
+     <%
 	    transactionManager tm = new transactionManager(); 
 	    List<assets> as = tm.getAssets();
 	    List<transaction> ts; 
@@ -13,16 +13,14 @@
 		SimpleDateFormat sdtf = new SimpleDateFormat("HH:mm");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 	  %> 
-	     <% 
+	   <% 
 	 	RegisterManager rgm = new RegisterManager();
 	   	member mb = (member)session.getAttribute("member"); 
 		register rg = rgm.getRegisterID(mb.getMember_id());
 	   %>
-   		
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="UTF-8">
  <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
@@ -36,17 +34,16 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">  
 <script type="text/javascript" src="js/jquery-1.4.4.min.js"></script> 
-
-<title>บันทึกรายรับ</title>
+<meta charset="UTF-8">
+<title>บันทึกรายจ่าย</title>
 	<script type="text/javascript">
 		function autoPrice(){
-			var product_name = document.getElementById("product_name").value;
+			var product_name = document.getElementById("equipment_name").value;
 			var asset_price = document.getElementById("asset_price").innerHTML;
 			console.log(product_name);
 			 <% for(int i=0;i<as.size();i++){%>
-				if( product_name == <%= as.get(i).getAsset_id() %>)	{
-					document.getElementById("asset_price").value = "<%= as.get(i).getAsset_price() %>";
-					document.getElementById("product_unit").value = "<%= as.get(i).getProduct_unit() %>";
+				if( product_name == <%= as.get(i).getAsset_id() %>)	{	
+					document.getElementById("equipment_unit").value = "<%= as.get(i).getEquipment_unit() %>";
 				}else{
 					asset_price = 0 ;
 				}		 
@@ -56,21 +53,19 @@
 		function calTotalprice(){
 			var amount = document.getElementById("amount").value;
 			var asset_price = document.getElementById("asset_price").innerHTML;
-			console.log(product_name);
+			console.log(equipment_name);
 			document.getElementById("sum").value = amount*document.getElementById("asset_price").value;	
 			
 		}
 
 	</script>
-
 </head>
-<link rel="stylesheet" href="css/addincome.css">
-
-<body> 
+<link rel="stylesheet" href="css/addexpense.css">
+<body>
 <jsp:include page="basic/header.jsp" /> 
-    <form align="center" action="addIncome"  method="POST" > 
+    <form align="center" action="addExpense"  method="POST" > 
     <div  class="main">
-        <h2>บันทึกรายรับ</h2>
+        <h2>บันทึกรายจ่าย</h2>
         <h3>"โครงการปลูกผักเเลกค่าเทอม"</h3>
        <div class="fit"align="center">
         <table >  
@@ -90,10 +85,12 @@
             <tr>
                 <td>
                      <div>
-	                     <select name="product_name" id="product_name" class="custom-select" style="height:58px;" onchange="autoPrice()">                 
-		                    <option value disabled selected>เลือกสินค้า</option>
+	                     <select name="equipment_name" id="equipment_name" class="custom-select" style="height:58px;" onchange="autoPrice()">                 
+		                    <option value disabled selected>เลือกอุปกรณ์</option>
 		                    <% for(int i=0;i<as.size();i++){%>
-                            <option value="<%= as.get(i).getAsset_id() %>"><%= as.get(i).getProduct_name() %></option>
+		                    <% if( !as.get(i).getEquipment_name().equals("-")){ %>
+                            <option value="<%= as.get(i).getAsset_id() %>"><%= as.get(i).getEquipment_name() %></option>
+                            <%} %>
                             <%}%>
 		                </select>         
                       </div>
@@ -101,7 +98,7 @@
                 <td>
                      <div class="form-floating">
                    		
-                        <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" readonly>
+                        <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" >
                         <label for="floating">ราคา</label>
                     </div>
                 </td>
@@ -123,7 +120,7 @@
             <tr>
                 <td>
                     <div class="form-floating">
-                        <input type="text" name="product_unit" id="product_unit" class="form-control registered" placeholder="หน่วย" readonly >
+                        <input type="text" name="equipment_unit" id="equipment_unit" class="form-control registered" placeholder="หน่วย" readonly >
                         <label for="floating">หน่วย</label>              
                       </div>
                 </td>
@@ -163,14 +160,13 @@
         <tbody>
         <% for(transaction t : ts ) {%>
         <% List<transaction_details> td = tm.list_transaction_details(t.getTransaction_id()); %>
-         <% if( !td.get(0).getAssets().getProduct_name().equals("-")){ %> 
+        <% if( !td.get(0).getAssets().getEquipment_name().equals("-")){ %>     
             <tr>
                 <td><%= sdf.format(t.getDate_time().getTime()) %></td>
                 <td><%= sdtf.format(t.getDate_time().getTime()) %></td>
-                <td><%= td.get(0).getAssets().getProduct_name() %> </td>
-                <td><%= td.get(0).getAmount() %> <%= td.get(0).getAssets().getProduct_unit() %></td>
-                <td><%= td.get(0).getSum() %></td>
-                
+                <td><%= td.get(0).getAssets().getEquipment_name() %> </td>
+                <td><%= td.get(0).getAmount() %> <%= td.get(0).getAssets().getEquipment_unit() %></td>
+                <td><%= td.get(0).getSum() %></td>   
                 <td>
                     <a>
                         <i class="far fa-trash-alt"></i>

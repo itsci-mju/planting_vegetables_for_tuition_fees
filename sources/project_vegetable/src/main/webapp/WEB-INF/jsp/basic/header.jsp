@@ -57,9 +57,9 @@
 	         <nav class="nav_bar">
 	            <ul>
 	                <li><a href="goHomepage">หน้าแรก</a></li>
-	                <li><a href="#">รายรับรายจ่ายของโครงการ</a></li>
-	                <!-- <li><a href="goaddIncome">บันทึกรายรับ</a></li>
-	                <li><a href="">บันทึกรายจ่าย</a></li> -->
+	                <li><a href="goListall">รายรับรายจ่ายของโครงการ</a></li>
+	                <li><a href="goaddIncome">บันทึกรายรับ</a></li>
+	                <li><a href="goaddExpense">บันทึกรายจ่าย</a></li>
 	                <li><a href="goAddshift">บันทึกเวลาการทำงาน</a></li>
 	                <li><a href="golistShift">รายชื่อสมาชิกโครงการ</a></li>
 	                <li><a href="#">ผลประกอบการ</a></li>
