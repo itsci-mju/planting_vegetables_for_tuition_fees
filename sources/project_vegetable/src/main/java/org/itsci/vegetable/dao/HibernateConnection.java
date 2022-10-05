@@ -1,10 +1,9 @@
-package util;
-import bean.*;
+package org.itsci.vegetable.dao;
 import java.util.Properties;
 import org.hibernate.SessionFactory;
 import org.hibernate.boot.registry.StandardServiceRegistryBuilder;
 import org.hibernate.cfg.Configuration;
-
+import org.itsci.vegetable.model.*;
 
 
 public class HibernateConnection {

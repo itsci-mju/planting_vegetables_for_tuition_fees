@@ -1,4 +1,4 @@
-package com.springmvc.controller;
+package org.itsci.vegetable.controller;
 
 
 import java.io.UnsupportedEncodingException;
@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import bean.logins;
-import bean.member;
-import bean.projects;
-import bean.register;
-import util.RegisterManager;
-import util.memberManager;
-import util.projectsManager;
+import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.projects;
+import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.dao.RegisterManager;
+import org.itsci.vegetable.dao.memberManager;
+import org.itsci.vegetable.dao.projectsManager;
 
 @Controller
 public class registerController {

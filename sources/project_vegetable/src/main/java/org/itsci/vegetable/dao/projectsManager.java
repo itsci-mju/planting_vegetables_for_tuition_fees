@@ -1,15 +1,13 @@
-package util;
+package org.itsci.vegetable.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Calendar;
 import java.util.List;
 import java.util.Vector;
 
-import bean.member;
-import bean.projects;
+import org.itsci.vegetable.model.projects;
 
 
 public class projectsManager {

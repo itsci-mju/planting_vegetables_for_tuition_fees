@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;

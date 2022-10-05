@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -40,7 +40,7 @@ public assets() {
 }
 
 public assets(int asset_id, String asset_price, String equipment_name, String equipment_unit, String product_name,
-		String product_unit, bean.projects projects) {
+		String product_unit, org.itsci.vegetable.model.projects projects) {
 	super();
 	this.asset_id = asset_id;
 	this.asset_price = asset_price;

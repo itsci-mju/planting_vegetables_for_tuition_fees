@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import java.util.Calendar;
 
@@ -44,7 +44,7 @@ public register() {
 }
 
 public register(String register_id, String register_reson, Calendar register_date, String register_term,
-		int register_status, bean.member member, bean.projects projects) {
+                int register_status, org.itsci.vegetable.model.member member, org.itsci.vegetable.model.projects projects) {
 	super();
 	this.register_id = register_id;
 	this.register_reson = register_reson;

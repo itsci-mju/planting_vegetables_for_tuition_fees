@@ -1,4 +1,4 @@
-package com.springmvc.controller;
+package org.itsci.vegetable.controller;
 import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
@@ -7,13 +7,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import bean.assets;
-import bean.logins;
-import bean.member;
-import bean.transaction;
-import bean.transaction_details;
-import util.memberManager;
-import util.transactionManager;
+import org.itsci.vegetable.model.assets;
+import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.transaction;
+import org.itsci.vegetable.model.transaction_details;
+import org.itsci.vegetable.dao.memberManager;
+import org.itsci.vegetable.dao.transactionManager;
 
 @Controller
 public class transactionController {

@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 
 
@@ -32,7 +32,7 @@ public class logins {
 		// TODO Auto-generated constructor stub
 	}
 
-	public logins(String email, String password, int status, bean.member member) {
+	public logins(String email, String password, int status, org.itsci.vegetable.model.member member) {
 		super();
 		this.email = email;
 		this.password = password;

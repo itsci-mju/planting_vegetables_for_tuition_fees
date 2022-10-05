@@ -1,21 +1,17 @@
-package util;
+package org.itsci.vegetable.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.TimeZone;
 
-import bean.member;
-import bean.member_shifts;
-import bean.projects;
-import bean.register;
+import org.itsci.vegetable.model.member_shifts;
+import org.itsci.vegetable.model.register;
 
 public class membershiftManager {
 	public int insertShift(member_shifts ms){

@@ -1,4 +1,7 @@
-package util;
+package org.itsci.vegetable.dao;
+
+import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.model.member;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -9,7 +12,6 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
-import bean.*;
 
 
 public class memberManager {

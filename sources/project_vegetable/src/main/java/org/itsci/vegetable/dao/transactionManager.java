@@ -1,4 +1,4 @@
-package util;
+package org.itsci.vegetable.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,11 +10,11 @@ import java.util.List;
 import java.util.TimeZone;
 import java.util.Vector;
 
-import bean.assets;
-import bean.member;
-import bean.projects;
-import bean.transaction;
-import bean.transaction_details;
+import org.itsci.vegetable.model.assets;
+import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.projects;
+import org.itsci.vegetable.model.transaction;
+import org.itsci.vegetable.model.transaction_details;
 
 public class transactionManager {
 	/*add income*/

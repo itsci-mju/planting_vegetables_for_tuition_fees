@@ -1,4 +1,4 @@
-package util;
+package org.itsci.vegetable.dao;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -10,10 +10,10 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import bean.member;
-import bean.member_shifts;
-import bean.projects;
-import bean.register;
+import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.member_shifts;
+import org.itsci.vegetable.model.projects;
+import org.itsci.vegetable.model.register;
 
 public class RegisterManager {
 	public register getRegisterById(String rid) {

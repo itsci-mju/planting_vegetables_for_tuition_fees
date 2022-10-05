@@ -1,9 +1,9 @@
-package bean;
+package org.itsci.vegetable.model;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 
-import util.HibernateConnection;
+import org.itsci.vegetable.dao.HibernateConnection;
 
 public class run {
 

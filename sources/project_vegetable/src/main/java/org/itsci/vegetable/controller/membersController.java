@@ -1,4 +1,4 @@
-package com.springmvc.controller;
+package org.itsci.vegetable.controller;
 
 import java.io.UnsupportedEncodingException;
 import java.text.ParseException;
@@ -6,7 +6,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import java.util.List;
 import java.util.TimeZone;
 
 import javax.servlet.http.HttpServletRequest;
@@ -15,13 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import bean.logins;
-import bean.member;
-import bean.member_shifts;
-import bean.register;
-import util.RegisterManager;
-import util.memberManager;
-import util.membershiftManager;
+import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.member_shifts;
+import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.dao.RegisterManager;
+import org.itsci.vegetable.dao.memberManager;
+import org.itsci.vegetable.dao.membershiftManager;
 
 @Controller
 public class membersController {

@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import java.util.Calendar;
 
@@ -43,7 +43,7 @@ public member_shifts() {
 }
 
 public member_shifts(String member_shift_id, String task_name, Calendar date, Calendar startTime, Calendar endTime,
-		int status, bean.register register) {
+		int status, org.itsci.vegetable.model.register register) {
 	super();
 	this.member_shift_id = member_shift_id;
 	this.task_name = task_name;

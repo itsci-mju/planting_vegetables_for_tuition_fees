@@ -1,4 +1,4 @@
-package com.springmvc.controller;
+package org.itsci.vegetable.controller;
 
 import java.io.UnsupportedEncodingException;
 
@@ -7,8 +7,8 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import bean.logins;
-import util.LoginManager;
+import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.dao.LoginManager;
 
 
 

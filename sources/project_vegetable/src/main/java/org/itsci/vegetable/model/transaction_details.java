@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
@@ -38,8 +38,8 @@ public transaction_details() {
 	// TODO Auto-generated constructor stub
 }
 
-public transaction_details(int transaction_detail_id, String type, int amount, double sum, bean.transaction transaction,
-		bean.assets assets) {
+public transaction_details(int transaction_detail_id, String type, int amount, double sum, org.itsci.vegetable.model.transaction transaction,
+		org.itsci.vegetable.model.assets assets) {
 	super();
 	this.transaction_detail_id = transaction_detail_id;
 	this.type = type;

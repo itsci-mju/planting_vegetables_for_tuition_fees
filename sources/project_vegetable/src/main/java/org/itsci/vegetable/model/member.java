@@ -1,4 +1,4 @@
-package bean;
+package org.itsci.vegetable.model;
 
 import java.util.Calendar;
 import javax.persistence.*;
