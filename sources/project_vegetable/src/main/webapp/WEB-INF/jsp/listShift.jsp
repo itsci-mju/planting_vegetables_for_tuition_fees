@@ -2,18 +2,21 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-    <% 
+<%@ page import="org.itsci.vegetable.manager.memberManager" %>
+<%@ page import="org.itsci.vegetable.manager.membershiftManager" %>
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
+<%
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");   	
     	sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
     	
     	memberManager mg = new memberManager();
     	RegisterManager rg = new RegisterManager();
     	
-      	membershiftManager mgs = new membershiftManager(); 
+      	membershiftManager mgs = new membershiftManager();
     	
       	List<member_shifts> mbs = mgs.getListShifts();
       	
-      	member mb = (member)session.getAttribute("member"); 
+      	Member mb = (Member)session.getAttribute("member");
     	
     %>
 <!DOCTYPE html>

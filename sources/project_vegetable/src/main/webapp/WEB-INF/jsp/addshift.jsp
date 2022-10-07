@@ -3,7 +3,8 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*,java.text.SimpleDateFormat"  %>
-    <%	Calendar cd = Calendar.getInstance();
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
+<%	Calendar cd = Calendar.getInstance();
 	 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdtf = new SimpleDateFormat("HH:mm");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -12,7 +13,7 @@
 	  %>  
 	   <% 
 	 	RegisterManager rgm = new RegisterManager();
-	   	member mb = (member)session.getAttribute("member"); 
+	   	Member mb = (Member)session.getAttribute("member");
 		register rg = rgm.getRegisterID(mb.getMember_id());
 	   %>
 		  

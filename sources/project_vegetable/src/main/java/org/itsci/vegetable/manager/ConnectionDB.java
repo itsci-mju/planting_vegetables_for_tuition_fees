@@ -1,4 +1,4 @@
-package org.itsci.vegetable.dao;
+package org.itsci.vegetable.manager;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

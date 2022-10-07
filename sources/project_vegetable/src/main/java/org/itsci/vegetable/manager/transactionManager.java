@@ -1,4 +1,4 @@
-package org.itsci.vegetable.dao;
+package org.itsci.vegetable.manager;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -11,7 +11,7 @@ import java.util.TimeZone;
 import java.util.Vector;
 
 import org.itsci.vegetable.model.assets;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.projects;
 import org.itsci.vegetable.model.transaction;
 import org.itsci.vegetable.model.transaction_details;
@@ -22,8 +22,6 @@ public class transactionManager {
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
-			
-	        
 			Statement stmt = con.createStatement();
 			String sql = "insert into transaction_details(transaction_detail_id,amount,sum,type,asset_id,transaction_id) "
 					+ "values('"+td.getTransaction_detail_id()+"','"
@@ -173,7 +171,7 @@ public class transactionManager {
 				String member_id = rs.getString(5); 
 				
 				memberManager m = new memberManager();
-				member mb = m.getMember(member_id);
+				Member mb = m.getMember(member_id);
 				transaction t = new transaction(transaction_id,tdate,total_price,term,mb);
 					ts.add(t);
 				 }
@@ -213,7 +211,7 @@ public class transactionManager {
 				String member_id = rs.getString(5); 
 				
 				memberManager m = new memberManager();
-				member mb = m.getMember(member_id);
+				Member mb = m.getMember(member_id);
 				 ts = new transaction(transaction_id,tdate,total_price,term,mb);	
 				 }
 			con.close();
@@ -303,7 +301,7 @@ public class transactionManager {
                 String date[] = date_time.split("-");
                 tdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date[2]));
 
-				transaction t = new transaction(0,tdate,total_price,"",new member());
+				transaction t = new transaction(0,tdate,total_price,"",new Member());
 				
 				
 					tsd.add(t);
@@ -338,7 +336,7 @@ public class transactionManager {
 				String member_id = rs.getString(5); 
 				
 				memberManager m = new memberManager();
-				member mb = m.getMember(member_id);
+				Member mb = m.getMember(member_id);
 				 ts = new transaction(transaction_id,tdate,total_price,term,mb);	
 				 }
 		} catch (SQLException e) {

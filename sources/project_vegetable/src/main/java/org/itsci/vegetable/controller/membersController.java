@@ -14,13 +14,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Login;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.member_shifts;
 import org.itsci.vegetable.model.register;
-import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
-import org.itsci.vegetable.dao.membershiftManager;
+import org.itsci.vegetable.manager.RegisterManager;
+import org.itsci.vegetable.manager.memberManager;
+import org.itsci.vegetable.manager.membershiftManager;
 
 @Controller
 public class membersController {
@@ -28,10 +28,10 @@ public class membersController {
 	@RequestMapping(value="/goAddshift", method=RequestMethod.GET)
 	public String goAddshift(HttpServletRequest request,HttpSession session) {
 		
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
 		System.out.println(log.getMember().getMember_id());
-		member listmember = lmem.getMember(log.getMember().getMember_id());
+		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
 	
@@ -106,7 +106,7 @@ public class membersController {
 		memberManager lmem = new memberManager();
 		RegisterManager Regis = new RegisterManager();
 		
-		member listmember = Regis.getMember_shift(Regis.getMember_shift(mid).getStudent_code());
+		Member listmember = Regis.getMember_shift(Regis.getMember_shift(mid).getStudent_code());
 		session.setAttribute("ShowMember", listmember);
 	return "approveShift";
 
@@ -211,7 +211,7 @@ public class membersController {
 			 String member_type = request.getParameter("member_type");
 			 String member_id = request.getParameter("member_id");
 
-			 member mb = new member(member_id,pf,name,phone,birthdate,"",stucode,major,faculty,"สมาชิก");
+			 Member mb = new Member(member_id,pf,name,phone,birthdate,"",stucode,major,faculty,"สมาชิก");
 			 memberManager mm = new memberManager();
 
 	        int r = mm.editProfile(mb);

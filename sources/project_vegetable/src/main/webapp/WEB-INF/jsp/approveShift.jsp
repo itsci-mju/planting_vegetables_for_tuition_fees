@@ -2,7 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*,java.text.SimpleDateFormat"  %>
-   <%	Calendar cd = Calendar.getInstance();
+<%@ page import="org.itsci.vegetable.manager.membershiftManager" %>
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
+<%	Calendar cd = Calendar.getInstance();
 	 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdtf = new SimpleDateFormat("HH:mm");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -10,10 +12,10 @@
 	    String  timeshift =  sdtf.format(cd.getTime());  
 	    
 	    RegisterManager rg = new RegisterManager();
-	    membershiftManager ms = new membershiftManager();    
+	    membershiftManager ms = new membershiftManager();
 	    
-	    member m = (member) session.getAttribute("ShowMember");
-	    member mb = rg.getMember_shift(m.getStudent_code());
+	    Member m = (Member) session.getAttribute("ShowMember");
+	    Member mb = rg.getMember_shift(m.getStudent_code());
 		register r = rg.getRegisterID(mb.getMember_id());
 	   	member_shifts mbs = ms.getMShifts_byRegis(r.getRegister_id());
 	   %>	

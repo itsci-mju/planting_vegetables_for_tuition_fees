@@ -2,8 +2,10 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-	    <%
-	    transactionManager tm = new transactionManager(); 
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
+<%@ page import="org.itsci.vegetable.manager.transactionManager" %>
+<%
+	    transactionManager tm = new transactionManager();
 	    List<assets> as = tm.getAssets();
 	    List<transaction> ts; 
 	    ts = tm.list_transaction();
@@ -15,7 +17,7 @@
 	  %> 
 	     <% 
 	 	RegisterManager rgm = new RegisterManager();
-	   	member mb = (member)session.getAttribute("member"); 
+	   	Member mb = (Member)session.getAttribute("member");
 		register rg = rgm.getRegisterID(mb.getMember_id());
 	   %>
    		

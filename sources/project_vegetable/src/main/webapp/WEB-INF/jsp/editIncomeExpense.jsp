@@ -2,8 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-     <%
-	    transactionManager tm = new transactionManager(); 
+<%@ page import="org.itsci.vegetable.manager.transactionManager" %>
+<%
+	    transactionManager tm = new transactionManager();
 	    List<transaction> ts =  tm.list_income_expense(); 
 	    List<transaction_details> td = tm.list_transaction_details("td");
 	    %>

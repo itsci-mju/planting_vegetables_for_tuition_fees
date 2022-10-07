@@ -2,15 +2,16 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*,java.text.SimpleDateFormat"  %>
-    <%
+<%@ page import="org.itsci.vegetable.manager.memberManager" %>
+<%
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
     memberManager mbm = new memberManager();
-	logins log = new logins();
-	member mb = new member();
+	Login log = new Login();
+	Member mb = new Member();
 	String member_type = null;
 	try{
-			log = (logins)session.getAttribute("login");
+			log = (Login)session.getAttribute("login");
 			mb = mbm.getMember(log.getMember().getMember_id());		
 	}catch (Exception e) {	
 	}
