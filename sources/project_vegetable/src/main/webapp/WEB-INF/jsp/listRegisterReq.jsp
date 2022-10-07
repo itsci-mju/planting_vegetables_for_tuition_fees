@@ -2,6 +2,8 @@
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
+<%@ page import="org.itsci.vegetable.manager.projectsManager" %>
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
 <%
     RegisterManager rg = new RegisterManager();
     List<register> registers = rg.getMemberRequestProject();

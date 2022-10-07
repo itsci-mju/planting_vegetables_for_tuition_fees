@@ -1,7 +1,7 @@
-package org.itsci.vegetable.dao;
+package org.itsci.vegetable.manager;
 
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Login;
+import org.itsci.vegetable.model.Member;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -16,7 +16,7 @@ import java.util.TimeZone;
 
 public class memberManager {
 
-	public int insertLogins(logins log, member mb){
+	public int insertLogins(Login log, Member mb){
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -36,7 +36,7 @@ public class memberManager {
 		return -1;
 	}
 	
-	public int insertMembers(member mb){
+	public int insertMembers(Member mb){
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -87,8 +87,8 @@ public class memberManager {
 		
 		return -1;
 	}
-	public member getallmember() {
-		member mb = new member();
+	public Member getallmember() {
+		Member mb = new Member();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -114,7 +114,7 @@ public class memberManager {
                 String date2[] = date[2].split(" ");
                 bdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 				
-				 mb = new member(member_id,member_prefix,member_name,member_phone,bdate,
+				 mb = new Member(member_id,member_prefix,member_name,member_phone,bdate,
 							officer_position,student_code,student_major,student_faculty,member_type);
 			}
 			con.close();
@@ -125,8 +125,8 @@ public class memberManager {
 		return mb;
 	}
 	
-	public member getMember(String mid) {
-		member mb = new member();
+	public Member getMember(String mid) {
+		Member mb = new Member();
 		
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
@@ -154,7 +154,7 @@ public class memberManager {
                 String date2[] = date[2].split(" ");
                 bdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 				
-				 mb = new member(member_id,member_prefix,member_name,member_phone,bdate,
+				 mb = new Member(member_id,member_prefix,member_name,member_phone,bdate,
 							officer_position,student_code,student_major,student_faculty,member_type);
 			}
 			con.close();
@@ -164,7 +164,7 @@ public class memberManager {
 		
 		return mb;
 	}
-	  public int editProfile(member emb) {
+	  public int editProfile(Member emb) {
 		  	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 	        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 	        ConnectionDB condb = new ConnectionDB();
@@ -190,8 +190,8 @@ public class memberManager {
 	        return -1;
 	    }
 
-public List<member> getListmember() {
-	List<member> list = new ArrayList<>();
+public List<Member> getListmember() {
+	List<Member> list = new ArrayList<>();
 	ConnectionDB condb = new ConnectionDB();
 	Connection con = condb.getConnection();
 	try {
@@ -217,7 +217,7 @@ public List<member> getListmember() {
             String date2[] = date[2].split(" ");
             bdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 			
-           member m  = new member(member_id,member_prefix,member_name,member_phone,bdate,
+           Member m  = new Member(member_id,member_prefix,member_name,member_phone,bdate,
 						officer_position,student_code,student_major,student_faculty,member_type);
 			 
            list.add(m);

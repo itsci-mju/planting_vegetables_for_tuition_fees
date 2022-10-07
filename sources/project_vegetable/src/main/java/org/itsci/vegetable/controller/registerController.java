@@ -11,13 +11,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Login;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.projects;
 import org.itsci.vegetable.model.register;
-import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
-import org.itsci.vegetable.dao.projectsManager;
+import org.itsci.vegetable.manager.RegisterManager;
+import org.itsci.vegetable.manager.memberManager;
+import org.itsci.vegetable.manager.projectsManager;
 
 @Controller
 public class registerController {
@@ -82,8 +82,8 @@ public class registerController {
 			 if(pm.getProjects().get(i).getProject_id().equals(faculty)){
 			 pj = new projects(faculty,pm.getProjects().get(i).getName(),pm.getProjects().get(i).getCost_amount());
 			 
-			 member mb = new member(mid,pf,name,phone,bd,"",stucode,major,faculty,"รอการอนุม้ติ");
-			 logins log = new logins(email,password,0,mb);
+			 Member mb = new Member(mid,pf,name,phone,bd,"",stucode,major,faculty,"รอการอนุม้ติ");
+			 Login log = new Login(email,password,0,mb);
 			 register reg = new register (regid,reason,rd,term,0,mb,pj);
 			 
 			 memberManager mm = new memberManager();

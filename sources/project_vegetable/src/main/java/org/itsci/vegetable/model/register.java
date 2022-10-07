@@ -32,7 +32,7 @@ private int register_status;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="member_id",nullable=false)
-private member member;
+private Member member;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="project_id",nullable=false)
@@ -44,7 +44,7 @@ public register() {
 }
 
 public register(String register_id, String register_reson, Calendar register_date, String register_term,
-                int register_status, org.itsci.vegetable.model.member member, org.itsci.vegetable.model.projects projects) {
+                int register_status, Member member, org.itsci.vegetable.model.projects projects) {
 	super();
 	this.register_id = register_id;
 	this.register_reson = register_reson;
@@ -95,11 +95,11 @@ public void setRegister_status(int register_status) {
 	this.register_status = register_status;
 }
 
-public member getMember() {
+public Member getMember() {
 	return member;
 }
 
-public void setMember(member member) {
+public void setMember(Member member) {
 	this.member = member;
 }
 

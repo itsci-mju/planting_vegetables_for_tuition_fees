@@ -8,12 +8,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import org.itsci.vegetable.model.assets;
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Login;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.transaction;
 import org.itsci.vegetable.model.transaction_details;
-import org.itsci.vegetable.dao.memberManager;
-import org.itsci.vegetable.dao.transactionManager;
+import org.itsci.vegetable.manager.memberManager;
+import org.itsci.vegetable.manager.transactionManager;
 
 @Controller
 public class transactionController {
@@ -22,10 +22,10 @@ public class transactionController {
 	@RequestMapping(value="/goListall", method=RequestMethod.GET)
 	public String goListall(HttpServletRequest request,HttpSession session) {
 		
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
 		System.out.println(log.getMember().getMember_id());
-		member listmember = lmem.getMember(log.getMember().getMember_id());
+		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
 		return "listIncomeandExpense";
@@ -46,10 +46,10 @@ public class transactionController {
 	@RequestMapping(value="/goaddIncome", method=RequestMethod.GET)
 	public String goaddIncome(HttpServletRequest request,HttpSession session) {
 		
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
 		System.out.println(log.getMember().getMember_id());
-		member listmember = lmem.getMember(log.getMember().getMember_id());
+		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
 		return "addincome";
@@ -58,9 +58,9 @@ public class transactionController {
 	
 	@RequestMapping(value="/addIncome", method=RequestMethod.POST)
 		public String addIncome(HttpServletRequest request,HttpSession session) {
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
-		member member = lmem.getMember(log.getMember().getMember_id());
+		Member member = lmem.getMember(log.getMember().getMember_id());
 		
 		 /*ไอดี*/ 
         int tsid = (int) (System.currentTimeMillis()/1000);  
@@ -98,10 +98,10 @@ public class transactionController {
 	@RequestMapping(value="/goaddExpense", method=RequestMethod.GET)
 	public String goaddExpense(HttpServletRequest request,HttpSession session) {
 		
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
 		System.out.println(log.getMember().getMember_id());
-		member listmember = lmem.getMember(log.getMember().getMember_id());
+		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
 		return "addexpense";
@@ -110,9 +110,9 @@ public class transactionController {
 	
 	@RequestMapping(value="/addExpense", method=RequestMethod.POST)
 		public String addExpense(HttpServletRequest request,HttpSession session) {
-		logins log = (logins) session.getAttribute("login");
+		Login log = (Login) session.getAttribute("login");
 		memberManager lmem = new memberManager();
-		member member = lmem.getMember(log.getMember().getMember_id());
+		Member member = lmem.getMember(log.getMember().getMember_id());
 		
 		 /*ไอดี*/ 
         int tsid = (int) (System.currentTimeMillis()/1000);  

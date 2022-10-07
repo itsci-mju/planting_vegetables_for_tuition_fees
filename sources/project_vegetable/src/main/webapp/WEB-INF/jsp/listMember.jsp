@@ -2,10 +2,12 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-    <% RegisterManager rg = new RegisterManager();
-    List<member> m = rg.getMember();
+<%@ page import="org.itsci.vegetable.manager.projectsManager" %>
+<%@ page import="org.itsci.vegetable.manager.RegisterManager" %>
+<% RegisterManager rg = new RegisterManager();
+    List<Member> m = rg.getMember();
     
-    member member = (member) session.getAttribute("showmember");
+    Member member = (Member) session.getAttribute("showmember");
     
    	projectsManager pjm = new projectsManager();
 	List<projects> pj = pjm.getProjects(); %>
@@ -45,7 +47,7 @@
             </tr>
         </thead>
         <tbody align="center">
-        <%for(member mm : m) {%>
+        <%for(Member mm : m) {%>
             <tr>
             <td><%= mm.getStudent_code() %></td>
             <td><%= mm.getMember_name() %></td>

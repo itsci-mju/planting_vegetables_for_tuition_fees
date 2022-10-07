@@ -9,10 +9,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.register;
-import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
+import org.itsci.vegetable.manager.RegisterManager;
+import org.itsci.vegetable.manager.memberManager;
 
 @Controller
 public class officerController {
@@ -69,7 +69,7 @@ public class officerController {
 	public String goSetPermissions(HttpServletRequest request,HttpSession session) {
 		String mid = request.getParameter("id");
 		memberManager mm = new memberManager();
-		member member = mm.getMember(mid);
+		Member member = mm.getMember(mid);
 		
 		session.setAttribute("showmember", member);
 	return "setPermissions";

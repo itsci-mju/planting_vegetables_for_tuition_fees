@@ -3,10 +3,9 @@ package org.itsci.vegetable.model;
 import java.util.Calendar;
 import javax.persistence.*;
 
-
 @Entity
-@Table(name="member")
-public class member {
+@Table(name= "member")
+public class Member {
 	@Id
 	@Column(name="member_id",nullable=false,length=11)
 	private String member_id;
@@ -38,14 +37,14 @@ public class member {
 	@Column(name="member_type",length=100)
 	private String member_type;
 	
-	public member() {
+	public Member() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public member(String member_id, int member_prefix, String member_name, String member_phone, Calendar member_birthday,
-			String officer_position, String student_code, String student_major, String student_faculty,
-			String member_type) {
+	public Member(String member_id, int member_prefix, String member_name, String member_phone, Calendar member_birthday,
+				  String officer_position, String student_code, String student_major, String student_faculty,
+				  String member_type) {
 		super();
 		this.member_id = member_id;
 		this.member_prefix = member_prefix;
