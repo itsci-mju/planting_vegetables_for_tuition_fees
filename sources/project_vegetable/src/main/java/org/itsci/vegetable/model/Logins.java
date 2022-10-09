@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table (name="logins")
-public class logins {
+public class Logins {
 	@Id
 	@Column(name="email",nullable=false,length=50)
 	private String email;
@@ -25,14 +25,14 @@ public class logins {
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name="member_id",nullable=false)
-	private member member;
+	private Member member;
 	
-	public logins() {
+	public Logins() {
 		super();
 		// TODO Auto-generated constructor stub
 	}
 
-	public logins(String email, String password, int status, org.itsci.vegetable.model.member member) {
+	public Logins(String email, String password, int status, org.itsci.vegetable.model.Member member) {
 		super();
 		this.email = email;
 		this.password = password;
@@ -64,11 +64,11 @@ public class logins {
 		this.status = status;
 	}
 
-	public member getMember() {
+	public Member getMember() {
 		return member;
 	}
 
-	public void setMember(member member) {
+	public void setMember(Member member) {
 		this.member = member;
 	}
 	

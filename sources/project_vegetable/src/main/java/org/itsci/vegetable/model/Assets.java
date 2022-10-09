@@ -10,7 +10,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="assets")
-public class assets {
+public class Assets {
 	
 @Id
 private int asset_id;
@@ -32,15 +32,15 @@ private String product_unit;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="project_id",nullable=false)
-private projects projects;
+private Projects projects;
 
-public assets() {
+public Assets() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public assets(int asset_id, String asset_price, String equipment_name, String equipment_unit, String product_name,
-		String product_unit, org.itsci.vegetable.model.projects projects) {
+public Assets(int asset_id, String asset_price, String equipment_name, String equipment_unit, String product_name,
+		String product_unit, org.itsci.vegetable.model.Projects projects) {
 	super();
 	this.asset_id = asset_id;
 	this.asset_price = asset_price;
@@ -99,11 +99,11 @@ public void setProduct_unit(String product_unit) {
 	this.product_unit = product_unit;
 }
 
-public projects getProjects() {
+public Projects getProjects() {
 	return projects;
 }
 
-public void setProjects(projects projects) {
+public void setProjects(Projects projects) {
 	this.projects = projects;
 }
 

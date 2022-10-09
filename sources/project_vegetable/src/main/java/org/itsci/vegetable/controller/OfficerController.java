@@ -9,13 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import org.itsci.vegetable.model.member;
-import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.model.Member;
+import org.itsci.vegetable.model.Register;
 import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
+import org.itsci.vegetable.dao.MemberManager;
 
 @Controller
-public class officerController {
+public class OfficerController {
 	/*listShift*/
 	@RequestMapping(value="/golistRegisterReq", method=RequestMethod.GET)
 	public String golistRegisterReq(HttpServletRequest request,HttpSession session) {
@@ -26,7 +26,7 @@ public class officerController {
 	public String goapproveReq(HttpServletRequest request,HttpSession session) {
 		String rqid = request.getParameter("id");
 		RegisterManager Regis = new RegisterManager();
-		register register = Regis.getRegisterById(rqid);
+		Register register = Regis.getRegisterById(rqid);
 		
 		session.setAttribute("showReq", register);
 	return "approveReq";
@@ -35,7 +35,7 @@ public class officerController {
 	@RequestMapping(value="/approveReq", method=RequestMethod.POST)
 	public String approveReq (HttpServletRequest request,HttpSession session) {
 		int r = -1;
-		register register = (register) session.getAttribute("showReq");
+		Register register = (Register) session.getAttribute("showReq");
 		String rid =request.getParameter("id");
 		RegisterManager Regis = new RegisterManager();
 		r=Regis.approveReq(rid);
@@ -49,7 +49,7 @@ public class officerController {
 	public String cancelApproveReq (HttpServletRequest request,HttpSession session) {
 		int r = -1;
 		String rid =request.getParameter("id");
-		register register = (register) session.getAttribute("showReq");
+		Register register = (Register) session.getAttribute("showReq");
 
 		RegisterManager Regis = new RegisterManager();
 		r=Regis.deleteLogin(register.getMember().getMember_id());
@@ -68,8 +68,8 @@ public class officerController {
 	@RequestMapping(value="/goSetPermissions", method=RequestMethod.GET)
 	public String goSetPermissions(HttpServletRequest request,HttpSession session) {
 		String mid = request.getParameter("id");
-		memberManager mm = new memberManager();
-		member member = mm.getMember(mid);
+		MemberManager mm = new MemberManager();
+		Member member = mm.getMember(mid);
 		
 		session.setAttribute("showmember", member);
 	return "setPermissions";

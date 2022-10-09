@@ -7,12 +7,11 @@ import java.sql.Statement;
 import java.util.List;
 import java.util.Vector;
 
-import org.itsci.vegetable.model.projects;
+import org.itsci.vegetable.model.Projects;
 
-
-public class projectsManager {
-	public List<projects> getProjects() {
-		List<projects> pj = new Vector<>();
+public class ProjectsManager {
+	public List<Projects> getProjects() {
+		List<Projects> pj = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -24,7 +23,7 @@ public class projectsManager {
 				double cost_amount = Double.parseDouble(rs.getString(2));
 				String name = rs.getString(3);
 			
-					 projects p = new projects(project_id,name,cost_amount);
+					 Projects p = new Projects(project_id,name,cost_amount);
 					 pj.add(p);
 				 }
 			con.close();
@@ -37,8 +36,8 @@ public class projectsManager {
 	}
 	
 
-	public projects getprojectName(String pid) {
-		projects p = new projects();
+	public Projects getprojectName(String pid) {
+	Projects p = new Projects();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {

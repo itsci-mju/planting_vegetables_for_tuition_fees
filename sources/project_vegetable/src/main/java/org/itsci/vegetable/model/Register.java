@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="register")
-public class register {
+public class Register {
 
 @Id
 @Column (name="register_id",nullable=false,length=11)
@@ -32,19 +32,19 @@ private int register_status;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="member_id",nullable=false)
-private member member;
+private Member member;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="project_id",nullable=false)
-private projects projects;
+private Projects projects;
 
-public register() {
+public Register() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public register(String register_id, String register_reson, Calendar register_date, String register_term,
-                int register_status, org.itsci.vegetable.model.member member, org.itsci.vegetable.model.projects projects) {
+public Register(String register_id, String register_reson, Calendar register_date, String register_term,
+                int register_status, org.itsci.vegetable.model.Member member, org.itsci.vegetable.model.Projects projects) {
 	super();
 	this.register_id = register_id;
 	this.register_reson = register_reson;
@@ -95,19 +95,19 @@ public void setRegister_status(int register_status) {
 	this.register_status = register_status;
 }
 
-public member getMember() {
+public Member getMember() {
 	return member;
 }
 
-public void setMember(member member) {
+public void setMember(Member member) {
 	this.member = member;
 }
 
-public projects getProjects() {
+public Projects getProjects() {
 	return projects;
 }
 
-public void setProjects(projects projects) {
+public void setProjects(Projects projects) {
 	this.projects = projects;
 }
 

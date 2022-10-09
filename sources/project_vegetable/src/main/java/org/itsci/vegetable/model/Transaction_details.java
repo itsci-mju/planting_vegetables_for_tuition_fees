@@ -11,7 +11,7 @@ import javax.persistence.Table;
 @Entity
 @Table(name="transaction_details")
 
-public class transaction_details {
+public class Transaction_details {
 @Id
 private int transaction_detail_id;
 
@@ -26,20 +26,20 @@ private double sum;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="transaction_id",nullable=false)
-private transaction transaction;
+private Transaction transaction;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="asset_id",nullable=false)
-private assets assets;
+private Assets assets;
 
  
-public transaction_details() {
+public Transaction_details() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public transaction_details(int transaction_detail_id, String type, int amount, double sum, org.itsci.vegetable.model.transaction transaction,
-		org.itsci.vegetable.model.assets assets) {
+public Transaction_details(int transaction_detail_id, String type, int amount, double sum, org.itsci.vegetable.model.Transaction transaction,
+		org.itsci.vegetable.model.Assets assets) {
 	super();
 	this.transaction_detail_id = transaction_detail_id;
 	this.type = type;
@@ -90,22 +90,22 @@ public void setSum(double sum) {
 }
 
 
-public transaction getTransaction() {
+public Transaction getTransaction() {
 	return transaction;
 }
 
 
-public void setTransaction(transaction transaction) {
+public void setTransaction(Transaction transaction) {
 	this.transaction = transaction;
 }
 
 
-public assets getAssets() {
+public Assets getAssets() {
 	return assets;
 }
 
 
-public void setAssets(assets assets) {
+public void setAssets(Assets assets) {
 	this.assets = assets;
 }
 

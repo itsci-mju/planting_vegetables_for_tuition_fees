@@ -7,7 +7,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.itsci.vegetable.model.logins;
+import org.itsci.vegetable.model.Logins;
 import org.itsci.vegetable.dao.LoginManager;
 
 
@@ -35,7 +35,7 @@ public class LoginController {
 		String email = request.getParameter("email");
 		String password = request.getParameter("pwd");
 		LoginManager lm = new LoginManager();
-		logins log = lm.verifyLogin(email, password);
+		Logins log = lm.verifyLogin(email, password);
 		if(log.getStatus()==0) {		
 			session.setAttribute("login", log);	
 			return "login"; 
@@ -48,6 +48,7 @@ public class LoginController {
 	@RequestMapping(value="/dologout", method=RequestMethod.GET)
 	public String dologout(HttpServletRequest request,HttpSession session) {
 			session.removeAttribute("login");
+			session.removeAttribute("ListTran");
 		return "content";
 	}
 }

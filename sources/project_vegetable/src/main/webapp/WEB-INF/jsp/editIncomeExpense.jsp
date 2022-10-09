@@ -2,11 +2,6 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-     <%
-	    transactionManager tm = new transactionManager(); 
-	    List<transaction> ts =  tm.list_income_expense(); 
-	    List<transaction_details> td = tm.list_transaction_details("td");
-	    %>
 	    <%
 	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -50,7 +45,7 @@
                 <tr>
                   <td>
                   วันที่ทำรายการ : 
-                  <input type="text" class="form-control date_time" name="date_time" id="date_time" value="<%= sdf.format( tm.list_transaction().get(0).getDate_time().getTime()) %>" readonly>
+                  <input type="text" class="form-control date_time" name="date_time" id="date_time" value="" readonly>
                  </td> 
                  <td>
                 	 ประเภท : 
@@ -154,8 +149,7 @@
                             <button type="reset" name="reset" class="btn btn-danger" >ยกเลิก</button>
                         </td>
                     </tr> 
-                </table>   
-                	
+                </table>     	
             </form>
       </div>
      </div>

@@ -2,8 +2,8 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*" %>
-    <% projectsManager pjm = new projectsManager();
-    	List<projects> pj = pjm.getProjects(); %>
+    <% ProjectsManager pjm = new ProjectsManager();
+    	List<Projects> pj = pjm.getProjects(); %>
 <!DOCTYPE html>
 <html>
 <head>

@@ -14,24 +14,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
-import org.itsci.vegetable.model.member_shifts;
-import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.model.Logins;
+import org.itsci.vegetable.model.Member;
+import org.itsci.vegetable.model.Member_shifts;
+import org.itsci.vegetable.model.Register;
 import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
-import org.itsci.vegetable.dao.membershiftManager;
+import org.itsci.vegetable.dao.MemberManager;
+import org.itsci.vegetable.dao.MembershiftManager;
 
 @Controller
-public class membersController {
+public class MembersController {
 	/*add shift*/
 	@RequestMapping(value="/goAddshift", method=RequestMethod.GET)
 	public String goAddshift(HttpServletRequest request,HttpSession session) {
 		
-		logins log = (logins) session.getAttribute("login");
-		memberManager lmem = new memberManager();
+		Logins log = (Logins) session.getAttribute("login");
+		MemberManager lmem = new MemberManager();
 		System.out.println(log.getMember().getMember_id());
-		member listmember = lmem.getMember(log.getMember().getMember_id());
+		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
 	
@@ -77,12 +77,12 @@ public class membersController {
 		cal_e_date.set(Calendar.HOUR_OF_DAY, et_hour);
 		cal_e_date.set(Calendar.MINUTE, et_min);
 	
-       register r = new register();
+       Register r = new Register();
        r.setRegister_id(register_id);
         
-        member_shifts ms = new member_shifts(msid,task_name,cal_date,cal,cal_e_date,0,r);
+        Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,0,r);
    
-        membershiftManager msm = new membershiftManager();
+        MembershiftManager msm = new MembershiftManager();
 		msm.insertShift(ms);
         
 		session.setAttribute("message", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
@@ -103,10 +103,10 @@ public class membersController {
 	@RequestMapping(value="/approveShift", method=RequestMethod.GET)
 	public String goapproveShift(HttpServletRequest request,HttpSession session) {
 		String mid = request.getParameter("id");
-		memberManager lmem = new memberManager();
+		MemberManager lmem = new MemberManager();
 		RegisterManager Regis = new RegisterManager();
 		
-		member listmember = Regis.getMember_shift(Regis.getMember_shift(mid).getStudent_code());
+		Member listmember = Regis.getMember_shift(Regis.getMember_shift(mid).getStudent_code());
 		session.setAttribute("ShowMember", listmember);
 	return "approveShift";
 
@@ -148,12 +148,13 @@ public class membersController {
 		cal_e_date.set(Calendar.HOUR_OF_DAY, et_hour);
 		cal_e_date.set(Calendar.MINUTE, et_min);
 	
-       register r = new register();
+       Register r = new Register();
        r.setRegister_id(register_id);
         
-        member_shifts ms = new member_shifts(msid,task_name,cal_date,cal,cal_e_date,1,r);
+        Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,1,r);
    
-        membershiftManager msm = new membershiftManager();
+        
+        MembershiftManager msm = new MembershiftManager();
 		msm.ApproveShift(ms);
 		session.setAttribute("message", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
 		return "content";
@@ -211,8 +212,8 @@ public class membersController {
 			 String member_type = request.getParameter("member_type");
 			 String member_id = request.getParameter("member_id");
 
-			 member mb = new member(member_id,pf,name,phone,birthdate,"",stucode,major,faculty,"สมาชิก");
-			 memberManager mm = new memberManager();
+			 Member mb = new Member(member_id,pf,name,phone,birthdate,"",stucode,major,faculty,"สมาชิก");
+			 MemberManager mm = new MemberManager();
 
 	        int r = mm.editProfile(mb);
 	        request.setAttribute("Editresult", r);

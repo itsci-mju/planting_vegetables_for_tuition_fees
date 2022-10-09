@@ -6,20 +6,20 @@
 	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 	    
-	    memberManager mbm = new memberManager();
-		logins log = new logins();
-		member mb = new member();	
+	    MemberManager mbm = new MemberManager();
+		Logins log = new Logins();
+		Member mb = new Member();	
 		try{
-				log = (logins)session.getAttribute("login");
+				log = (Logins)session.getAttribute("login");
 				mb = mbm.getMember(log.getMember().getMember_id());		
 		}catch (Exception e) {	
 			
 		} 
     	RegisterManager rm = new RegisterManager();
-    	register r = rm.getRegister(mb.getMember_id());
+    	Register r = rm.getRegister(mb.getMember_id());
     	
-    	projectsManager pjm = new projectsManager();
-    	projects pj = pjm.getprojectName(r.getProjects().getProject_id());
+    	ProjectsManager pjm = new ProjectsManager ();
+    	Projects pj = pjm.getprojectName(r.getProjects().getProject_id());
    	%>
 <!DOCTYPE html>
 <html>

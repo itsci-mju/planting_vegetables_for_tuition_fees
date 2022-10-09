@@ -10,12 +10,12 @@
 	    String  timeshift =  sdtf.format(cd.getTime());  
 	    
 	    RegisterManager rg = new RegisterManager();
-	    membershiftManager ms = new membershiftManager();    
+	    MembershiftManager ms = new MembershiftManager();    
 	    
-	    member m = (member) session.getAttribute("ShowMember");
-	    member mb = rg.getMember_shift(m.getStudent_code());
-		register r = rg.getRegisterID(mb.getMember_id());
-	   	member_shifts mbs = ms.getMShifts_byRegis(r.getRegister_id());
+	    Member m = (Member) session.getAttribute("ShowMember");
+	    Member mb = rg.getMember_shift(m.getStudent_code());
+		Register r = rg.getRegisterID(mb.getMember_id());
+	   	Member_shifts mbs = ms.getMShifts_byRegis(r.getRegister_id());
 	   %>	
 	   
 <!DOCTYPE html>

@@ -4,9 +4,9 @@
       <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*"  %>
     <%
-	logins log = new logins();
+	Logins log = new Logins();
 	try{
-			log = (logins)session.getAttribute("login");	
+			log = (Logins)session.getAttribute("login");	
 	}catch (Exception e) {	
 	}
     %>

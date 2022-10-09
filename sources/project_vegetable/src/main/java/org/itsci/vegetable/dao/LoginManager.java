@@ -5,13 +5,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
+import org.itsci.vegetable.model.Logins;
+import org.itsci.vegetable.model.Member;
 
 public class LoginManager {
 
-	public logins verifyLogin(String em,String pw){
-		logins l = null;
+	public Logins verifyLogin(String em,String pw){
+		Logins l = null;
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -24,9 +24,9 @@ public class LoginManager {
 				String pwd = rs.getString(2);
 				int status = Integer.parseInt(rs.getString(3));
 				String member_id = rs.getString(4);
-				member mb = new member();
+				Member mb = new Member();
 				mb.setMember_id(member_id);
-				 l = new logins (email,pwd,status,mb);
+				 l = new Logins (email,pwd,status,mb);
 			}
 			con.close();
 		} catch (SQLException e) {

@@ -10,14 +10,14 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.itsci.vegetable.model.member;
-import org.itsci.vegetable.model.member_shifts;
-import org.itsci.vegetable.model.projects;
-import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.model.Member;
+import org.itsci.vegetable.model.Member_shifts;
+import org.itsci.vegetable.model.Projects;
+import org.itsci.vegetable.model.Register;
 
 public class RegisterManager {
-	public register getRegisterById(String rid) {
-		register rg = new register();
+	public Register getRegisterById(String rid) {
+		Register rg = new Register();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {
@@ -33,12 +33,12 @@ public class RegisterManager {
 				
 				String member_id = rs.getString(6);
 				
-				memberManager m = new memberManager();
-				member mbid = new member();
+				MemberManager m = new MemberManager();
+				Member mbid = new Member();
 				mbid = m.getMember(member_id);
 				
 				String project_id  = rs.getString(7);
-				projects pjid = new projects();
+				Projects pjid = new Projects();
 				pjid.setProject_id(project_id);
 				
 				Calendar rdate = Calendar.getInstance(); 
@@ -46,7 +46,7 @@ public class RegisterManager {
                 String date2[] = date[2].split(" ");
                 rdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
                  
-				 rg = new register(register_id,register_reson,rdate,register_term,
+				 rg = new Register(register_id,register_reson,rdate,register_term,
 							register_status, mbid,pjid);
 			}
 				 con.close();
@@ -59,7 +59,7 @@ public class RegisterManager {
 	}
 	
 
-	public int insertRegister(register rgt){
+	public int insertRegister(Register rgt){
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		try {
@@ -87,8 +87,8 @@ public class RegisterManager {
 		return -1;
 	}
 	
-	public register getRegister(String mid) {
-		register rg = new register();
+	public Register getRegister(String mid) {
+		Register rg = new Register();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {
@@ -104,11 +104,11 @@ public class RegisterManager {
 				String register_term = rs.getString(5);
 				
 				String member_id = rs.getString(6);
-				member mbid = new member();
+				Member mbid = new Member();
 				mbid.setMember_id(member_id);
 				
 				String project_id  = rs.getString(7);
-				projects pjid = new projects();
+				Projects pjid = new Projects();
 				pjid.setProject_id(project_id);
 				
 				Calendar rdate = Calendar.getInstance(); 
@@ -116,7 +116,7 @@ public class RegisterManager {
                 String date2[] = date[2].split(" ");
                 rdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 				
-				rg = new register(register_id,register_reson,rdate,register_term,
+				rg = new Register(register_id,register_reson,rdate,register_term,
 							register_status, mbid,pjid);
 			}
 			con.close();
@@ -127,8 +127,8 @@ public class RegisterManager {
 		return rg;
 	}
 	
-	public register getRegisterID(String mid) {
-		register rg = new register();
+	public Register getRegisterID(String mid) {
+		Register rg = new Register();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {
@@ -147,8 +147,8 @@ public class RegisterManager {
 		return rg;
 	}
 	
-	public member getstuCode(String rd) {
-		member m = new member();
+	public Member getstuCode(String rd) {
+		Member m = new Member();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {
@@ -171,9 +171,9 @@ public class RegisterManager {
 		return m;
 	}
 	
-	public member getMember_shift(String s) {
-		member m = new member();
-		member_shifts shi = new member_shifts();
+	public Member getMember_shift(String s) {
+		Member m = new Member();
+		Member_shifts shi = new Member_shifts();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
 		try {
@@ -222,8 +222,8 @@ public class RegisterManager {
 		return m;
 	}
 	
-	public List<register> getMemberRequestProject() {
-		List<register> list = new ArrayList<>();
+	public List<Register> getMemberRequestProject() {
+		List<Register> list = new ArrayList<>();
 		String Status = "0";
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
@@ -240,12 +240,12 @@ public class RegisterManager {
 				
 				String member_id = rs.getString(6);
 				
-				memberManager m = new memberManager();
-				member mbid = new member();
+				MemberManager m = new MemberManager();
+				Member mbid = new Member();
 				mbid = m.getMember(member_id);
 				
 				String project_id  = rs.getString(7);
-				projects pjid = new projects();
+				Projects pjid = new Projects();
 				pjid.setProject_id(project_id);
 				
 				Calendar rdate = Calendar.getInstance(); 
@@ -253,7 +253,7 @@ public class RegisterManager {
                 String date2[] = date[2].split(" ");
                 rdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
                  
-				register rg = new register(register_id,register_reson,rdate,register_term,
+				Register rg = new Register(register_id,register_reson,rdate,register_term,
 							register_status, mbid,pjid);
 				//member m  = new member(member_id,0, member_name,student_faculty,null, student_major,student_code, "", "", "");
 				list.add(rg);
@@ -266,8 +266,8 @@ public class RegisterManager {
 		return list;
 	}
 
-    public register getRequest(String r){
-    	register rg = new register();
+    public Register getRequest(String r){
+    	Register rg = new Register();
          ConnectionDB condb = new ConnectionDB();
          Connection con = condb.getConnection();
         try {
@@ -285,7 +285,7 @@ public class RegisterManager {
                 String student_faculty =rs.getString(6);
                 String student_major = rs.getString(7);
  
-              member m = new member();
+              Member m = new Member();
               m.setMember_id(member_id);
               m.setMember_prefix(member_prefix);
               m.setMember_name(member_name);
@@ -406,8 +406,8 @@ public class RegisterManager {
 		}
 		return -1;
 	}
-    public List<member> getMember() {
-		List<member> list = new ArrayList<>();
+    public List<Member> getMember() {
+		List<Member> list = new ArrayList<>();
 		
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -434,7 +434,7 @@ public class RegisterManager {
                 String date2[] = date[2].split(" ");
                 bdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 				
-                member mb = new member(member_id,member_prefix,member_name,member_phone,bdate,
+                Member mb = new Member(member_id,member_prefix,member_name,member_phone,bdate,
 							officer_position,student_code,student_major,student_faculty,member_type);
                 list.add(mb);
 			}
@@ -446,8 +446,8 @@ public class RegisterManager {
 		return list;
 	}
 	
-	public member getMember(String mid) {
-		member mb = new member();
+	public Member getMember(String mid) {
+		Member mb = new Member();
 		
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();  
@@ -475,7 +475,7 @@ public class RegisterManager {
                 String date2[] = date[2].split(" ");
                 bdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])+1, Integer.parseInt(date2[0]));
 				
-				 mb = new member(member_id,member_prefix,member_name,member_phone,bdate,
+				 mb = new Member(member_id,member_prefix,member_name,member_phone,bdate,
 							officer_position,student_code,student_major,student_faculty,member_type);
 			}
 			con.close();

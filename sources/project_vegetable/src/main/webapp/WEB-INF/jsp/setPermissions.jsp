@@ -2,9 +2,9 @@
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-    <% projectsManager pjm = new projectsManager();
-	List<projects> pj = pjm.getProjects();
-	member member = (member) session.getAttribute("showmember");
+    <% ProjectsManager pjm = new ProjectsManager();
+	List<Projects> pj = pjm.getProjects();
+	Member member = (Member) session.getAttribute("showmember");
 	%>
 <!DOCTYPE html>
 <html>

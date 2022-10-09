@@ -3,9 +3,9 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
 	<%
-	projectsManager pjm = new projectsManager();
-	List<projects> pj = pjm.getProjects();
-	register register = (register) session.getAttribute("showReq");
+	ProjectsManager pjm = new ProjectsManager();
+	List<Projects> pj = pjm.getProjects();
+	Register register = (Register) session.getAttribute("showReq");
 	
 	int resultApprove = 0;
 	try{

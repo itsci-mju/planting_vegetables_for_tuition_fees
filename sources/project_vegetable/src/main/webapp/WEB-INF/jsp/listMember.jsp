@@ -3,12 +3,12 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 	<%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
     <% RegisterManager rg = new RegisterManager();
-    List<member> m = rg.getMember();
+    List<Member> m = rg.getMember();
     
-    member member = (member) session.getAttribute("showmember");
+    Member member = (Member) session.getAttribute("showmember");
     
-   	projectsManager pjm = new projectsManager();
-	List<projects> pj = pjm.getProjects(); %>
+   	ProjectsManager pjm = new ProjectsManager();
+	List<Projects> pj = pjm.getProjects(); %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -45,7 +45,7 @@
             </tr>
         </thead>
         <tbody align="center">
-        <%for(member mm : m) {%>
+        <%for(Member mm : m) {%>
             <tr>
             <td><%= mm.getStudent_code() %></td>
             <td><%= mm.getMember_name() %></td>

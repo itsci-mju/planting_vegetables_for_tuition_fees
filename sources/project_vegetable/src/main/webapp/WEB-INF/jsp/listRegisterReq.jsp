@@ -4,10 +4,10 @@
 <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
 <%
     RegisterManager rg = new RegisterManager();
-    List<register> registers = rg.getMemberRequestProject();
-   	projectsManager pjm = new projectsManager();
-	List<projects> pj = pjm.getProjects();
-	register register = (register) session.getAttribute("showReq");
+    List<Register> registers = rg.getMemberRequestProject();
+   	ProjectsManager pjm = new ProjectsManager();
+	List<Projects> pj = pjm.getProjects();
+	Register register = (Register) session.getAttribute("showReq");
 %>
  
 <!DOCTYPE html>
@@ -44,7 +44,7 @@
            
         </thead>
         <tbody  align="center">
-        <%int num = 1; for(register r : registers) {%>
+        <%int num = 1; for(Register r : registers) {%>
             <tr>
             <td><%=num %></td>
             <td><%=r.getMember().getStudent_code() %></td>

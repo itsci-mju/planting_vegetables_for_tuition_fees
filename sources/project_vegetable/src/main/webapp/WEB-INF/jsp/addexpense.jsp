@@ -3,9 +3,9 @@
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
      <%
-	    transactionManager tm = new transactionManager(); 
-	    List<assets> as = tm.getAssets();
-	    List<transaction> ts; 
+	    TransactionManager tm = new TransactionManager(); 
+	    List<Assets> as = tm.getAssets();
+	    List<Transaction> ts; 
 	    ts = tm.list_transaction();
 	    %>
 	    <%
@@ -15,8 +15,8 @@
 	  %> 
 	   <% 
 	 	RegisterManager rgm = new RegisterManager();
-	   	member mb = (member)session.getAttribute("member"); 
-		register rg = rgm.getRegisterID(mb.getMember_id());
+	   	Member mb = (Member)session.getAttribute("member"); 
+		Register rg = rgm.getRegisterID(mb.getMember_id());
 	   %>
 <!DOCTYPE html>
 <html>
@@ -98,7 +98,7 @@
                 <td>
                      <div class="form-floating">
                    		
-                        <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" >
+                        <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" onkeyup="calTotalprice()">
                         <label for="floating">ราคา</label>
                     </div>
                 </td>
@@ -158,8 +158,8 @@
             </tr>
         </thead>
         <tbody>
-        <% for(transaction t : ts ) {%>
-        <% List<transaction_details> td = tm.list_transaction_details(t.getTransaction_id()); %>
+        <% for(Transaction t : ts ) {%>
+        <% List<Transaction_details> td = tm.list_transaction_details(t.getTransaction_id()); %>
         <% if( !td.get(0).getAssets().getEquipment_name().equals("-")){ %>     
             <tr>
                 <td><%= sdf.format(t.getDate_time().getTime()) %></td>

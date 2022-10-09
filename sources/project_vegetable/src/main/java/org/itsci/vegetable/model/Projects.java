@@ -7,7 +7,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="projects")
-public class projects {
+public class Projects {
 	
 @Id
 @Column (name="project_id",nullable=false,length=11)
@@ -19,12 +19,12 @@ private String name;
 @Column (name="cost_amount",nullable=false)
 private double cost_amount;
 
-public projects() {
+public Projects() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public projects(String project_id, String name, double cost_amount) {
+public Projects(String project_id, String name, double cost_amount) {
 	super();
 	this.project_id = project_id;
 	this.name = name;

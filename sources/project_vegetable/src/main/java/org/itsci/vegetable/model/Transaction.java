@@ -13,7 +13,7 @@ import javax.persistence.Table;
 @Entity
 @Table (name="transaction")
 
-public class transaction {
+public class Transaction {
 @Id
 @Column(name="transaction_id")
 private int transaction_id;
@@ -29,14 +29,14 @@ private String term;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="member_id",nullable=false)
-private member member;
+private Member member;
 
-public transaction() {
+public Transaction() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public transaction(int transaction_id, Calendar date_time, double total_price, String term, member member) {
+public Transaction(int transaction_id, Calendar date_time, double total_price, String term, Member member) {
 	super();
 	this.transaction_id = transaction_id;
 	this.date_time = date_time;
@@ -77,11 +77,11 @@ public void setTerm(String term) {
 	this.term = term;
 }
 
-public member getMember() {
+public Member getMember() {
 	return member;
 }
 
-public void setMember(member member) {
+public void setMember(Member member) {
 	this.member = member;
 }
 

@@ -6,14 +6,14 @@
     	SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");   	
     	sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
     	
-    	memberManager mg = new memberManager();
+    	MemberManager mg = new MemberManager();
     	RegisterManager rg = new RegisterManager();
     	
-      	membershiftManager mgs = new membershiftManager(); 
+      	MembershiftManager mgs = new MembershiftManager(); 
     	
-      	List<member_shifts> mbs = mgs.getListShifts();
+      	List<Member_shifts> mbs = mgs.getListShifts();
       	
-      	member mb = (member)session.getAttribute("member"); 
+      	Member mb = (Member)session.getAttribute("member"); 
     	
     %>
 <!DOCTYPE html>
@@ -47,7 +47,7 @@
             </tr>
         </thead>
         <tbody  align="center">
-        	<% for(member_shifts ms : mbs ) {%>
+        	<% for(Member_shifts ms : mbs ) {%>
             <tr>
             <td><%= rg.getstuCode(ms.getRegister().getRegister_id()).getStudent_code()%></td>
             <td><%= rg.getstuCode(ms.getRegister().getRegister_id()).getMember_name() %></td>

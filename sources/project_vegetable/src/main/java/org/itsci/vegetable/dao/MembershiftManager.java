@@ -10,11 +10,11 @@ import java.util.Calendar;
 import java.util.List;
 import java.util.TimeZone;
 
-import org.itsci.vegetable.model.member_shifts;
-import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.model.Member_shifts;
+import org.itsci.vegetable.model.Register;
 
-public class membershiftManager {
-	public int insertShift(member_shifts ms){
+public class MembershiftManager {
+	public int insertShift(Member_shifts ms){
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		//register reg = new register();
@@ -50,7 +50,7 @@ public class membershiftManager {
 		return -1;
 	}
 	
-	public int ApproveShift(member_shifts ms){
+	public int ApproveShift(Member_shifts ms){
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
 		
@@ -80,8 +80,8 @@ public class membershiftManager {
 	
 	
 	
-    public List<member_shifts> getListShifts(){
-         List<member_shifts> list = new ArrayList<>();
+    public List<Member_shifts> getListShifts(){
+         List<Member_shifts> list = new ArrayList<>();
          ConnectionDB condb = new ConnectionDB();
          Connection con = condb.getConnection();
         try {
@@ -118,9 +118,9 @@ public class membershiftManager {
 						 stime.set(Calendar.HOUR,sth);
 						 stime.set(Calendar.MINUTE,stm);
 						 
-              register reg = new register();
+              Register reg = new Register();
               reg.setRegister_id(register_id);
-                member_shifts st = new member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
+                Member_shifts st = new Member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
 
                 list.add(st);
             }
@@ -189,8 +189,8 @@ public class membershiftManager {
    }*/
     
     
-    public member_shifts getMShifts_byRegis(String r){
-         member_shifts st = new member_shifts();
+    public Member_shifts getMShifts_byRegis(String r){
+         Member_shifts st = new Member_shifts();
          ConnectionDB condb = new ConnectionDB();
          Connection con = condb.getConnection();
         try {
@@ -226,9 +226,9 @@ public class membershiftManager {
 				int stm = Integer.parseInt( date5[1]);
 						 stime.set(Calendar.HOUR,sth);
 						 stime.set(Calendar.MINUTE,stm);
-              register reg = new register();
+              Register reg = new Register();
               reg.setRegister_id(register_id);
-                st = new member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
+                st = new Member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
 
             }
 

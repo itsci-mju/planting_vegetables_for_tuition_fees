@@ -12,7 +12,7 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name="member_shifts")
-public class member_shifts {
+public class Member_shifts {
 	
 @Id
 @Column (name="member_shift_id",nullable=false,length=11)
@@ -35,15 +35,15 @@ private int status;
 
 @ManyToOne(cascade = CascadeType.ALL)
 @JoinColumn(name="register_id",nullable=false)
-private register register;
+private Register register;
 
-public member_shifts() {
+public Member_shifts() {
 	super();
 	// TODO Auto-generated constructor stub
 }
 
-public member_shifts(String member_shift_id, String task_name, Calendar date, Calendar startTime, Calendar endTime,
-		int status, org.itsci.vegetable.model.register register) {
+public Member_shifts(String member_shift_id, String task_name, Calendar date, Calendar startTime, Calendar endTime,
+		int status, org.itsci.vegetable.model.Register register) {
 	super();
 	this.member_shift_id = member_shift_id;
 	this.task_name = task_name;
@@ -102,11 +102,11 @@ public void setStatus(int status) {
 	this.status = status;
 }
 
-public register getRegister() {
+public Register getRegister() {
 	return register;
 }
 
-public void setRegister(register register) {
+public void setRegister(Register register) {
 	this.register = register;
 }
 

@@ -12,8 +12,8 @@
 	  %>  
 	   <% 
 	 	RegisterManager rgm = new RegisterManager();
-	   	member mb = (member)session.getAttribute("member"); 
-		register rg = rgm.getRegisterID(mb.getMember_id());
+	   	Member mb = (Member)session.getAttribute("member"); 
+		Register rg = rgm.getRegisterID(mb.getMember_id());
 	   %>
 		  
 <!DOCTYPE html>

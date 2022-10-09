@@ -10,17 +10,16 @@ import javax.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-
-import org.itsci.vegetable.model.logins;
-import org.itsci.vegetable.model.member;
-import org.itsci.vegetable.model.projects;
-import org.itsci.vegetable.model.register;
+import org.itsci.vegetable.model.Logins;
+import org.itsci.vegetable.model.Member;
+import org.itsci.vegetable.model.Projects;
+import org.itsci.vegetable.model.Register;
+import org.itsci.vegetable.dao.MemberManager;
+import org.itsci.vegetable.dao.ProjectsManager;
 import org.itsci.vegetable.dao.RegisterManager;
-import org.itsci.vegetable.dao.memberManager;
-import org.itsci.vegetable.dao.projectsManager;
 
 @Controller
-public class registerController {
+public class RegisterController {
 	@RequestMapping(value="/goRegister", method=RequestMethod.GET )
     public String goRegister(){ 
         return"register";
@@ -72,21 +71,19 @@ public class registerController {
 		 String faculty = request.getParameter("faculty");
 		 String email = request.getParameter("email");
 		 String password = request.getParameter("password");
-		 	 
-		
-		 
-		 projectsManager pm = new projectsManager();
-		 projects pj;
+		 	 	 
+		 ProjectsManager pm = new ProjectsManager();
+		 Projects pj;
 		 
 		 for(int i=0;i<pm.getProjects().size();i++) {
 			 if(pm.getProjects().get(i).getProject_id().equals(faculty)){
-			 pj = new projects(faculty,pm.getProjects().get(i).getName(),pm.getProjects().get(i).getCost_amount());
+			 pj = new Projects(faculty,pm.getProjects().get(i).getName(),pm.getProjects().get(i).getCost_amount());
 			 
-			 member mb = new member(mid,pf,name,phone,bd,"",stucode,major,faculty,"รอการอนุม้ติ");
-			 logins log = new logins(email,password,0,mb);
-			 register reg = new register (regid,reason,rd,term,0,mb,pj);
+			 Member mb = new Member(mid,pf,name,phone,bd,"",stucode,major,faculty,"รอการอนุม้ติ");
+			 Logins log = new Logins(email,password,0,mb);
+			 Register reg = new Register (regid,reason,rd,term,0,mb,pj);
 			 
-			 memberManager mm = new memberManager();
+			 MemberManager mm = new MemberManager();
 			 RegisterManager rm =new RegisterManager();
 			 
 			 mm.insertMembers(mb);

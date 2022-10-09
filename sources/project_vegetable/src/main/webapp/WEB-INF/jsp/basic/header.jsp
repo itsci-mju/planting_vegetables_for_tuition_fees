@@ -4,13 +4,13 @@
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*,java.text.SimpleDateFormat"  %>
     <%
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-    memberManager mbm = new memberManager();
-	logins log = new logins();
-	member mb = new member();
+    sdf.setTimeZone(TimeZone.getTimeZone("UTC+7"));
+    MemberManager mbm = new MemberManager();
+	Logins log = new Logins();
+	Member mb = new Member();
 	String member_type = null;
 	try{
-			log = (logins)session.getAttribute("login");
+			log = (Logins)session.getAttribute("login");
 			mb = mbm.getMember(log.getMember().getMember_id());		
 	}catch (Exception e) {	
 	}
