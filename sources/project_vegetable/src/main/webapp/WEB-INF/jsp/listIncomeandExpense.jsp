@@ -26,11 +26,11 @@
 	    }
 	    %>
 	    <%
-	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
-	    DecimalFormat df = new DecimalFormat("###,###,###.00");
-	    
-	  %>
+		 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+		    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
+		    DecimalFormat df = new DecimalFormat("###,###,###.00");
+	 	%>
+	 	
 <!DOCTYPE html>
 <html>
 <head>
@@ -41,6 +41,7 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
   
 <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+
 <!-- css.gg -->
 <link href='https://css.gg/css' rel='stylesheet'>
 
@@ -60,9 +61,12 @@
 	 <h2>รายรับรายจ่ายของโครงการ</h2>
 	 <h3>"โครงการปลูกผักแลกค่าเทอม"</h3>
 	<form action="search_income_expense"  method="POST">
-		<div style="width: 300px;">วันที่:<input type="date" name="date" value="<%= select_date %>" class="form-control registered" >
-				ประเภท:
-				<select name="type" id="type" class="form-control registered">
+		<div class="">
+		<label class="">วันที่:</label>
+		<input type="date" name="date" value="<%= select_date %>" class="form-control registered " >
+		
+				<label class="">ประเภท:</label>
+				<select name="type" id="type" class="form-control registered ">
 					<% if(type.equals("1")) {%>
 	                     <option value="1" selected>ทั้งหมด</option>
 	                     <option value="สินค้า">รายรับ</option>
@@ -80,9 +84,10 @@
 	             <button type="submit" class="button-20" role="button" >ค้นหา 
 	             	&nbsp;<i class="gg-search"></i>
 	             </button>
-        </div>
+       		</div>
 	</form>
-	<table class="table table-bordered" align="center"  >
+	<div class="scoll-list">
+	<table class="table table-bordered" align="center"  style="width:800;">
     <thead align="center">   
       <tr>
         <th>วันที่</th>
@@ -93,7 +98,7 @@
         <th class="th-width"></th>
       </tr>
     </thead>
-    <tbody>
+    <tbody align="center">
     <% if(ts.size() > 0) { %>
     <% for(Transaction_details td : ts ) {%>  
     <% Transaction t = tm.transactionID(td.getTransaction().getTransaction_id()); %>
@@ -149,7 +154,7 @@
       
         <td>
         <% if(!type.equals("1")){ %>
-        	<a href="goEdit_income_expense?id=<%= sdf.format(t.getDate_time().getTime()) %>">
+        	<a href="goEdit_income_expense?date=<%= sdf2.format(t.getDate_time().getTime()) %>&&type=<%= td.getType() %>">
 				<button type="button" class="button-17" role="button" >ดู 
 				&nbsp; 	<i class="gg-eye"></i></button></a>
 		<%} %>
@@ -168,8 +173,8 @@
       <%} %>
     </tbody>
   </table>
-
-	</div>
+</div>
+</div>
 <jsp:include page="basic/footer.jsp" />
 </body>
 <style>
@@ -179,9 +184,36 @@
     box-sizing: border-box;
     font-family: 'Mitr', sans-serif;
  }
+ .scoll-list{
+ 	max-height:300px ;
+	overflow:scroll;
+	overflow-x:hidden;	 
+	padding-top:0;
+	margin-bottom:90px;
+ }
 .container{
 	margin-top:180px;
 	margin-bottom:200px;
+}
+.s_date{
+ margin-top: 40px;
+}
+.p_date{
+	margin-right: 565px;
+}
+.t_date{
+    margin-right: 265px;
+    margin-top: -36px;
+}
+.ty_seltype{
+margin-left: 40px;
+}
+.p_type{
+margin-right: 265px;
+overflow: visible;
+}
+.sel_type{
+margin-right: 265px;
 }
 .btn{
 	width:50px;
@@ -194,7 +226,7 @@ table{
 	margin-top:50px;
 }
 .th-width{
-	width:350px;
+	width:400px;
 }
 th{
 	width:250px;
@@ -373,6 +405,7 @@ thead{
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
+  margin-top:20px;
 }
 
 .button-20:hover {

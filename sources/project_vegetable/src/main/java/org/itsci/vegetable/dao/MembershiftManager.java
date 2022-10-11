@@ -22,7 +22,7 @@ public class MembershiftManager {
 			Calendar bd = ms.getDate();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 			SimpleDateFormat stf = new SimpleDateFormat("HH:mm");
-	        sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+	        //sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 	        String  dateshift =  sdf.format(bd.getTime());
 	        
 	        Calendar st = ms.getStartTime();	

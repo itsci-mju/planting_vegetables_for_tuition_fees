@@ -5,7 +5,9 @@
     font-family: 'Mitr', sans-serif;
  }
  .main{
- 	margin-top:150px;
+ 	    margin-top: 140px;
+    margin-left: 77px;
+    margin-right: 29px;
  }
 h3{  
    color: rgb(255, 221, 0);

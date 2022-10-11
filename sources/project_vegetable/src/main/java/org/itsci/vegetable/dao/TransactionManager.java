@@ -230,9 +230,7 @@ public class TransactionManager {
 		}
 		
 		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-		System.out.println("--------------------------");
-		System.out.println( sdf.format(ts.getDate_time().getTime()));
-		
+				
 		return ts;
 	}
 	
@@ -298,7 +296,7 @@ public class TransactionManager {
 		return tsd;
 	}
 	
-	public List<Transaction_details> list_income_expense() {
+	/*public List<Transaction_details> list_income_expense() {
 		List<Transaction_details> tsd = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -320,7 +318,6 @@ public class TransactionManager {
 				Transaction ts = transactionID(transaction_id);
 				
 				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-				System.out.println("555555555555555555");
 				System.out.println( sdf.format(ts.getDate_time().getTime()));
 	
 				Transaction_details t = new Transaction_details(transaction_detail_id,type,amount,sum,ts,as);
@@ -333,7 +330,7 @@ public class TransactionManager {
 		}
 		System.out.println(tsd.get(0).getTransaction().getTotal_price());
 		return tsd;
-	}
+	}*/
 	
 	public List<Transaction_details> transaction_by_search(String t,String d) {
 		List<Transaction_details> td = new Vector<>();
@@ -487,15 +484,16 @@ public class TransactionManager {
 		}	
 		return td;
 	}
-	/*ค้นหา*/
-/*	public List<Transaction_details> search_list_transaction_details(String d,String t) {
-		List<Transaction_details> tsd = new Vector<>();
+	/*list edit*/
+	public List<Transaction_details> transaction_details_by_date(String t,String d) {
+		List<Transaction_details> td = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
+		
 		try {
 			Statement stmt = con.createStatement();
-			TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-			String sql = "select * from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   where CAST(t.date_time AS date) = '"+d+"' and td.type = '"+ t +"';";
+			String sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,t.date_time  from transaction_details td "
+					+ "inner join transaction t on t.transaction_id = td.transaction_id where CAST(t.date_time AS date) = '"+d+"' and td.type='"+t+"'";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int transaction_detail_id = rs.getInt(1);
@@ -503,33 +501,21 @@ public class TransactionManager {
 				double sum = rs.getDouble(3);
 				String type = rs.getString(4);
 				int asset_id = rs.getInt(5);
-				int transaction_id = rs.getInt(6);	
-				String date_time = rs.getString(7);
-				Calendar tdate = Calendar.getInstance(); 
-                String date[] = date_time.split("-");
-          
-                tdate.set(Integer.parseInt(date[0]), Integer.parseInt(date[1])-1, Integer.parseInt(date[2]));
-
-				String term = rs.getString(8);
-				Double total_price = rs.getDouble(9);
+				int transaction_id = rs.getInt(6);
 				
-				String member_id = rs.getString(10); 
-				
-				MemberManager m = new MemberManager();
-				Member mb = m.getMember(member_id);
-				
+								
 				Assets as = assetID(asset_id);
 				Transaction ts = transactionID(transaction_id);
+				SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
+				
 	
-				Transaction_details td = new Transaction_details(transaction_detail_id,type,amount,sum,ts,as);
-					tsd.add(td);
-			}
-			con.close();
-			
+				Transaction_details tds = new Transaction_details(transaction_detail_id,type,amount,sum,ts,as);
+					td.add(tds);
+					
+				 }
 		} catch (SQLException e) {
 			e.printStackTrace();
-		}
-		
-		return tsd;
-	}*/
+		}	
+		return td;
+	}
 }

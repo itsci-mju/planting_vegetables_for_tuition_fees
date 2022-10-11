@@ -31,17 +31,19 @@ public class TransactionController {
 		session.setAttribute("member", listmember);
 		return "listIncomeandExpense";
 	}
-	/*Edit_income_expense
+	/*Edit_income_expense*/
 	@RequestMapping(value="/goEdit_income_expense", method=RequestMethod.GET)
 	public String goEdit_income_expense(HttpServletRequest request,HttpSession session) {
-		String t = request.getParameter("id");
-		String td = request.getParameter("td");
+		String type = request.getParameter("type");
+		String date = request.getParameter("date");
 		TransactionManager tm = new TransactionManager();
-		tm.list_transaction_details(Integer.valueOf(td));
-		tm.transaction_by_date(t);
+		//tm.list_transaction_details(Integer.valueOf(td));
+		List<Transaction_details> list_edit = tm.transaction_details_by_date(type, date);
+		
+		session.setAttribute("list_edit", list_edit);
 		
 		return "editIncomeExpense";
-	}*/
+	}
 
 	/*add income*/
 	@RequestMapping(value="/goaddIncome", method=RequestMethod.GET)
@@ -160,24 +162,26 @@ public class TransactionController {
 		TransactionManager t = new TransactionManager();
 		List<Transaction_details> listtran =  t.Alltransaction_by_search();
 		List<Transaction_details> list_details =  t.transaction_details_by_search(type,new_date);
-		if(type.equals("1")) {	
-			listtran =  t.transaction_by_search(type,new_date);
-			list_details =  t.Alltransaction_details_by_search(new_date);
-		}else {
-			listtran =  t.transaction_by_search(type,new_date);
-			list_details =  t.transaction_details_by_search(type,new_date);
-		}
 		if(date.equals("")) {	
 			if(type.equals("1")) {
 				listtran =  t.Alltransaction_by_search();
 			}else{
 				listtran = t.transaction_by_search(type,new_date);
 			}
-	
+		}else{
+			if(type.equals("1")) {	
+				listtran =  t.transaction_by_search(type,new_date);
+				list_details =  t.Alltransaction_details_by_search(new_date);
+			}else {
+				listtran =  t.transaction_by_search(type,new_date);
+				list_details =  t.transaction_details_by_search(type,new_date);
+			}
 		}
+		
+		
 		Calendar cal = Calendar.getInstance();
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-		if(!date.isEmpty()||date != null) {
+		if(!date.equals("")){
 			String date1[]=date.split("-");
 			int year = Integer.parseInt(date1[0]);
 			cal.set(year, Integer.parseInt(date1[1])-1, Integer.parseInt(date1[2]));

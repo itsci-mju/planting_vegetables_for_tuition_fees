@@ -49,8 +49,9 @@ public class MembersController {
 		}
 		Calendar cal = new GregorianCalendar();
 		Calendar cal_date = new GregorianCalendar();
+		
 		Calendar cal_e_date = new GregorianCalendar();
-		SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MM-yyyy");
+		SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		
 		/*auto number*/ 
         long unix = System.currentTimeMillis()/1000;
@@ -60,16 +61,17 @@ public class MembersController {
         String date = request.getParameter("date");
         String startTime = request.getParameter("startTime");
         String endTime = request.getParameter("endTime");
-		Date _date = dateFormat.parse(date);
-		dateFormat.format(_date);
-		cal_date = dateFormat.getCalendar();
+		Date _date = sdf.parse(date);
+		sdf.format(_date);
+		
 		String[] st = startTime.split(":");
 		int hour = Integer.parseInt(st[0]);
 		int min = Integer.parseInt(st[1]);
 		cal.set(Calendar.HOUR_OF_DAY, hour);
 		cal.set(Calendar.MINUTE, min);
 		String register_id = request.getParameter("register_id");
-		
+		String[] new_date = date.split("-");
+		cal_date.set(Integer.parseInt(new_date[0])-543, Integer.parseInt(new_date[1])-1, Integer.parseInt(new_date[2]));
 	
 		String[] et = endTime.split(":");
 		int et_hour = Integer.parseInt(et[0]);

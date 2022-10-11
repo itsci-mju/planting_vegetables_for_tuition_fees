@@ -64,14 +64,14 @@
 	</script>
 
 </head>
-<link rel="stylesheet" href="css/addincome.css">
+
 
 <body> 
 <jsp:include page="basic/header.jsp" /> 
     <form align="center" action="addIncome"  method="POST" > 
     <div  class="main">
-        <h2>บันทึกรายรับ</h2>
-        <h3>"โครงการปลูกผักเเลกค่าเทอม"</h3>
+        <h3>บันทึกรายรับ</h3>
+        <h4>"โครงการปลูกผักเเลกค่าเทอม"</h4>
        <div class="fit"align="center">
         <table >  
             <tr>
@@ -146,7 +146,7 @@
        </div>	
     </form>
         <div class="list" align="center" >
-            <h2>รายการขายสินค้า</h2>
+            <h3>รายการขายสินค้า</h3>
          <div style="width:800px;  height:100px; overflow:auto;">
         <table class="table table-bordered" id="table-bordered" align="center" >
         <thead>
@@ -185,4 +185,52 @@
     </div>    
     <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+	*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mitr', sans-serif;
+ }
+ .main{
+ 	margin-top:150px;
+	margin-bottom:20px;
+ }
+
+  body{
+    font-family: 'Mitr', sans-serif;
+    
+}
+
+.form-control{
+    width:215px;
+    margin: 5px;
+}
+
+.table-bordered{
+   width: 800px;
+}
+.custom-select{
+    width: 215px;
+    height: 58px;
+    margin: 5px;
+}
+.list{
+ 	max-height:400px ;
+	overflow:scroll;
+	overflow-x:hidden;	 
+	padding-top:0;
+	margin-bottom:90px;
+}
+thead{
+  background-color: #E0E0E0;
+}
+h4{
+	color:#F9CF0B;
+}
+.p2{
+	margin-top: 10px;
+    margin-bottom: 10px;
+}
+</style>
 </html>

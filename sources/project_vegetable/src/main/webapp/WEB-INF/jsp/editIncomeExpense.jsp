@@ -1,158 +1,333 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-    <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.SimpleDateFormat" %>
-	    <%
-	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
-	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
-	  %> 
+    <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.*" %>
+	  <%
+
+		SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
+		List<Transaction_details> list_edit  = (List<Transaction_details>) session.getAttribute("list_edit");
+		DecimalFormat df = new DecimalFormat("###,###,###.00");
+		DecimalFormat dff = new DecimalFormat("###,###,###");
+		%>
+
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
     <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-<!-- JavaScript Bundle with Popper -->
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.0.3/css/font-awesome.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css">  
-    <link rel="stylesheet" href="css/editincomeExpense.css">
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
+	!-- css.gg -->
+<link href='https://css.gg/css' rel='stylesheet'>
+
+<!-- UNPKG -->
+<link href='https://unpkg.com/css.gg/icons/all.css' rel='stylesheet'>
+
+<!-- JSDelivr -->
+<link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
+
     <title>แก้ไขรายรับรายจ่าย</title>
 </head>
-<style>
-.container{
-	margin-top:150px;
-	margin-bottom:150px;
-}
-</style>
 <body>
 <jsp:include page="basic/header.jsp" /> 
     <div class="container" align="center">
-        <h2 >แก้ไขรายรับรายจ่าย</h2>
-        <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
-        <div>
-            <table>
-                <tr>
-                  <td>
-                  วันที่ทำรายการ : 
-                  <input type="text" class="form-control date_time" name="date_time" id="date_time" value="" readonly>
-                 </td> 
-                 <td>
-                	 ประเภท : 
-                  <input type="text" class="form-control type"  name="type" id="type" value="" readonly> 
-                </td>
-        </tr>
-          </table>
-        </div>
-    <div class="container-fluid" >       
-        <table class="table table-hover" >
-        <thead  align="center">
+        <h1>แก้ไขรายรับรายจ่าย</h1>
+        <h3>" โครงการปลูกผักเเลกค่าเทอม "</h3>            
+        <table class="table table-bordered" >
+          <thead  align="center">
             <tr>
-            <th>ลำดับ</th>
-            <th>เวลาข้อมูล</th>    
-            <th>ชื่อ</th>
-            <th>จำนวน</th> 
-            <th>ราคา</th>
-            <th>รวม</th>
-            <th></th>
+              <th>ลำดับ</th>
+              <th>เวลาข้อมูล</th>
+              <th>ชื่อสินค้า</th>
+              <th>จำนวน</th>
+              <th>ราคา</th>
+              <th>รวม</th>
+              <th></th>
             </tr>
-        </thead>
-        <tbody  align="center">
+          </thead>
+          <tbody>
+          <%int num = 1;  for(Transaction_details td:list_edit)  {%>
             <tr>
-            <td></td>
-            <td></td>
-            <td></td>  
-            <td></td>
-            <td></td>
-            <td></td>
-            <td> 
-               <a href=""><i class="far fa-trash-alt"></i></a>
-               <a href=""><i class="far fa-edit"></i></a>
-             </td>
-            </tr>                           
-        </tbody>
+              <td><%= num  %></td>
+              <td><%= tf.format(td.getTransaction().getDate_time().getTime()) %></td>
+              
+               <% if(td.getType().equals("สินค้า")){%>
+	              <td><%= td.getAssets().getProduct_name() %></td>
+	              <td><%= td.getAmount() %><%= td.getAssets().getProduct_unit() %></td>
+	               <td><%=td.getAssets().getAsset_price()%></td>
+               <%}else if (td.getType().equals("อุปกรณ์")){%>
+                  <td><%= td.getAssets().getEquipment_name() %></td>
+	              <td><%= td.getAmount() %><%= td.getAssets().getEquipment_unit() %></td>
+	               <td><%= td.getSum()/td.getAmount() %></td>
+               <% } %>
+              
+              
+             
+              <td><%= df.format(td.getSum()) %></td>
+              <td align="center">
+              	<a href="">
+				<button type="button" class="button-edit" role="button" >แก้ไข</button></a>
+				<a href=""><button type="button" class="button-remove" role="button" >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
+				</button></a>
+				</td>
+            </tr>
+            <%num++;} %>   
+          </tbody>
         </table>
-        </div>  
-        <div>
-            <form class="fit" method="post" action="#" >       
-                <table align="center">  
-                    <tr>
-                        <td>
-                            <p class="p3">แก้ไขรายละเอียดข้อมูล</p>
-                        </td>
-                    </tr>              
-                    <tr>
-                        <td>
-                            <div class="form-floating">
-                                <select name="cars" class="custom-select"  style="height:55px;">
-                                    <option disabled selected>เลือกสินค้า</option>
-                                    <option value="1">ผักบุ้ง</option>
-                                    <option value="2">ผักกาด</option>
-                                    <option value="3">ถั่ว</option>
-                                  </select>                 
-                              </div>
-                        </td>
-                        <td>
-                             <div class="form-floating">
-                                <input type="text" name="price" id="price" class="form-control registered" value=""  placeholder="ราคา" >
-                                <label for="floating">ราคา</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-floating" >
-                                <input type="text" name="amount" id="amount" class="form-control registered" placeholder="จำนวน" value=""  >
-                                <label for="floating">จำนวน</label>
-                            </div>
-                        </td>
-                        <td>
-                            <div class="form-floating" >
-                                <input type="text" name="sum" id="sum" class="form-control registered" placeholder="รวม" value=""  >
-                                <label for="floating">รวม</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>
-                            <div class="form-floating">
-                                <select name="cars" class="custom-select"  style="height:55px;">
-                                    <option disabled selected>เลือกหน่วย</option>
-                                    <option value="1">ผักบุ้ง</option>
-                                    <option value="2">ผักกาด</option>
-                                    <option value="3">ถั่ว</option>
-                                  </select>                 
-                              </div>
-                        </td>
-                        <td>
-                            <div class="form-floating" >
-                                <input type="text" name="name" id="name" class="form-control registered" placeholder="ผู้บันทึก" value=""  >
-                                <label for="floating">ผู้บันทึก</label>
-                            </div>
-                        </td>
-                    </tr>
-                    <tr align="center"> 
-                        <td>
-                            <button type="submit" class="btn btn-success"  name="submit">บันทึกข้อมูล</button>
-                        </td> 
-                        <td>
-                            <button type="reset" name="reset" class="btn btn-danger" >ยกเลิก</button>
-                        </td>
-                    </tr> 
-                </table>     	
-            </form>
-      </div>
-     </div>
+        <a href="goListall"><button type="button" class="button-back" role="button" >ย้อนกลับ 
+				&nbsp; <i class="gg-push-left"></i></button></a>
+    </div>
 <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+	body{
+    font-family: 'Mitr', sans-serif;
+    
+}
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+}
+.container{
+	margin-top:180px;
+	margin-bottom:150px;
+}
+.form-control{
+    width:215px;
+    margin: 5px;
+}
+
+.btn{
+    width: 150px;
+}
+.table-bordered{
+    width: 800px;
+}
+.custom-select{
+    width: 215px;
+    height: 58px;
+    margin: 5px;
+}
+.p3{
+    font-size: 20px;
+}
+.fit{
+    margin-top: 50px;
+}
+
+.button-back {
+  align-items: center;
+  appearance: none;
+  background-color:#388E3C;
+  border-radius: 10px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 20px;
+  font-weight: 500;
+  height: 34px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+.button-back:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.button-back:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-back:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-back:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-back:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-back:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-back:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-back:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+/*button-edit*/
+.button-edit {
+  align-items: center;
+  appearance: none;
+  background-color:#FFCA28;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 34px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+.button-edit:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.button-edit:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-edit:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-edit:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-edit:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-edit:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-edit:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-edit:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+/**/
+.button-remove {
+  align-items: center;
+  appearance: none;
+  background-color: #dc3545;
+  border-radius: 24px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #fff;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 34px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+}
+
+.button-edit:hover {
+  background: #F6F9FE;
+  color: #174ea6;
+}
+
+.button-edit:active {
+  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
+  outline: none;
+}
+
+.button-edit:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-edit:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-edit:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-edit:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-edit:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-edit:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+</style>
 </html>
