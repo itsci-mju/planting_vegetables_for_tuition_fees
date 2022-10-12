@@ -29,6 +29,9 @@
 		 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 		    SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 		    DecimalFormat df = new DecimalFormat("###,###,###.00");
+		    
+		    String date_time = (String) request.getAttribute("date");
+		    
 	 	%>
 	 	
 <!DOCTYPE html>
@@ -158,7 +161,7 @@
 				<button type="button" class="button-17" role="button" >ดู 
 				&nbsp; 	<i class="gg-eye"></i></button></a>
 		<%} %>
-        	<a href="">
+        	<a href="delete_income_expense?date=<%= sdf2.format(t.getDate_time().getTime()) %>">
 				<button type="button" class="button-19" role="button" >ยกเลิก
 				&nbsp; &nbsp;	<i class="gg-trash"></i>
 				</button></a>
@@ -189,7 +192,7 @@
 	overflow:scroll;
 	overflow-x:hidden;	 
 	padding-top:0;
-	margin-bottom:90px;
+	margin-bottom:20px;
  }
 .container{
 	margin-top:180px;

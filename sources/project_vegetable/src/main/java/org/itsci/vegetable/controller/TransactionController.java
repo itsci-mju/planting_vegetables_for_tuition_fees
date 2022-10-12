@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.itsci.vegetable.model.Assets;
 import org.itsci.vegetable.model.Logins;
 import org.itsci.vegetable.model.Member;
+import org.itsci.vegetable.model.Register;
 import org.itsci.vegetable.model.Transaction;
 import org.itsci.vegetable.model.Transaction_details;
 import org.itsci.vegetable.dao.MemberManager;
+import org.itsci.vegetable.dao.RegisterManager;
 import org.itsci.vegetable.dao.TransactionManager;
 
 @Controller
@@ -31,7 +33,7 @@ public class TransactionController {
 		session.setAttribute("member", listmember);
 		return "listIncomeandExpense";
 	}
-	/*Edit_income_expense*/
+	/*goEdit_income_expense*/
 	@RequestMapping(value="/goEdit_income_expense", method=RequestMethod.GET)
 	public String goEdit_income_expense(HttpServletRequest request,HttpSession session) {
 		String type = request.getParameter("type");
@@ -44,6 +46,70 @@ public class TransactionController {
 		
 		return "editIncomeExpense";
 	}
+	/*edit_income_expense*/
+	@RequestMapping(value="/edit_income_expense", method=RequestMethod.GET)
+	public String edit_income_expense(HttpServletRequest request,HttpSession session) {
+		String asid = request.getParameter("asid");
+		String tid = request.getParameter("tid");
+		String tdid = request.getParameter("tdid");
+		TransactionManager tm = new TransactionManager();
+		
+		System.out.println(asid+" "+ tid + " " + tdid);
+		
+		Transaction_details tran_de_id = tm.transaction_details_id(Integer.parseInt(tdid),Integer.parseInt(tid));
+		String go = "";
+
+		session.setAttribute("tran_de_id", tran_de_id);
+		if(tran_de_id.getType().equals("สินค้า")) {
+			go = "editIncome";
+		}else {
+			go = "editExpense";
+		}
+		return go;
+		
+	}
+	/*edit_income*/
+	@RequestMapping(value="/edit_income", method=RequestMethod.POST)
+	public String edit_income(HttpServletRequest request,HttpSession session) {
+		Double sum = Double.parseDouble(request.getParameter("sum"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		int tdid = Integer.parseInt(request.getParameter("tdid"));
+		int tid = Integer.parseInt(request.getParameter("tid"));
+		TransactionManager tm = new TransactionManager();
+		Transaction t = tm.transactionID(tid);
+		Assets a = new Assets();
+		
+		Transaction_details td = new Transaction_details(tdid,"",amount,sum,t,a);
+		
+		tm.editIncome(td);
+		
+		return "editIncomeExpense";
+	}
+	/*edit_expense*/
+	@RequestMapping(value="/edit_expense", method=RequestMethod.POST)
+	public String edit_expense(HttpServletRequest request,HttpSession session) {
+		Double sum = Double.parseDouble(request.getParameter("sum"));
+		int amount = Integer.parseInt(request.getParameter("amount"));
+		int tdid = Integer.parseInt(request.getParameter("tdid"));
+		int tid = Integer.parseInt(request.getParameter("tid"));
+		String type = request.getParameter("type");
+		TransactionManager tm = new TransactionManager();
+		Transaction t = tm.transactionID(tid);
+		t.setTotal_price(sum);
+		Assets a = new Assets();
+		
+		
+		Transaction_details td = new Transaction_details(tdid,type,amount,sum,t,a);
+		
+		tm.editExpense(td);
+		
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		List<Transaction_details> list_edit = tm.transaction_details_by_date(td.getType(),sdf.format(td.getTransaction().getDate_time().getTime()) );
+		session.setAttribute("list_edit", list_edit);
+		
+		return "editIncomeExpense";
+	}
+
 
 	/*add income*/
 	@RequestMapping(value="/goaddIncome", method=RequestMethod.GET)
@@ -193,5 +259,17 @@ public class TransactionController {
 		request.setAttribute("new_date", new_date);
 		return "listIncomeandExpense";
 
+	}
+	
+	@RequestMapping(value="/delete_income_expense",method=RequestMethod.GET)
+	public String delete_income_expense (HttpServletRequest request,HttpSession session) {
+		
+		String date =request.getParameter("date");
+		
+		TransactionManager tm = new TransactionManager();
+		
+		tm.delete_income_expense(date);
+
+		return "listIncomeandExpense";
 	}
 }

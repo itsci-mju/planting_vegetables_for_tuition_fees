@@ -295,6 +295,36 @@ public class TransactionManager {
 		
 		return tsd;
 	}
+	public Transaction_details transaction_details_id(int tdid,int tid) {
+		 Transaction_details t = new Transaction_details();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select * from transaction_details where transaction_detail_id = "+ tdid +" and transaction_id = "+tid+"";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int transaction_detail_id = rs.getInt(1);
+				int amount = rs.getInt(2);
+				double sum = rs.getDouble(3);
+				String type = rs.getString(4);
+				int asset_id = rs.getInt(5);
+				int transaction_id = rs.getInt(6);
+				
+				Assets as = assetID(asset_id);
+				Transaction ts = transactionID(transaction_id);
+	
+				 t = new Transaction_details(transaction_detail_id,type,amount,sum,ts,as);
+					
+				 }
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return t;
+	}
 	
 	/*public List<Transaction_details> list_income_expense() {
 		List<Transaction_details> tsd = new Vector<>();
@@ -518,4 +548,68 @@ public class TransactionManager {
 		}	
 		return td;
 	}
+	  public int editIncome(Transaction_details td) {
+		  	
+	        ConnectionDB condb = new ConnectionDB();
+	        Connection con = condb.getConnection();
+	        try {
+	            Statement stmt = con.createStatement();
+	            String sql = "update transaction_details set amount="+ td.getAmount()
+	            		+ ",sum="+ td.getSum()
+	            		+ " where transaction_detail_id = " + td.getTransaction_detail_id() 
+	            		+ " and transaction_id = "+td.getTransaction().getTransaction_id()+";";
+	            
+	            String sql2 = "update transaction set total_price ="+ td.getSum()
+	            		+ " where transaction_id = " + td.getTransaction().getTransaction_id()+";";
+         
+	            int result = stmt.executeUpdate(sql);
+	            int result2 = stmt.executeUpdate(sql2);
+	            con.close();
+	            return result;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return -1;
+	    }
+	  public int editExpense(Transaction_details td) {
+		  	
+	        ConnectionDB condb = new ConnectionDB();
+	        Connection con = condb.getConnection();
+	        try {
+	            Statement stmt = con.createStatement();
+	            String sql = "update transaction_details set amount="+ td.getAmount()
+	            		+ ",sum="+ td.getSum()
+	            		+ " where transaction_detail_id = " + td.getTransaction_detail_id() 
+	            		+ " and transaction_id = "+td.getTransaction().getTransaction_id()+";";
+	            
+	            String sql2 = "update transaction set total_price ="+ td.getSum()
+	            		+ " where transaction_id = " + td.getTransaction().getTransaction_id()+";";
+       
+	            int result = stmt.executeUpdate(sql);
+	            int result2 = stmt.executeUpdate(sql2);
+	            con.close();
+	            return result;
+	        } catch (SQLException e) {
+	            e.printStackTrace();
+	        }
+	        return -1;
+	    }
+	  
+	  /*ลบข้อมูล*/
+	    public int delete_income_expense(String date) {
+	  		ConnectionDB condb = new ConnectionDB();
+	  		Connection con = condb.getConnection();
+	  		try {
+	  			Statement stmt = con.createStatement();
+	  			String sql = "delete  t,td from transaction_details td  join transaction t on td.transaction_id=t.transaction_id"
+	  					+ " where cast(t.date_time as Date) ='"+date+"' ; ";
+	  			int result = stmt.executeUpdate(sql);
+	  			con.close();
+	  			return result; 
+	  		} catch (SQLException e) {
+	  			// TODO Auto-generated catch block
+	  			e.printStackTrace();
+	  		}
+	  		return -1;
+	  	}
 }

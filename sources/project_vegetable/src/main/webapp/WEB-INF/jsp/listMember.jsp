@@ -29,10 +29,12 @@
 	   <div class="container" align="center">
         <h2 >รายนักศึกษาโครงการ</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
-        
             <div class="form-group has-search">               
                <input type="s" class="form-control" placeholder="ค้นหารหัสนักศึกษา..">
-            </div>  
+            </div> 
+            <div class="buttom_print">
+             <a href="goReport_member" class="printReport"><img src="img/excel.png" class="print"> Print Report</a>
+            </div> 
    	 <div class="container-fluid" >       
         <table class="table table-hover" >
         <thead  align="center">
@@ -55,8 +57,10 @@
                 <a href="goSetPermissions?id=<%= mm.getMember_id() %>" class="btn btn-warning" > ดูรายละเอียด</a>
             </td>
             </tr> 
-           
-           <%} %>                             
+           		
+           <%} 
+           		session.setAttribute("member", member);
+           %>                             
         </tbody>
         </table>
         </div>
@@ -64,4 +68,32 @@
 	</form>     
 <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+.print{
+	 width: 30px;
+    height: 30px;
+}
+.buttom_print{
+	width: 160px;
+    background-color: #43A047;
+    padding: 10px;
+    border-radius: 4px;
+	text-decoration: none;
+	margin-bottom:20px;
+	margin-left: 900px;
+	transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+	align-items: center;
+}
+a {
+    color: #000;
+    
+}
+.buttom_print:hover {
+  background-color: white;
+  color: black;
+  border: 2px solid #4CAF50; /* Green */
+  text-decoration: none;
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+</style>
 </html>

@@ -135,60 +135,7 @@ public class MembershiftManager {
 
     }
     
-    
-   /*public member_shifts getMemShifts(){
-        member_shifts st = new member_shifts();
-        ConnectionDB condb = new ConnectionDB();
-        Connection con = condb.getConnection();
-       try {
-           Statement stmt = con.createStatement();
-           
-           String column = "member_shift_id,date,endTime,startTime,status,task_name,register_id";
-           String sql = "select "+column+" from member_shifts";
-           ResultSet rs = stmt.executeQuery(sql);
-           while(rs.next()) {
-               String member_shift_id = rs.getString(1);  
-               String date = rs.getString(2);
-               String endTime  = rs.getString(3);
-               String startTime = rs.getString(4);
-               int status = rs.getInt(5);
-               String task_name = rs.getString(6);
-               String register_id = rs.getString(7);
-                
-				Calendar sdate = Calendar.getInstance();
-               Calendar stime = Calendar.getInstance(); 
-				Calendar etime = Calendar.getInstance();
-				
-				String date1[] = date.split("-");
-				String date2[] = date1[2].split(" ");
-				String date3[] = date2[1].split(":");
-						sdate.set(Integer.parseInt(date1[0]), Integer.parseInt(date1[1])-1, Integer.parseInt(date2[0]), Integer.parseInt(date3[0]), Integer.parseInt(date3[1]));
-				
-				String date4[] = endTime.split("-");
-				String date5[] = date4[2].split(" ");
-				String date6[] = date5[1].split(":");
-						 etime.set(Integer.parseInt(date4[0]), Integer.parseInt(date4[1])-1, Integer.parseInt(date5[0]), Integer.parseInt(date6[0]), Integer.parseInt(date6[1]));
-						 
-				String date7[] = startTime.split("-");
-				String date8[] = date7[2].split(" ");
-				String date9[] = date8[1].split(":");
-						stime.set(Integer.parseInt(date7[0]), Integer.parseInt(date7[1])-1, Integer.parseInt(date8[0]), Integer.parseInt(date9[0]), Integer.parseInt(date9[1]));
-             register reg = new register();
-             reg.setRegister_id(register_id);
-               st = new member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
-
-               //list.add(st);
-           }
-
-           con.close();
-       }catch(SQLException e){
-           e.printStackTrace();
-       }
-
-       return st;
-   }*/
-    
-    
+   
     public Member_shifts getMShifts_byRegis(String r){
          Member_shifts st = new Member_shifts();
          ConnectionDB condb = new ConnectionDB();

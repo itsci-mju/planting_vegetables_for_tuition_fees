@@ -7,8 +7,8 @@
 		SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
 		List<Transaction_details> list_edit  = (List<Transaction_details>) session.getAttribute("list_edit");
 		DecimalFormat df = new DecimalFormat("###,###,###.00");
-		DecimalFormat dff = new DecimalFormat("###,###,###");
 		%>
+		
 
 <!DOCTYPE html>
 <html>
@@ -25,14 +25,12 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
-	!-- css.gg -->
-<link href='https://css.gg/css' rel='stylesheet'>
-
-<!-- UNPKG -->
-<link href='https://unpkg.com/css.gg/icons/all.css' rel='stylesheet'>
-
-<!-- JSDelivr -->
-<link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
+	<!-- css.gg -->
+	<link href='https://css.gg/css' rel='stylesheet'>
+	<!-- UNPKG -->
+	<link href='https://unpkg.com/css.gg/icons/all.css' rel='stylesheet'>
+	<!-- JSDelivr -->
+	<link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
 
     <title>แก้ไขรายรับรายจ่าย</title>
 </head>
@@ -73,7 +71,7 @@
              
               <td><%= df.format(td.getSum()) %></td>
               <td align="center">
-              	<a href="">
+              	<a href="edit_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&asid=<%= td.getAssets().getAsset_id() %>&&tdid=<%= td.getTransaction_detail_id() %>">
 				<button type="button" class="button-edit" role="button" >แก้ไข</button></a>
 				<a href=""><button type="button" class="button-remove" role="button" >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
 				</button></a>

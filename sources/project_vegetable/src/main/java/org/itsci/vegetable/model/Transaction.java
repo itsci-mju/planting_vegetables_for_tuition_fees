@@ -45,6 +45,13 @@ public Transaction(int transaction_id, Calendar date_time, double total_price, S
 	this.member = member;
 }
 
+
+public Transaction(int transaction_id, double total_price) {
+	super();
+	this.transaction_id = transaction_id;
+	this.total_price = total_price;
+}
+
 public int getTransaction_id() {
 	return transaction_id;
 }
