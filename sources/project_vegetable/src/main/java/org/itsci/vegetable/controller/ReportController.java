@@ -35,8 +35,7 @@ public class ReportController {
 	    public String goReportSummary(HttpServletRequest request,HttpSession session){ 
 			
 	        return"reportSummary";
-	}
-	 
+	 }
 	 @RequestMapping(value="/search_report_summary", method=RequestMethod.POST)
 		public String search_report_summary(HttpServletRequest request,HttpSession session) {
 			
@@ -92,6 +91,45 @@ public class ReportController {
 			request.setAttribute("enddate", new_enddate);
 			
 			return "reportSummary";
+
+		}
+
+		@RequestMapping(value="/goReportStudentEarn", method=RequestMethod.GET )
+		   public String goReportStudentEarn(HttpServletRequest request,HttpSession session){ 
+			ReportManager rpm = new ReportManager();
+		 	List<Member_shifts> listwork = rpm.getAllWorkStatistics();
+		 	TransactionManager tm = new TransactionManager();
+		 	List<Assets> listasset = tm.getAssets();
+		 	System.out.println(listwork);
+		 	
+		 	request.setAttribute("listwork",listwork);
+		 	request.setAttribute("listasset",listasset);
+				
+		       return"reportStudentEarn";
+		}
+		
+		@RequestMapping(value="/search_report_student_earn", method=RequestMethod.POST)
+		public String search_report_student_earn(HttpServletRequest request,HttpSession session) {
+			
+			String term_year = request.getParameter("term_year");
+			int term = 0;
+			int year = 0;
+			if(term_year.isEmpty()||term_year == null) {
+				term_year = "";
+			}else{/*แปลงวันที่*/
+				String date[] = term_year.split("-");
+				term = Integer.parseInt(date[0]);
+				year = Integer.parseInt(date[1]);
+			}
+			
+			ReportManager rm = new ReportManager();
+			TransactionManager t = new TransactionManager();
+			List<Transaction_details> list_details =  rm.report_student_earn_by_search(term, year);
+			
+			request.setAttribute("list_details", list_details);
+			request.setAttribute("term_year", term_year);
+			
+			return "reportStudentEarn";
 
 		}
 }

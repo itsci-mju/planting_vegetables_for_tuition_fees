@@ -139,4 +139,57 @@ public class ReportManager {
 		}	
 		return tds;
 	}
+   public List<Transaction_details> report_student_earn_by_search(int term,int year) {
+		List<Transaction_details> tds = new Vector<>();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		String sql = "";
+		try {
+			Statement stmt = con.createStatement();
+			if(term == 0 || year == 0) {
+				sql = "select * from transaction_details;";
+			}else {
+				sql = "select * from transaction_details where transaction_id in (select transaction_id from transaction where term = '"+ term +"' and year(date_time) = '"+ year +"');";
+			}
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int transaction_detail_id = rs.getInt(1);
+				int amount = rs.getInt(2);
+				double sum = rs.getDouble(3);
+				String type = rs.getString(4);
+				int asset_id = rs.getInt(5);
+				int transaction_id = rs.getInt(6);
+				
+				TransactionManager tm = new TransactionManager();
+				Assets as = tm.assetID(asset_id);
+				Transaction ts = tm.transactionID(transaction_id);
+	
+				Transaction_details td = new Transaction_details(transaction_detail_id,type,amount,sum,ts,as);
+					tds.add(td);
+				 }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return tds;
+	}
+   
+   public List<String> options_term_year() {
+		List<String> term_year = new Vector<>();
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select term,year(date_time) from transaction group by term,year(date_time) order by year(date_time) desc;";
+			
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				int t = rs.getInt(1);
+				int y = rs.getInt(2);
+				term_year.add(t+"-"+y);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}	
+		return term_year;
+	}
 }

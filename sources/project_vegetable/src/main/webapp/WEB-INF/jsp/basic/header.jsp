@@ -84,7 +84,7 @@
 	                	<a>ข้อมูลโครงการ</a>
 	                	<ul class="dropdown-content">
 	                		<a href="golistMember">รายชื่อนักศึกษาโครงการ</a>
-			                <a href="">รายได้ของนักศึกษา</a>
+			                <a href="goReportStudentEarn">รายได้ของนักศึกษา</a>
 			                <a href="goReportSummary">รายงานผลประการ</a>
 			            </ul>
 			        </li>
