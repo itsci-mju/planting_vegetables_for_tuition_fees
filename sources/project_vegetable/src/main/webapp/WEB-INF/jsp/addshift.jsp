@@ -8,6 +8,7 @@
 	 	SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat sdtf = new SimpleDateFormat("HH:mm");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+	    sdtf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 	    String  dateshift =  sdf.format(cd.getTime()); 
 	    String  timeshift =  sdtf.format(cd.getTime());  
 	  %>  
@@ -62,7 +63,7 @@
                 <td>เวลาเข้างาน <br>
                     <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift"readonly>
                 </td>
-                <td>เวลาเข้าออกงาน <br>
+                <td>เวลาออกงาน <br>
                     <input type="time" name="endTime" id="endTime" class="form-control addShift">
                 </td>
             </tr>

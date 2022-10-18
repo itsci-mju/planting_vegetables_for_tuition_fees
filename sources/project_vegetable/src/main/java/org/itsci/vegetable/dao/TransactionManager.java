@@ -136,7 +136,7 @@ public class TransactionManager {
 				String product_unit = rs.getString(6);
 				String project_id = rs.getString(7);
 				
-				p.setProject_id(project_id);
+				p = projectID(project_id);
 				Assets a = new Assets(asset_id,asset_price,equipment_name,equipment_unit,product_name,product_unit,p);
 					 as.add(a);
 				 }
@@ -234,6 +234,31 @@ public class TransactionManager {
 		return ts;
 	}
 	
+	public Projects projectID(String pid) {
+		Projects p = new Projects(); 
+		ConnectionDB condb = new ConnectionDB();
+		Connection con = condb.getConnection();
+		try {
+			Statement stmt = con.createStatement();
+			String sql = "select * from projects where project_id = "+ pid +"";
+			ResultSet rs = stmt.executeQuery(sql);
+			while (rs.next()) {
+				String project_id = rs.getString(1);
+				double cost_amount = rs.getDouble(2);
+				String name = rs.getString(3);
+				
+				p = new Projects(project_id,name,cost_amount);
+					
+				 }
+			con.close();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+		return p;
+	}
+	
 	public Assets assetID(int as) {
 		Assets a = new Assets();
 		Projects p = new Projects(); 
@@ -252,7 +277,7 @@ public class TransactionManager {
 				String product_unit = rs.getString(6);
 				String project_id = rs.getString(7);
 				
-				p.setProject_id(project_id);
+				p = projectID(project_id);
 				a = new Assets(asset_id,asset_price,equipment_name,equipment_unit,product_name,product_unit,p);
 					
 				 }

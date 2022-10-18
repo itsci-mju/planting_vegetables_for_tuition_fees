@@ -78,8 +78,6 @@ public class MembershiftManager {
 		return -1;
 	}
 	
-	
-	
     public List<Member_shifts> getListShifts(){
          List<Member_shifts> list = new ArrayList<>();
          ConnectionDB condb = new ConnectionDB();

@@ -13,13 +13,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>   
 <link rel="preconnect" href="https://fonts.gstatic.com">
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
-<title>Insert title here</title>
+<title>ลงทะเบียนเข้าร่วมโครงการปลูกผักเเลกค่าเทอม</title>
 </head>
 <link rel="stylesheet" href="css/register.css">
 <script src="js/register.js"></script>
 <body>
 <jsp:include page="basic/header.jsp" />
-  <form class="fit" name="regis" method="POST" action="getRegister">
+  <form class="fit" name="regis" method="POST" action="insertRegister">
         <div align="center" >
         	<b class="h">ลงทะเบียน</b>
         	<b class="t">เข้าร่วมโครงการปลูกผักเเลกค่าเทอม</b>

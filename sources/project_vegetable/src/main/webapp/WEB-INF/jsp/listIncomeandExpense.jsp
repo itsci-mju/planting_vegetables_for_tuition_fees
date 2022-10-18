@@ -93,7 +93,7 @@
 	<table class="table table-bordered" align="center"  style="width:800;">
     <thead align="center">   
       <tr>
-        <th>วันที่</th>
+        <th>วันที่ทำรายการ</th>
         <th>ประเภท</th>
         <th>รายละเอียด</th>
         <th>ราคา</th>

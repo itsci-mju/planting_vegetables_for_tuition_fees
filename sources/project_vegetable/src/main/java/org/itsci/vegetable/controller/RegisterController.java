@@ -24,9 +24,9 @@ public class RegisterController {
     public String goRegister(){ 
         return"register";
         }
-	/*เปลี่ยนชื่อ getRegisterเป็น insertRegister*/
-	@RequestMapping(value="/getRegister", method=RequestMethod.POST)
-	public String getRegister(HttpServletRequest request,HttpSession session) {
+	/*insertRegister*/
+	@RequestMapping(value="/insertRegister", method=RequestMethod.POST)
+	public String insertRegister(HttpServletRequest request,HttpSession session) {
 		try {
 			request.setCharacterEncoding("UTF-8");
 		} catch (UnsupportedEncodingException e1) {

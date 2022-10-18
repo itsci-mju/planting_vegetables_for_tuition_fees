@@ -49,7 +49,7 @@
 	                <li><a href="goHomepage">หน้าแรก</a></li>
 	                <li><a href="goAddshift">บันทึกเวลาทำงาน</a></li>
 	                <li><a href="#">ผลประกอบการ</a></li>
-	                <li><a href="#">สถิติการทำงาน</a></li>
+	                <li><a href="goViewAllWorkStatistics">สถิติการทำงาน</a></li>
 	                <li><a href="goViewprofile">ข้อมูลส่วนตัว</a></li>   
 	                <li><a href="dologout">ออกจากระบบ</a></li>
 	            </ul>
@@ -70,7 +70,7 @@
 		            <li><a href="goAddshift">บันทึกเวลาการทำงาน</a></li>
 		            <li><a href="golistShift">รายชื่อสมาชิกโครงการ</a></li>
 		            <li><a href="#">ผลประกอบการ</a></li>
-		            <li><a href="#">สถิติการทำงาน</a></li>
+		            <li><a href="goViewAllWorkStatistics">สถิติการทำงาน</a></li>
 		            <li><a href="dologout">ออกจากระบบ</a></li>
 	            </ul>
 	        </nav>
@@ -80,7 +80,14 @@
 	            <ul>
 	                <li><a href="goHomepage">หน้าแรก</a></li>
 	                <li><a href="golistRegisterReq">คำขอเข้าร่วมโครงการ</a></li>
-	                <li><a href="golistMember">รายชื่อนักศึกษา</a></li>
+	                <li class="dropdown">
+	                	<a>ข้อมูลโครงการ</a>
+	                	<ul class="dropdown-content">
+	                		<a href="golistMember">รายชื่อนักศึกษาโครงการ</a>
+			                <a href="">รายได้ของนักศึกษา</a>
+			                <a href="goReportSummary">รายงานผลประการ</a>
+			            </ul>
+			        </li>
 	                <li><a href="dologout">ออกจากระบบ</a></li>
 	            </ul>
 	        </nav>
@@ -116,12 +123,7 @@
   padding:0 20px 0 20px;
 }
 /* --------------------- Header --------------------------*/
-a{
-    text-decoration: none;
-}
-a:hover{
-  text-decoration: none;
-}
+
 .header_page {
     position: fixed;
     top: 0;
@@ -181,7 +183,14 @@ p.wn2 {
 
 .nav_bar a{
     float: right;
-    color:#fff
+
+}
+a{
+    text-decoration: none;
+}
+a:hover{
+  text-decoration: none;
+  color: white;
 }
 
 .dropbtn {
@@ -197,6 +206,7 @@ p.wn2 {
 .dropdown {
   position: relative;
   display: inline-block;
+  color: white;
 }
 
 .dropdown-content {

@@ -222,5 +222,5 @@ public class MembersController {
 	        session.setAttribute("member", mb);
 	        return "viewprofile";
 	      }
- 
+	
 }
