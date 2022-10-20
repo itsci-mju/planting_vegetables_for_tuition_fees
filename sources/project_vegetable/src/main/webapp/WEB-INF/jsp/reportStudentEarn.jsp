@@ -56,8 +56,7 @@
         <form action="search_report_student_earn"  method="POST">
 		    <table>
 		        <tr >
-		            <td></td>
-		            <td><label class="tr2">เทอมปีการศึกษา :
+		            <td><label class="tr2">เทอมปีการศึกษา :</label> 
 		            <div class="form-floating">
 		                <select name="term_year" class="custom-select" style="width:200px;">
 			                <% for(String i : ty){ %>
@@ -68,15 +67,22 @@
 			                     <% } %>
 			                <% } %>
 		                  </select>                 
-		              </div>  
+		              </div> 
+		              </td> 
 		              <td><button type="submit" class="form-control  button-search" role="button" >ค้นหา 
 		                    &nbsp;<i class="gg-search"></i>
-		                </button></td>
-		            </td>
+		                </button>
+		              </td>
+		              <td><a href="reportSummary">
+		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานรายได้ของนักศึกษา
+		                    &nbsp;<img class="img_print" src="img/print.png">
+		                </button>
+		                </a></td>
 		        </tr>
 		    </table>
    		</form>
-        <table class="table table-bordered">
+   		<div id="dvContents" >
+        <table class="table table-bordered" id="dvContents" border="1">
             <thead>
               <tr>
                 <th>ลำดับ</th>
@@ -139,10 +145,41 @@
             
             </tbody>
           </table>
+          </div>
     </div>
     <jsp:include page="basic/footer.jsp" />
 </body>
-<style>
+<script type="text/javascript">
+    function PrintTable() {
+    	/*
+    	var divToPrint=document.getElementById("dvContents");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    	*/
+        var printWindow = window.open('', '','height=700,width=1200');
+        printWindow.document.write('<html><head><title>.</title></head>');
+ 
+        
+        //Print the DIV contents i.e. the HTML Table.
+        printWindow.document.write('<body> <div align="center"> <h3>รายงานรายได้นักศึกษา</h3> <h4> โครงการปลูกผักเเลกค่าเทอม </h4>  ');
+        var divContents = document.getElementById("dvContents").innerHTML;
+        
+        printWindow.document.write(divContents);
+        printWindow.document.write('</div> </body>');
+ 
+        printWindow.document.write('</html>');
+        printWindow.document.close();
+        printWindow.print();
+        
+    }
+    
+    
+    
+</script>
+
+<style  id="table_style" >
     body{
     font-family: 'Mitr', sans-serif;
     
@@ -172,7 +209,7 @@ table{
   align-items: center;
   appearance: none;
   background-color: #BDBDBD;
-  border-radius: 24px;
+  border-radius: 10px;
   border-style: none;
   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
   box-sizing: border-box;
@@ -199,7 +236,7 @@ table{
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
-  margin-top:20px;
+  margin-top:31px;
 }
 
 .button-search:hover {
@@ -236,5 +273,69 @@ table{
 .button-search:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
+  /*button print*/
+.button-print{
+  align-items: center;
+  appearance: none;
+  background-color: #FFE082;
+  border-radius: 10px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 34px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+  margin-top:31px;
+}
+
+.button-print:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-print:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-print:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-print:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-print:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-print:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+.img_print{
+	width:25px;
+
+}
+</style>
 </style>
 </html>

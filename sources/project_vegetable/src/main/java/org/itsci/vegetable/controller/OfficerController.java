@@ -65,10 +65,7 @@ public class OfficerController {
 	public String golistMember(HttpServletRequest request,HttpSession session) {
 	return "listMember";
 	}
-	@RequestMapping(value="/goReport_member", method=RequestMethod.GET)
-	public String goReport_member(HttpServletRequest request,HttpSession session) {
-	return "report_member";
-	}
+	
 	@RequestMapping(value="/goSetPermissions", method=RequestMethod.GET)
 	public String goSetPermissions(HttpServletRequest request,HttpSession session) {
 		String mid = request.getParameter("id");

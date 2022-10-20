@@ -37,7 +37,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
+ <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/css/bootstrap.min.css">
   <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.slim.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.1/dist/umd/popper.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.1/dist/js/bootstrap.bundle.min.js"></script>
@@ -53,41 +55,49 @@
 
 <!-- JSDelivr -->
 <link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
-
 <meta charset="UTF-8">
 <title>รายรับรายจ่ายของโครงการ</title>
 </head>
-<!-- <link rel="stylesheet" href="css/listIncomeandExpense.css"> -->
 <body>
 <jsp:include page="basic/header.jsp" /> 
 	<div class="container" align="center"> 
-	 <h2>รายรับรายจ่ายของโครงการ</h2>
-	 <h3>"โครงการปลูกผักแลกค่าเทอม"</h3>
+	 <h3>รายรับรายจ่ายของโครงการ</h3>
+	 <h4>"โครงการปลูกผักแลกค่าเทอม"</h4>
 	<form action="search_income_expense"  method="POST">
-		<div class="">
-		<label class="">วันที่:</label>
-		<input type="date" name="date" value="<%= select_date %>" class="form-control registered " >
-		
-				<label class="">ประเภท:</label>
-				<select name="type" id="type" class="form-control registered ">
-					<% if(type.equals("1")) {%>
-	                     <option value="1" selected>ทั้งหมด</option>
-	                     <option value="สินค้า">รายรับ</option>
-	                     <option value="อุปกรณ์">รายจ่าย</option>
-	                <%}else if (type.equals("สินค้า")){ %>
-	                     <option value="1" >ทั้งหมด</option>
-	                     <option value="สินค้า"selected>รายรับ</option>
-	                     <option value="อุปกรณ์">รายจ่าย</option>
-	                <%}else if (type.equals("อุปกรณ์")){ %>
-	                	 <option value="1" >ทั้งหมด</option>
-	                     <option value="สินค้า">รายรับ</option>
-	                     <option value="อุปกรณ์"selected>รายจ่าย</option>
-	                <%} %>
-	             </select>
+		<table >
+		<tr>
+			<td style="width:250px;">
+			<label>วันที่: </label>
+				<input type="date" name="date" value="<%= select_date %>" class="form-control tr1" >
+			</td>
+			<td style="width:250px;">
+			<label >ประเภท:</label>
+				<div class="form-floating">
+						<select name="type" id="type" class="form-control ">
+							<% if(type.equals("1")) {%>
+			                     <option value="1" selected>ทั้งหมด</option>
+			                     <option value="สินค้า">รายรับ</option>
+			                     <option value="อุปกรณ์">รายจ่าย</option>
+			                <%}else if (type.equals("สินค้า")){ %>
+			                     <option value="1" >ทั้งหมด</option>
+			                     <option value="สินค้า"selected>รายรับ</option>
+			                     <option value="อุปกรณ์">รายจ่าย</option>
+			                <%}else if (type.equals("อุปกรณ์")){ %>
+			                	 <option value="1" >ทั้งหมด</option>
+			                     <option value="สินค้า">รายรับ</option>
+			                     <option value="อุปกรณ์"selected>รายจ่าย</option>
+			                <%} %>
+		            	 </select>
+	             </div>	
+	         </td>
+	       	 <td style="width:150px;">
 	             <button type="submit" class="button-20" role="button" >ค้นหา 
 	             	&nbsp;<i class="gg-search"></i>
 	             </button>
-       		</div>
+	         </td>
+	       </tr>
+	  </table>
+	        
 	</form>
 	<div class="scoll-list">
 	<table class="table table-bordered" align="center"  style="width:800;">
@@ -171,7 +181,7 @@
       <%} %>
       <%}else{%>
       	<tr>
-      		<td colspan="6"><h1 align="center">ไม่มีรายการเเสดง</h1></td>
+      		<td colspan="6"><h3 align="center">ไม่มีรายการเเสดง</h3></td>
       	</tr>
       <%} %>
     </tbody>
@@ -181,7 +191,9 @@
 <jsp:include page="basic/footer.jsp" />
 </body>
 <style>
+
 *{
+	z-index: 2;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -198,32 +210,10 @@
 	margin-top:180px;
 	margin-bottom:200px;
 }
-.s_date{
- margin-top: 40px;
-}
-.p_date{
-	margin-right: 565px;
-}
-.t_date{
-    margin-right: 265px;
-    margin-top: -36px;
-}
-.ty_seltype{
-margin-left: 40px;
-}
-.p_type{
-margin-right: 265px;
-overflow: visible;
-}
-.sel_type{
-margin-right: 265px;
-}
 .btn{
 	width:50px;
 }
-i{
 
-}
 table{
 	width:1000px;
 	margin-top:50px;
@@ -238,6 +228,15 @@ th{
 thead{
   background-color: #00AE3B;
 }
+td{
+    align-items: center;
+    margin-top: 29px;
+    padding: 10px;
+}
+.td1{
+	margin:10px;
+}
+
 
 /*button view*/
 .button-17 {
@@ -450,6 +449,10 @@ thead{
 .registered{
 	width:260px;
 }
+.table1{
+
+}
+
 </style>
 
 </html>

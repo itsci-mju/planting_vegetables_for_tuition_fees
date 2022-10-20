@@ -33,7 +33,10 @@ public class ReportController {
 	 }
 	 @RequestMapping(value="/goReportSummary", method=RequestMethod.GET )
 	    public String goReportSummary(HttpServletRequest request,HttpSession session){ 
-			
+		 	ReportManager rm = new ReportManager();
+		 	List<Transaction_details> ts = rm.list_Alltransaction_details();
+		 	request.setAttribute("list_details", ts);
+		 	request.setAttribute("type", "1");
 	        return"reportSummary";
 	 }
 	 @RequestMapping(value="/search_report_summary", method=RequestMethod.POST)

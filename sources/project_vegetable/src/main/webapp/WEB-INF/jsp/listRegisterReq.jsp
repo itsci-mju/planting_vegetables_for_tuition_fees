@@ -44,6 +44,7 @@
            
         </thead>
         <tbody  align="center">
+        <% if(registers.size() > 0) { %>
         <%int num = 1; for(Register r : registers) {%>
             <tr>
             <td><%=num %></td>
@@ -64,6 +65,11 @@
             </td>
             </tr> 
            <%num++;} %>
+           <%}else{ %>
+            <tr>
+      			<td colspan="6"><h1 align="center">ไม่มีรายการเเสดง</h1></td>
+      		</tr>
+           <%} %>
                                         
         </tbody>
         </table>

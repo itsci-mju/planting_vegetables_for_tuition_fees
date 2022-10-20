@@ -13,17 +13,20 @@
 			
 		} 
 		List<Transaction_details> ts = (List<Transaction_details>) request.getAttribute("list_details");
-    	List<Transaction_details> tsd = (List<Transaction_details>) request.getAttribute("ListTran");
+    	//List<Transaction_details> tsd = (List<Transaction_details>) request.getAttribute("ListTran");
 	    TransactionManager tm = new TransactionManager(); 
 	    ReportManager rm = new ReportManager();
 	    String type = (String) request.getAttribute("type");
 	    String startdate = (String) request.getAttribute("startdate");
 	    String enddate = (String) request.getAttribute("enddate");
-		/*ค่าเริ่มต้นที่เเสดง*/
+	
+	    /*ค่าเริ่มต้นที่เเสดง*/
+	    /*
 	    if(ts == null){
 	    	ts = rm.list_Alltransaction_details();
 	    	type = "1";	 
 	    }
+	    */
 	%>
 	<%
 	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -65,26 +68,24 @@
         <h4>" โครงการปลูกผักเเลกค่าเทอม "</h4> 
         <form action="search_report_summary"  method="POST">
 	        <table>
+	        
 		        <tr>
+		        	<td><a href="reportSummary">
+		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานผลประกอบการ 
+		                    &nbsp;<img class="img_print" src="img/print.png">
+		                </button>
+		                </a></td>
 		            <td><label class="tr1">วันที่ทำรายการ : </label><input type="date"  name="startdate" class="form-control  search_stucode" value="<%= startdate %>"></td>
-		             <td><label class="tr3">ถึง</label></td>
+		            <td><label class="tr3">ถึง</label></td>
 		            <td><label class="tr1">วันที่สิ้นสุดทำรายการ : </label><input type="date" name="enddate"  class="form-control  search_stucode" value="<%= enddate %>"></td>
 		            <td><label class="tr2">ประเภท :</label>
 		                <div class="form-floating">
 		                <select name="cars" class="custom-select" style="width:200px;">
-		                    <% if(type.equals("1")) {%>
-			                     <option value="1" selected>ทั้งหมด</option>
-			                     <option value="สินค้า">รายรับ</option>
-			                     <option value="อุปกรณ์">รายจ่าย</option>
-			                <%}else if (type.equals("สินค้า")){ %>
-			                     <option value="1" >ทั้งหมด</option>
-			                     <option value="สินค้า"selected>รายรับ</option>
-			                     <option value="อุปกรณ์">รายจ่าย</option>
-			                <%}else if (type.equals("อุปกรณ์")){ %>
-			                	 <option value="1" >ทั้งหมด</option>
-			                     <option value="สินค้า">รายรับ</option>
-			                     <option value="อุปกรณ์"selected>รายจ่าย</option>
-			                <%} %>
+		                    
+			                     <option value="1" <% if(type.equals("1")) {%> selected  <%} %>>ทั้งหมด</option>
+			                     <option value="สินค้า" <% if(type.equals("สินค้า")) {%> selected  <%} %>>รายรับ</option>
+			                     <option value="อุปกรณ์" <% if(type.equals("อุปกรณ์")) {%> selected  <%} %>>รายจ่าย</option>
+			                   
 		                  </select>                 
 		              </div>
 		            </td>
@@ -96,8 +97,8 @@
 		        </tr>
 	    	</table>
         </form> 
-    
-        <table class="table table-bordered">
+    <div id="dvContents" >
+        <table class="table table-bordered" id="dvContents" border="1">
             <thead>
               <tr>
                 <th>วันที่</th>
@@ -151,9 +152,43 @@
             </tbody>
           </table>
     </div>
+    </div>
 <jsp:include page="basic/footer.jsp" />
 </body>
-<style>
+<script type="text/javascript">
+    function PrintTable() {
+    	/*
+    	var divToPrint=document.getElementById("dvContents");
+        newWin= window.open("");
+        newWin.document.write(divToPrint.outerHTML);
+        newWin.print();
+        newWin.close();
+    	*/
+        var printWindow = window.open('', '','height=700,width=1200');
+        printWindow.document.write('<html><head><title>.</title></head>');
+ 
+        
+        //Print the DIV contents i.e. the HTML Table.
+        printWindow.document.write('<body> <div align="center"> <h3>รายงานผลประกอบการ</h3> <h4> โครงการปลูกผักเเลกค่าเทอม </h4>  ');
+        var divContents = document.getElementById("dvContents").innerHTML;
+        
+        printWindow.document.write(divContents);
+        printWindow.document.write('</div> </body>');
+ 
+        printWindow.document.write('</html>');
+        printWindow.document.close();
+        printWindow.print();
+        
+    }
+    
+    
+    
+</script>
+
+
+
+
+<style >
     body{
     font-family: 'Mitr', sans-serif;
     
@@ -163,6 +198,7 @@
    padding: 0;
    box-sizing: border-box;
    font-family: 'Mitr', sans-serif;
+   z-index: 2;
 }
 td{
     align-items: center;
@@ -190,7 +226,67 @@ table{
   align-items: center;
   appearance: none;
   background-color: #BDBDBD;
-  border-radius: 24px;
+  border-radius: 10px;
+  border-style: none;
+  box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
+  box-sizing: border-box;
+  color: #000;
+  cursor: pointer;
+  display: inline-flex;
+  fill: currentcolor;
+  font-size: 14px;
+  font-weight: 500;
+  height: 36px;
+  justify-content: center;
+  letter-spacing: .25px;
+  line-height: normal;
+  max-width: 100%;
+  overflow: visible;
+  padding: 2px 24px;
+  position: relative;
+  text-align: center;
+  text-transform: none;
+  transition: box-shadow 280ms cubic-bezier(.4, 0, .2, 1),opacity 15ms linear 30ms,transform 270ms cubic-bezier(0, 0, .2, 1) 0ms;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  width: auto;
+  will-change: transform,opacity;
+  z-index: 0;
+  margin-top:31px;
+}
+
+.button-search:focus {
+  outline: none;
+  border: 2px solid #4285f4;
+}
+
+.button-search:not(:disabled) {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-search:not(:disabled):hover {
+  box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
+}
+
+.button-search:not(:disabled):focus {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+.button-search:not(:disabled):active {
+  box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
+}
+
+.button-search:disabled {
+  box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+
+  /*button print*/
+.button-print{
+  align-items: center;
+  appearance: none;
+  background-color: #FFE082;
+  border-radius: 10px;
   border-style: none;
   box-shadow: rgba(0, 0, 0, .2) 0 3px 5px -1px,rgba(0, 0, 0, .14) 0 6px 10px 0,rgba(0, 0, 0, .12) 0 1px 18px 0;
   box-sizing: border-box;
@@ -217,42 +313,36 @@ table{
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
-  margin-top:20px;
+  margin-top:31px;
 }
 
-.button-search:hover {
-  background: #F6F9FE;
-  color: #174ea6;
-}
-
-.button-search:active {
-  box-shadow: 0 4px 4px 0 rgb(60 64 67 / 30%), 0 8px 12px 6px rgb(60 64 67 / 15%);
-  outline: none;
-}
-
-.button-search:focus {
+.button-print:focus {
   outline: none;
   border: 2px solid #4285f4;
 }
 
-.button-search:not(:disabled) {
+.button-print:not(:disabled) {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
 
-.button-search:not(:disabled):hover {
+.button-print:not(:disabled):hover {
   box-shadow: rgba(60, 64, 67, .3) 0 2px 3px 0, rgba(60, 64, 67, .15) 0 6px 10px 4px;
 }
 
-.button-search:not(:disabled):focus {
+.button-print:not(:disabled):focus {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
 }
 
-.button-search:not(:disabled):active {
+.button-print:not(:disabled):active {
   box-shadow: rgba(60, 64, 67, .3) 0 4px 4px 0, rgba(60, 64, 67, .15) 0 8px 12px 6px;
 }
 
-.button-search:disabled {
+.button-print:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+.img_print{
+	width:25px;
+
 }
 </style>
     

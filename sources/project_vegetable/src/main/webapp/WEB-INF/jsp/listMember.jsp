@@ -29,12 +29,6 @@
 	   <div class="container" align="center">
         <h2 >รายนักศึกษาโครงการ</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
-            <div class="form-group has-search">               
-               <input type="s" class="form-control" placeholder="ค้นหารหัสนักศึกษา..">
-            </div> 
-            <div class="buttom_print">
-             <a href="goReport_member" class="printReport"><img src="img/excel.png" class="print"> Print Report</a>
-            </div> 
    	 <div class="container-fluid" >       
         <table class="table table-hover" >
         <thead  align="center">
