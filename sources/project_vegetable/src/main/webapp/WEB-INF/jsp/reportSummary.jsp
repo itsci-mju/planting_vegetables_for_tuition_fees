@@ -2,16 +2,19 @@
     pageEncoding="UTF-8"%>
      <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.*" %>
-     <%
-     	MemberManager mbm = new MemberManager();
+    <%  MemberManager mbm = new MemberManager();
 		Logins log = new Logins();
-		Member mb = new Member();	
+		Member mb = new Member();
+		String member_type = null;
 		try{
 				log = (Logins)session.getAttribute("login");
 				mb = mbm.getMember(log.getMember().getMember_id());		
 		}catch (Exception e) {	
-			
-		} 
+		}
+		
+		session.setAttribute("login", log);
+ 	%>
+ 	<%  
 		List<Transaction_details> ts = (List<Transaction_details>) request.getAttribute("list_details");
     	//List<Transaction_details> tsd = (List<Transaction_details>) request.getAttribute("ListTran");
 	    TransactionManager tm = new TransactionManager(); 
@@ -21,12 +24,11 @@
 	    String enddate = (String) request.getAttribute("enddate");
 	
 	    /*ค่าเริ่มต้นที่เเสดง*/
-	    /*
+	    
 	    if(ts == null){
 	    	ts = rm.list_Alltransaction_details();
 	    	type = "1";	 
 	    }
-	    */
 	%>
 	<%
 	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -70,11 +72,13 @@
 	        <table>
 	        
 		        <tr>
+		            <%if(log.getStatus()==3){ %>
 		        	<td><a href="reportSummary">
 		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานผลประกอบการ 
 		                    &nbsp;<img class="img_print" src="img/print.png">
 		                </button>
 		                </a></td>
+		            <%} %>
 		            <td><label class="tr1">วันที่ทำรายการ : </label><input type="date"  name="startdate" class="form-control  search_stucode" value="<%= startdate %>"></td>
 		            <td><label class="tr3">ถึง</label></td>
 		            <td><label class="tr1">วันที่สิ้นสุดทำรายการ : </label><input type="date" name="enddate"  class="form-control  search_stucode" value="<%= enddate %>"></td>
@@ -157,18 +161,10 @@
 </body>
 <script type="text/javascript">
     function PrintTable() {
-    	/*
-    	var divToPrint=document.getElementById("dvContents");
-        newWin= window.open("");
-        newWin.document.write(divToPrint.outerHTML);
-        newWin.print();
-        newWin.close();
-    	*/
+    	
         var printWindow = window.open('', '','height=700,width=1200');
         printWindow.document.write('<html><head><title>.</title></head>');
- 
-        
-        //Print the DIV contents i.e. the HTML Table.
+
         printWindow.document.write('<body> <div align="center"> <h3>รายงานผลประกอบการ</h3> <h4> โครงการปลูกผักเเลกค่าเทอม </h4>  ');
         var divContents = document.getElementById("dvContents").innerHTML;
         
@@ -207,6 +203,9 @@ td{
 }
 table{
     margin-top: 30px;
+}
+thead{
+	 background-color: #EEEEEE;
 }
 .form-control{
     width: 200px;

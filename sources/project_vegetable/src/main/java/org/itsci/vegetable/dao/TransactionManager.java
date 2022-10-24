@@ -155,7 +155,7 @@ public class TransactionManager {
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select * from transaction ";
+			String sql = "select * from transaction where   DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 543 year) < DATE_ADD(date_time,INTERVAL 24 HOUR) ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int transaction_id = rs.getInt(1);
@@ -620,7 +620,7 @@ public class TransactionManager {
 	        return -1;
 	    }
 	  
-	  /*ลบข้อมูล*/
+	  /*ลบข้อมูลทั้งหมด*/
 	    public int delete_income_expense(String date) {
 	  		ConnectionDB condb = new ConnectionDB();
 	  		Connection con = condb.getConnection();
@@ -628,6 +628,23 @@ public class TransactionManager {
 	  			Statement stmt = con.createStatement();
 	  			String sql = "delete  t,td from transaction_details td  join transaction t on td.transaction_id=t.transaction_id"
 	  					+ " where cast(t.date_time as Date) ='"+date+"' ; ";
+	  			int result = stmt.executeUpdate(sql);
+	  			con.close();
+	  			return result; 
+	  		} catch (SQLException e) {
+	  			// TODO Auto-generated catch block
+	  			e.printStackTrace();
+	  		}
+	  		return -1;
+	  	}
+	    /*ลบข้อมูลทีละเเถว*/
+	    public int delete_column_income_expense(String tid) {
+	  		ConnectionDB condb = new ConnectionDB();
+	  		Connection con = condb.getConnection();
+	  		try {
+	  			Statement stmt = con.createStatement();
+	  			String sql = "delete  t,td from transaction_details td  join transaction t on td.transaction_id=t.transaction_id"
+	  					+ " where t.transaction_id ='"+tid+"' ; ";
 	  			int result = stmt.executeUpdate(sql);
 	  			con.close();
 	  			return result; 

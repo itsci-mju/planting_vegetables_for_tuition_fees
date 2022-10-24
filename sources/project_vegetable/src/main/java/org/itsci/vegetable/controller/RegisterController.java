@@ -36,6 +36,7 @@ public class RegisterController {
 		Calendar birthdate = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
+        int r=-1;
        /*ไอดี*/ 
         long unix = System.currentTimeMillis()/1000;
 	        String mid = "m"+Long.toString(unix);
@@ -86,10 +87,16 @@ public class RegisterController {
 			 MemberManager mm = new MemberManager();
 			 RegisterManager rm =new RegisterManager();
 			 
-			 mm.insertMembers(mb);
-			 rm.insertRegister(reg);
+			r=  mm.insertMembers(mb);
+			r=  rm.insertRegister(reg);
 			 mm.insertLogins(log, mb);
-			 session.setAttribute("message", "สมัครสมาชิกเสร็จสิ้น รอการอนุมัติ");
+			 if(r==1) {
+					request.setAttribute("resultRegis", "สมัครสมาชิกสำเร็จ รอการอนุมัติ");
+					return "login";
+				}else {
+					request.setAttribute("resultRegis", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+					return "register";
+				}
 		 
 			 }
 		 }

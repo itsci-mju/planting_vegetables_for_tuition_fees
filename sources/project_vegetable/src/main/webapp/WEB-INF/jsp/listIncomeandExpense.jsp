@@ -31,6 +31,7 @@
 		    DecimalFormat df = new DecimalFormat("###,###,###.00");
 		    
 		    String date_time = (String) request.getAttribute("date");
+		   
 		    
 	 	%>
 	 	
@@ -172,7 +173,7 @@
 				&nbsp; 	<i class="gg-eye"></i></button></a>
 		<%} %>
         	<a href="delete_income_expense?date=<%= sdf2.format(t.getDate_time().getTime()) %>">
-				<button type="button" class="button-19" role="button" >ยกเลิก
+				<button type="button" class="button-19" role="button" >ลบ
 				&nbsp; &nbsp;	<i class="gg-trash"></i>
 				</button></a>
    

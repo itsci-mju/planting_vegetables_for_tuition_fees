@@ -25,12 +25,12 @@ public class TransactionController {
 	@RequestMapping(value="/goListall", method=RequestMethod.GET)
 	public String goListall(HttpServletRequest request,HttpSession session) {
 		
-		Logins log = (Logins) session.getAttribute("login");
+		//Logins log = (Logins) session.getAttribute("login");
 		MemberManager lmem = new MemberManager();
-		System.out.println(log.getMember().getMember_id());
-		Member listmember = lmem.getMember(log.getMember().getMember_id());
+		//System.out.println(log.getMember().getMember_id());
+		//Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
-		session.setAttribute("member", listmember);
+		//session.setAttribute("member", listmember);
 		return "listIncomeandExpense";
 	}
 	/*goEdit_income_expense*/
@@ -260,7 +260,7 @@ public class TransactionController {
 		return "listIncomeandExpense";
 
 	}
-	
+	/*delete_all*/
 	@RequestMapping(value="/delete_income_expense",method=RequestMethod.GET)
 	public String delete_income_expense (HttpServletRequest request,HttpSession session) {
 		
@@ -271,5 +271,29 @@ public class TransactionController {
 		tm.delete_income_expense(date);
 
 		return "listIncomeandExpense";
+	}
+	/*delete_column*/
+	@RequestMapping(value="/delete_Colume_income_expense",method=RequestMethod.GET)
+	public String delete_column_income_expense (HttpServletRequest request,HttpSession session) {
+		
+		String tid =request.getParameter("tid");
+		String type = request.getParameter("type");
+		String date = request.getParameter("date");
+		
+		TransactionManager tm = new TransactionManager();
+		
+		tm.delete_column_income_expense(tid);
+		
+		
+		List<Transaction_details> list_edit = tm.transaction_details_by_date(type, date);
+		session.setAttribute("list_edit", list_edit);
+		
+		if(list_edit.size()==0 || list_edit==null) {
+			return "listIncomeandExpense";
+		}else {
+			return "editIncomeExpense";
+		}
+
+		
 	}
 }

@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class ReportController {
 	
-	 @RequestMapping(value="/goViewAllWorkStatistics", method=RequestMethod.GET )
+	/* @RequestMapping(value="/goViewAllWorkStatistics", method=RequestMethod.GET )
 	    public String goViewAllWorkStatistics(HttpServletRequest request,HttpSession session){ 
 			
 		 	ReportManager rpm = new ReportManager();
@@ -38,7 +38,13 @@ public class ReportController {
 		 	request.setAttribute("list_details", ts);
 		 	request.setAttribute("type", "1");
 	        return"reportSummary";
-	 }
+	 }*/
+	
+	@RequestMapping(value="/goReportSummary", method=RequestMethod.GET )
+	   public String goReportSummary(HttpServletRequest request,HttpSession session){ 
+			
+	       return"reportSummary";
+	}
 	 @RequestMapping(value="/search_report_summary", method=RequestMethod.POST)
 		public String search_report_summary(HttpServletRequest request,HttpSession session) {
 			

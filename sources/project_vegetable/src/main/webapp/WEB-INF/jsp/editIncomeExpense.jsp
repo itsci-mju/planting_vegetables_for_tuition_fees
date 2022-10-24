@@ -7,6 +7,8 @@
 		SimpleDateFormat tf = new SimpleDateFormat("HH:mm");
 		List<Transaction_details> list_edit  = (List<Transaction_details>) session.getAttribute("list_edit");
 		DecimalFormat df = new DecimalFormat("###,###,###.00");
+		
+		SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd");
 		%>
 		
 
@@ -73,7 +75,7 @@
               <td align="center">
               	<a href="edit_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&asid=<%= td.getAssets().getAsset_id() %>&&tdid=<%= td.getTransaction_detail_id() %>">
 				<button type="button" class="button-edit" role="button" >แก้ไข</button></a>
-				<a href=""><button type="button" class="button-remove" role="button" >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
+				<a href="delete_Colume_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&date=<%= sdf2.format(td.getTransaction().getDate_time().getTime()) %>&&type=<%= td.getType() %>"><button type="button" class="button-remove" role="button" >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
 				</button></a>
 				</td>
             </tr>

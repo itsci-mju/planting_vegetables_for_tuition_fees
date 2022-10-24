@@ -36,13 +36,21 @@ public class LoginController {
 		String password = request.getParameter("pwd");
 		LoginManager lm = new LoginManager();
 		Logins log = lm.verifyLogin(email, password);
-		if(log.getStatus()==0) {		
-			session.setAttribute("login", log);	
+		if(log == null) {
+			request.setAttribute("result", "Email หรือ Paswordไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
 			return "login"; 
 		}
-			/*login pass*/
-			session.setAttribute("login", log);
-		return "content";
+		else {
+			if(log.getStatus()==0) {		
+				session.setAttribute("login", log);	
+				return "login"; 
+			}else {
+				session.setAttribute("login", log);
+				return "content";
+			}
+				/*login pass*/
+				
+		}
 	}
 	
 	@RequestMapping(value="/dologout", method=RequestMethod.GET)

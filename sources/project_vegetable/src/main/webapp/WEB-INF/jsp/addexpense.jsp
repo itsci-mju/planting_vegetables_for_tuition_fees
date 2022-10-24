@@ -153,8 +153,7 @@
             <th>ชื่อสินค้า</th>
             <th>จำนวน</th>
             <th>รวม</th>
-            <th></th>
-            <th></th>
+     
             </tr>
         </thead>
         <tbody>
@@ -166,12 +165,7 @@
                 <td><%= sdtf.format(t.getDate_time().getTime()) %></td>
                 <td><%= td.get(0).getAssets().getEquipment_name() %> </td>
                 <td><%= td.get(0).getAmount() %> <%= td.get(0).getAssets().getEquipment_unit() %></td>
-                <td><%= td.get(0).getSum() %></td>   
-                <td>
-                    <a>
-                        <i class="far fa-trash-alt"></i>
-                    </a> 
-                </td>   
+                <td><%= td.get(0).getSum() %></td>     
             </tr>
             <%} %>
             <%} %>

@@ -24,6 +24,18 @@
 
 	    DecimalFormat df = new DecimalFormat("###,###,###");
 	  %> 
+	  <%  MemberManager mbm = new MemberManager();
+		Logins log = new Logins();
+		Member mb = new Member();
+		String member_type = null;
+		try{
+				log = (Logins)session.getAttribute("login");
+				mb = mbm.getMember(log.getMember().getMember_id());		
+		}catch (Exception e) {	
+		}
+		
+		session.setAttribute("login", log);
+ %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,7 +66,7 @@
         <h3 >รายงานรายได้นักศึกษา</h3>
         <h4>" โครงการปลูกผักเเลกค่าเทอม "</h4>  
         <form action="search_report_student_earn"  method="POST">
-		    <table>
+		    <table>	
 		        <tr >
 		            <td><label class="tr2">เทอมปีการศึกษา :</label> 
 		            <div class="form-floating">
@@ -73,11 +85,13 @@
 		                    &nbsp;<i class="gg-search"></i>
 		                </button>
 		              </td>
+		              <%if(log.getStatus()==3){ %>
 		              <td><a href="reportSummary">
 		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานรายได้ของนักศึกษา
 		                    &nbsp;<img class="img_print" src="img/print.png">
 		                </button>
 		                </a></td>
+		              <%} %>
 		        </tr>
 		    </table>
    		</form>
@@ -90,7 +104,9 @@
                 <th>ชื่อ-นามสกุล</th>
                 <th>สาขา</th>
                 <th>สถิติ</th>
+                <%if(log.getStatus()==3){ %>
                 <th>ค่าตอบเเทน</th>
+                <%} %>
               </tr>
             </thead>
             <tbody>
@@ -138,7 +154,9 @@
 	             <% } all_hour += (all_minute/60); 
 	             
              	System.out.println("hour "+all_hour);%>
+             	<%if(log.getStatus()==3){ %>
               	<td><%= df.format(total*all_hour) %></td>
+              	<%} %>
               </tr>
             <% num++;} %>
            

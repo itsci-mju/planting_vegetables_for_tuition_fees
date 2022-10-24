@@ -121,7 +121,9 @@ public class MembersController {
 				} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
+			
 		}
+		int r=-1;
 		Calendar cal = new GregorianCalendar();
 		Calendar cal_date = new GregorianCalendar();
 		Calendar cal_e_date = new GregorianCalendar();
@@ -150,17 +152,22 @@ public class MembersController {
 		cal_e_date.set(Calendar.HOUR_OF_DAY, et_hour);
 		cal_e_date.set(Calendar.MINUTE, et_min);
 	
-       Register r = new Register();
-       r.setRegister_id(register_id);
+       Register rg = new Register();
+       rg.setRegister_id(register_id);
         
-        Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,1,r);
+        Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,1,rg);
    
         
         MembershiftManager msm = new MembershiftManager();
 		msm.ApproveShift(ms);
-		session.setAttribute("message", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
-		return "content";
-
+		
+		 if(r==1) {
+			 session.setAttribute("resultAddshift", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
+				return "content";
+			}else {
+				request.setAttribute("resultAddshift", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+				return "addshift";
+			}
 	}
 	/*my profile*/
 	

@@ -13,9 +13,10 @@
 			log = (Logins)session.getAttribute("login");
 			mb = mbm.getMember(log.getMember().getMember_id());		
 	}catch (Exception e) {	
+			session.setAttribute("login", log);
 	}
 	
-	session.setAttribute("login", log);
+	
 
     %>
 <!DOCTYPE html>
@@ -59,8 +60,8 @@
 	            <ul>
 	                <li><a href="goHomepage">หน้าแรก</a></li>
 	                <li><a href="goAddshift">บันทึกเวลาทำงาน</a></li>
-	                <li><a href="#">ผลประกอบการ</a></li>
-	                <li><a href="goViewAllWorkStatistics">สถิติการทำงาน</a></li>
+	                <li><a href="goReportSummary">ผลประกอบการ</a></li>
+	                <li><a href="goReportStudentEarn">สถิติการทำงาน</a></li>
 	                
 	                <li class="dropdown">
 	                	<i class="gg-user"></i>
@@ -87,8 +88,8 @@
 			        </li>
 		            <li><a href="goAddshift">บันทึกเวลาการทำงาน</a></li>
 		            <li><a href="golistShift">รายชื่อสมาชิกโครงการ</a></li>
-		            <li><a href="#">ผลประกอบการ</a></li>
-		            <li><a href="goViewAllWorkStatistics">สถิติการทำงาน</a></li>
+		            <li><a href="goReportSummary">ผลประกอบการ</a></li>
+		            <li><a href="goReportStudentEarn">สถิติการทำงาน</a></li>
 		            <li class="dropdown">
 	                	<i class="gg-user"></i>
 	                	  <%=mb.getMember_name() %>		 
@@ -122,8 +123,7 @@
 			        </li>
 	            </ul>
 	        </nav>
-	        
-	       	<%}%>		
+	       	<%}%>
 	      	<%}else{%>
 	        <!-- not login nav user -->
 	      
@@ -133,14 +133,11 @@
 		                <li><a href="goRegister">ลงทะเบียน</a></li>    
 		                <li><a href="goLogin">เข้าสู่ระบบ</a></li>
 		            </ul>
-		        </nav>
-		      
-		        <%}%>
-	     	
-	     	
+		        </nav>  
+		    <%}%>
+		        
     </header>	 	
 </body>
-
 <style>
 
 @charset "UTF-8";

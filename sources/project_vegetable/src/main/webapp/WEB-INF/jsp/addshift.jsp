@@ -16,6 +16,12 @@
 	 	RegisterManager rgm = new RegisterManager();
 	   	Member mb = (Member)session.getAttribute("member"); 
 		Register rg = rgm.getRegisterID(mb.getMember_id());
+		
+		String resultAddshift = null;
+    	try{
+    		resultAddshift = (String) request.getAttribute("resultAddshift");
+    	}catch(Exception e){
+    	}
 	   %>
 		  
 <!DOCTYPE html>
@@ -29,13 +35,46 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
     <title>บันทึกเวลาการทำงาน</title>
     <link rel="stylesheet" href="css/addshift.css">
-    <script>
-    
+     <script type="text/javascript">
+  function check(addshift){
+	  
+	
+    var task_name = /^([ก-์]{2,50})([\s]{1,2})([ก-์]{2,50})$/;
+    var labelAlert1  = document.getElementById("alertTask_name");
+    labelAlert1.innerText="";
+    if(addshift.task_name.value==("")){
+      labelAlert1.innerText="กรุณากรอกการรับหน้าที่";
+      labelAlert1.style.color="#ff5252";
+      return false;
+      }
+    if(!addshift.task_name.value.match(Name)){
+        labelAlert1.style.color="#ff5252";
+        labelAlert1.innerText="กรุณากรอกการรับหน้าที่เป็นภาษาไทยเท่านั้น";
+        addshift.task_name.value = "";
+        return false;
+      }
+    var toTime= new Time;
+	    end_time.setHours(0,0,0,0);
+	    alertend_time= document.getElementById("alertEnddate");
+	    alertend_time.innerText="";
+    var end_time = new Date(addshift.endTime.value)
+    if(addshift.endTime.value==""){
+    	alertend_time.innerText="กรุณากรอก วัน/เดือน/ปี";
+    	alertend_time.style.color="#ff5252";
+      return false;
+    }
+   if(end_date < toTime) {
+		alertend_time.innerText="ต้องไม่ใช่เวลาปัจจุบันหรืออดีต";
+		addshift.endTime.value= ""
+	    alertend_time.style.color="#ff5252";
+      return false;
+    }
+    }
     </script>
 </head>
 <body>
 <jsp:include page="basic/header.jsp"/>
-    <form class="fit" name="fm2" action="insertAddshift" method="POST" >
+    <form class="fit" name="addshift" action="insertAddshift" method="POST" >
         <div align="center">
             <table>
                 <tr>
@@ -43,32 +82,45 @@
 	                	<b>บันทึกเวลาการทำงาน</b>
 	                </td>
                 </tr>
+                   <%if( resultAddshift != null) {%>
+		              <div class="col-md-12">
+			            <div class="bg-light rounded p-3">	    		
+							<p class="mb-0 d-inline-block" style="color:red"><span class="icon-exclamation-circle text-warning"></span> <%= resultAddshift %></p>            
+			            </div> <br> 
+		          	</div> 
+              	   <%} %>
 	            <tr>
 	                <td> รหัสนักศึกษา <br>
 	                    <input type="text" value="<%=mb.getStudent_code() %>"  name="stucode" id="stucode" class="form-control addShift" placeholder="รหัสนักศึกษา"readonly>
+	                	<label></label>
 	                </td>
 	                <td>ชื่อ-นามสกุล <br>
 	                    <input type="text" value="<%=mb.getMember_name() %>" name="name" id="name" class="form-control addShift" placeholder="ชื่อ-นามสกุล"readonly>
+	                	<label></label>
 	                </td>
 	            </tr>
             <tr>
                 <td>วันที่ทำงาน <br>
                     <input type="date" value="<%= dateshift %>" name="date" id="date" class="form-control addShift"readonly>
+                	<label></label>
                 </td>
                 <td>รับหน้าที่ <br>
                     <input type="text" name="task_name" id="task_name" class="form-control addShift" placeholder="รับหน้าที่">
+               		<label class="alert-label" id="alertTask_name"></label>
                 </td>
             </tr>
             <tr>
                 <td>เวลาเข้างาน <br>
-                    <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift"readonly>
+                    <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift" min="09:00" max="18:00"  required readonly>
+                	<label></label>
                 </td>
                 <td>เวลาออกงาน <br>
-                    <input type="time" name="endTime" id="endTime" class="form-control addShift">
+                    <input type="time" name="endTime" id="endTime"   min="09:00" max="18:00" class="form-control addShift" required>
+                    <label class="alert-label" id="alertEnddate"></label>
                 </td>
             </tr>
             <tr>
-                <td align="right"><input type="submit" name="submit" value="บันทึก" class="btn btn-success"></td>
+                <td align="right"><input type="submit" name="submit" value="บันทึก" class="btn btn-success" Onclick="return check(addshift)"></td>
                 <td><input type="reset" name="reset" value="ยกเลิก" class="btn btn-danger" ></td>
             </tr>
             <tr>

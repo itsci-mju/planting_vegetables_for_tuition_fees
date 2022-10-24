@@ -156,8 +156,6 @@
             <th>ชื่อสินค้า</th>
             <th>จำนวน</th>
             <th>รวม</th>
-            <th></th>
-            <th></th>
             </tr>
         </thead>
         <tbody>
@@ -170,12 +168,7 @@
                 <td><%= td.get(0).getAssets().getProduct_name() %> </td>
                 <td><%= td.get(0).getAmount() %> <%= td.get(0).getAssets().getProduct_unit() %></td>
                 <td><%= td.get(0).getSum() %></td>
-                
-                <td>
-                    <a>
-                        <i class="far fa-trash-alt"></i>
-                    </a> 
-                </td>   
+          
             </tr>
             <%} %>
             <%} %>

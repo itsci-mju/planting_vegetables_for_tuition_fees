@@ -1,5 +1,23 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+    <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*"  %>
+    <%
+	Logins log = new Logins();
+    String err_login = null;
+    
+	try{
+			log = (Logins)session.getAttribute("login");
+			err_login = (String) request.getAttribute("result");			
+	}catch (Exception e) {	
+	}
+	String resultAddshift = null;
+	try{
+		resultAddshift = (String) session.getAttribute("resultAddshift");
+	}catch(Exception e){
+	
+	}
+    %>
     
 <!DOCTYPE html>
 <html>
@@ -15,7 +33,16 @@
     <link rel="stylesheet" href="css/content.css">
     <link rel="stylesheet" href="css/footer.css">
 <meta charset="UTF-8">
-<title>Insert title here</title>
+
+	<script>
+	 <%if( resultAddshift != null) {%>
+		 $(document).ready(function(){
+			  alert('บันทึกการทำงานสำเร็จ รอการอนุมัติ');
+		
+			});  
+	 <%}%>
+	</script>
+<title>โครงการปลูกผักเเลกค่าเทอม</title>
 	 
 				
 </head>
