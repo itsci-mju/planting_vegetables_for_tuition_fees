@@ -225,9 +225,13 @@ public class MembersController {
 			 MemberManager mm = new MemberManager();
 
 	        int r = mm.editProfile(mb);
-	        request.setAttribute("Editresult", r);
 	        session.setAttribute("member", mb);
-	        return "viewprofile";
-	      }
-	
+	        if(r==1) {
+				request.setAttribute("Editresult", "แก้ไขข้อมูลส่วนตัวสำเร็จ");
+				return "viewprofile";
+			}else {
+				request.setAttribute("Editresult", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+				return "editProfile";
+			}
+	 	}
 }

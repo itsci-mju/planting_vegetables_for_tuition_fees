@@ -207,6 +207,7 @@
    padding: 0;
    box-sizing: border-box;
    font-family: 'Mitr', sans-serif;
+   z-index: 2;
 }
 td{
     align-items: center;
@@ -215,12 +216,14 @@ td{
 }
 table{
     margin-top: 30px;
+        
 }
 .form-control{
     width: 200px;
 }
 .container{
     margin-top: 150px;
+    margin-bottom: 80px;
 }
     /*button search*/
 .button-search{
@@ -354,6 +357,5 @@ table{
 	width:25px;
 
 }
-</style>
 </style>
 </html>

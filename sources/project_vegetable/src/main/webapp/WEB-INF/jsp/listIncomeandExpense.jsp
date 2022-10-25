@@ -65,7 +65,7 @@
 	 <h3>รายรับรายจ่ายของโครงการ</h3>
 	 <h4>"โครงการปลูกผักแลกค่าเทอม"</h4>
 	<form action="search_income_expense"  method="POST">
-		<table >
+		<table class="fit2">
 		<tr>
 			<td style="width:250px;">
 			<label>วันที่: </label>
@@ -100,9 +100,9 @@
 	  </table>
 	        
 	</form>
-	<div class="scoll-list">
-	<table class="table table-bordered" align="center"  style="width:800;">
-    <thead align="center">   
+	  
+    <table class="table table-bordered" border="1">
+    <thead  align="center">
       <tr>
         <th>วันที่ทำรายการ</th>
         <th>ประเภท</th>
@@ -188,7 +188,6 @@
     </tbody>
   </table>
 </div>
-</div>
 <jsp:include page="basic/footer.jsp" />
 </body>
 <style>
@@ -200,13 +199,7 @@
     box-sizing: border-box;
     font-family: 'Mitr', sans-serif;
  }
- .scoll-list{
- 	max-height:300px ;
-	overflow:scroll;
-	overflow-x:hidden;	 
-	padding-top:0;
-	margin-bottom:20px;
- }
+
 .container{
 	margin-top:180px;
 	margin-bottom:200px;
@@ -216,7 +209,7 @@
 }
 
 table{
-	width:1000px;
+	width:700px;
 	margin-top:50px;
 }
 .th-width{
@@ -227,7 +220,7 @@ th{
 	align:center;
 }
 thead{
-  background-color: #00AE3B;
+   background-color:#EEEEEE;
 }
 td{
     align-items: center;

@@ -10,6 +10,7 @@
 			log = (Logins)session.getAttribute("login");
 			err_login = (String) request.getAttribute("result");			
 	}catch (Exception e) {	
+		
 	}
 	String resultAddshift = null;
 	try{
@@ -33,19 +34,16 @@
     <link rel="stylesheet" href="css/content.css">
     <link rel="stylesheet" href="css/footer.css">
 <meta charset="UTF-8">
-
-	<script>
-	 <%if( resultAddshift != null) {%>
-		 $(document).ready(function(){
-			  alert('บันทึกการทำงานสำเร็จ รอการอนุมัติ');
-		
-			});  
-	 <%}%>
-	</script>
-<title>โครงการปลูกผักเเลกค่าเทอม</title>
-	 
-				
+<title>โครงการปลูกผักเเลกค่าเทอม</title>			
 </head>
+	<script>
+		 <%if( resultAddshift != null) {%>
+			 $(document).ready(function(){
+				  alert('บันทึกการทำงานสำเร็จ รอการอนุมัติ');
+			
+				});  
+		 <%}%>
+	</script>
 <body>
 <jsp:include page="basic/header.jsp" />
   <div class="slide">

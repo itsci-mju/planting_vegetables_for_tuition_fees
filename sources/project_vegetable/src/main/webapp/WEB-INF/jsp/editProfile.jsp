@@ -2,6 +2,14 @@
     pageEncoding="UTF-8"%>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
     <%@ page import="org.itsci.vegetable.model.*,org.itsci.vegetable.dao.*,java.util.*,java.text.SimpleDateFormat"%>
+        <% 
+    	String edit_profile = null;
+    	try{
+    		edit_profile= (String) request.getAttribute("Editresult");
+    	}catch(Exception e){
+    		
+    	}
+    %>
     <% 
 	    SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
@@ -20,7 +28,9 @@
     	
     	ProjectsManager pjm = new ProjectsManager ();
     	Projects pj = pjm.getprojectName(r.getProjects().getProject_id());
-   	%>
+    	%>	
+
+  
 <!DOCTYPE html>
 <html>
 <head>
@@ -32,61 +42,89 @@
 	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
-<link rel="stylesheet" href="css/profile.css">
+
 <title>แก้ไขข้อมมูลส่วนตัว</title>
 </head>
+<script type="text/javascript">
+	function check(edit){
+		//ชื่อ-นามสกุล//
+	      var Name = /^([ก-์]{2,50})([\s]{1,2})([ก-์]{2,50})$/;
+	      var labelAlert1  = document.getElementById("alertName");
+	      labelAlert1.innerText="";
+	      if(edit.name.value==("")){
+	        labelAlert1.innerText="กรุณากรอกชื่อ";
+	        labelAlert1.style.color="#ff5252";
+	        return false;
+	        }
+	      if(!edit.name.value.match(Name)){
+	          labelAlert1.style.color="#ff5252";
+	          labelAlert1.innerText="*กรุณากรอกชื่อเป็นภาษาไทยเท่านั้น";
+	          edit.name.value = "";
+	          return false;
+	        }
+	      // เบอร์โทรศัพท์ //
+	  	var Phone = /^[0]{1}([0-9]{9})$/;
+	      var labelAlert2  = document.getElementById("alertPhone");
+	      labelAlert2.innerText="";
+	      if(edit.phone.value==("")){
+	          labelAlert2.innerText="กรุณากรอกเบอร์โทรศัพท์";
+	          labelAlert2.style.color="#ff5252";
+	          return false;
+	        }
+	       if(!edit.phone.value.match(Phone)){
+	          labelAlert2.style.color="#ff5252";
+	          labelAlert2.innerText="*กรุณากรอกเป็นตัวเลขและขึ้นต้นด้วยเลข 0 เท่านั้น" ;
+	          edit.phone.value = "";
+	          return false;
+	        }
+	 }
+</script>
 <body>
 <jsp:include page="basic/header.jsp" />   
-<form name="fm1" class="fit" method="post" action="submitEdit" >
+<form name="edit" class="fit" method="post" action="submitEdit" >
     <div align="center"  >
         <p>แก้ไขข้อมูลส่วนตัว</p>
-    <table>                
+   
+    <table>  
+      <%if( edit_profile != null) {%>
+              <div class="col-md-12">
+	            <div class="bg-light rounded p-3">	    		
+					<p class="mb-0 d-inline-block" style="color:red"><span class="icon-exclamation-circle text-warning"></span><%= edit_profile %></p>            
+	            </div> <br> 
+          	</div> 
+      <%} %>
+				<div><b><label style="color:red" id="alertName"></label>
+					<label style="color:red" id="alertPhone"></label></b></div>                    
         <tr>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="name" id="name" class="form-control registered" placeholder="ชื่อ-นามสกกุล" Onblur="from(fm1)" value="<%= mb.getMember_name() %>">
-                    <label for="floating">ชื่อ-นามสกุล</label>
-                  </div>
+            <td>ชื่อ-นามสกุล<br> 
+                <input type="text" name="name" id="name" class="form-control registered" placeholder="ชื่อ-นามสกกุล"  value="<%= mb.getMember_name() %>">
             </td>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="stucode" id="stucode" class="form-control registered" placeholder="รหัสนักศึกษา" Onblur="from(fm1)" value="<%= mb.getStudent_code() %>"readonly>
-                    <label for="floating">รหัสนักศึกษา</label>
-                  </div>
+            <td>รหัสนักศึกษา<br>
+                <input type="text" name="stucode" id="stucode" class="form-control registered" placeholder="รหัสนักศึกษา" value="<%= mb.getStudent_code() %>"readonly>	
             </td>
         </tr>
-       
         <tr>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="phone" id="phone" class="form-control registered" placeholder="เบอร์โทรศัพท์" Onblur="from(fm1)" value="<%= mb.getMember_phone() %>">
-                    <label for="floating">เบอร์โทรศัพท์</label>
-                  </div>
+            <td>เบอร์โทรศัพท์<br>
+      			<input type="text" name="phone" id="phone" placeholder="เบอร์โทรศัพท์" maxlength="10" value="<%= mb.getMember_phone() %>" class="form-control registered" >
+            	
             </td>
-            <td>
-                    <div class="form-floating">
-                    <input type="text" name="major" id="major" class="form-control registered" value="<%= mb.getStudent_major() %>"  placeholder="สาขา" readonly>
-                    <label for="floating">สาขา</label>
-                </div>
+            <td>สาขา<br>
+                    <input type="text" name="major" id="major" class="form-control registered" value="<%= mb.getStudent_major() %>"  placeholder="สาขา" readonly>  
             </td>
         </tr>
      
         <tr>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="birthday" id="birthday" class="form-control registered" placeholder="วันเกิด" value="<%= sdf.format(mb.getMember_birthday().getTime()) %>" readonly>
-                    <label for="floating">วันเกิด</label>
-                  </div>
+            <td>วันเกิด<br>
+               <input type="text" name="birthday" id="birthday" class="form-control registered" placeholder="วันเกิด" value="<%= sdf.format(mb.getMember_birthday().getTime()) %>" readonly>
+           <label></label>
             </td>
-            <td>
-                <div class="form-floating">
-                    <input type="text" name="faculty" id="faculty" class="form-control registered" placeholder="สังกัดคณะ/โครงการ" value="<%= pj.getName() %>" readonly >
-                    <label for="floating">สังกัดคณะ/โครงการ</label>
-                  </div>
+            <td>สังกัดคณะ/โครงการ<br>
+                <input type="text" name="faculty" id="faculty" class="form-control registered" placeholder="สังกัดคณะ/โครงการ" value="<%= pj.getName() %>" readonly >
+            
             </td>
         </tr>
          <tr>
-                <td align="right"><input type="submit" name="submit" value="บันทึก" class="btn btn-success"></td>
+                <td align="right"><input type="submit" name="submit" value="บันทึก" class="btn btn-success" Onclick="return check(edit)"></td>
                 <td><input type="reset" name="reset" value="ยกเลิก" class="btn btn-danger" ></td>
             </tr>
     </table>    
@@ -100,4 +138,71 @@
 <jsp:include page="basic/footer.jsp" />
 
 </body>
+<style>
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+}
+p{
+    font-size: 30px;
+    color:#353b48; 
+}
+label{
+font-size: 16px;
+}
+
+.fit {
+    background-color: #f2f2f25e;
+    border-radius: 2px;
+    margin-left: 480px;
+    margin-right: 457px;
+    margin-top: 155px;
+    margin-bottom: 99px;
+    padding: 64px;
+    padding-top: 30px;
+    display: flex;
+    justify-items: center;
+}
+
+.registered{
+    width:215px;
+    margin: 8px;
+}
+
+.btnSite{
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 5;
+    background-color: #9E9E9E;
+    border: 0;
+    color: #9E9E9E;
+    margin: 0;
+    margin-top:20px;
+}
+
+.btnSite:hover{
+    background-color: #9E9E9E;
+}
+
+.btnSelect:hover{
+    background-color: #BDBDBD;
+    color: white;
+}
+
+.btnsubmit{
+    background-color: rgb(#BDBDBD); 
+    color: white;
+}
+
+.btnsubmit:hover{
+    background-color: #BDBDBD;
+}
+.bg-light {
+    background-color: #F2F2F2!important;
+}
+</style>
 </html>

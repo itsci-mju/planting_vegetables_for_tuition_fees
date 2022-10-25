@@ -12,16 +12,17 @@ p{
 }
 
 .fit {
-	background-color: #F2F2F2;
-	border-radius: 10px;
-	margin-left: 480px;
-	margin-right: 480px;
-	margin-top: 155px;
-	margin-bottom: 99px;
-	padding: 65px;
-	padding-top: 30px;
-	display: flex;
-	justify-items: center;
+	
+    background-color: #f2f2f25e;
+    border-radius: 2px;
+    margin-left: 480px;
+    margin-right: 457px;
+    margin-top: 155px;
+    margin-bottom: 99px;
+    padding: 64px;
+    padding-top: 30px;
+    display: flex;
+    justify-items: center;
 }
 
 .registered{

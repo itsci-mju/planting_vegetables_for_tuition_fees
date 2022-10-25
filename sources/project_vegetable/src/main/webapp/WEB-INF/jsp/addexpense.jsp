@@ -157,6 +157,7 @@
             </tr>
         </thead>
         <tbody>
+        <% if(ts.size()>0){ %>
         <% for(Transaction t : ts ) {%>
         <% List<Transaction_details> td = tm.list_transaction_details(t.getTransaction_id()); %>
         <% if( !td.get(0).getAssets().getEquipment_name().equals("-")){ %>     
@@ -169,6 +170,11 @@
             </tr>
             <%} %>
             <%} %>
+            <%}else{%>
+		      	<tr>
+		      		<td colspan="6"><h3 align="center">ไม่มีรายการเเสดง</h3></td>
+		      	</tr>
+      	<%} %>
         </tbody>
         </table>
         </div>   

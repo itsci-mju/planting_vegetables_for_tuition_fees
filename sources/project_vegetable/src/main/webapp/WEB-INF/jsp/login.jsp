@@ -35,7 +35,7 @@
     <script src="https://code.jquery.com/jquery-3.5.1.js"></script>
 
 <meta charset="UTF-8">
-<title></title>
+<title>เข้าสู่ระบบ</title>
 </head>
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css"/>
 <script src="js/login.js"></script>

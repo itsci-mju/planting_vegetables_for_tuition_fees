@@ -96,8 +96,7 @@ public class RegisterController {
 				}else {
 					request.setAttribute("resultRegis", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
 					return "register";
-				}
-		 
+				} 
 			 }
 		 }
 		return "content";

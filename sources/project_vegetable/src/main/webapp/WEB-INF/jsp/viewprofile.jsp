@@ -34,7 +34,6 @@
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 <title>ข้อมูลส่วนตัว</title>
-<link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 <jsp:include page="basic/header.jsp" />   
@@ -95,4 +94,68 @@
 </form>
 <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+}
+p{
+    font-size: 30px;
+    color:#353b48; 
+}
+
+.fit {
+	
+    background-color: #f2f2f25e;
+    border-radius: 2px;
+    margin-left: 480px;
+    margin-right: 457px;
+    margin-top: 155px;
+    margin-bottom: 99px;
+    padding: 64px;
+    padding-top: 30px;
+    display: flex;
+    justify-items: center;
+}
+
+.registered{
+    width:215px;
+    margin: 5px;
+}
+
+.btnSite{
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 5;
+    background-color: #9E9E9E;
+    border: 0;
+    color: #9E9E9E;
+    margin: 0;
+    margin-top:20px;
+}
+
+.btnSite:hover{
+    background-color: #9E9E9E;
+}
+
+.btnSelect:hover{
+    background-color: #BDBDBD;
+    color: white;
+}
+
+.btnsubmit{
+    background-color: rgb(#BDBDBD); 
+    color: white;
+}
+
+.btnsubmit:hover{
+    background-color: #BDBDBD;
+}
+
+</style>
 </html>

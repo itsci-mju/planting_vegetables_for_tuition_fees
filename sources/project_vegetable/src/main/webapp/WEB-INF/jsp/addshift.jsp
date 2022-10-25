@@ -37,19 +37,17 @@
     <link rel="stylesheet" href="css/addshift.css">
      <script type="text/javascript">
   function check(addshift){
-	  
-	
     var task_name = /^([ก-์]{2,50})([\s]{1,2})([ก-์]{2,50})$/;
     var labelAlert1  = document.getElementById("alertTask_name");
     labelAlert1.innerText="";
     if(addshift.task_name.value==("")){
-      labelAlert1.innerText="กรุณากรอกการรับหน้าที่";
+      labelAlert1.innerText="*กรุณากรอกการรับหน้าที่";
       labelAlert1.style.color="#ff5252";
       return false;
       }
     if(!addshift.task_name.value.match(Name)){
         labelAlert1.style.color="#ff5252";
-        labelAlert1.innerText="กรุณากรอกการรับหน้าที่เป็นภาษาไทยเท่านั้น";
+        labelAlert1.innerText="*กรุณากรอกการรับหน้าที่เป็นภาษาไทยเท่านั้น";
         addshift.task_name.value = "";
         return false;
       }
@@ -59,12 +57,12 @@
 	    alertend_time.innerText="";
     var end_time = new Date(addshift.endTime.value)
     if(addshift.endTime.value==""){
-    	alertend_time.innerText="กรุณากรอก วัน/เดือน/ปี";
+    	alertend_time.innerText="*กรุณากรอกเวลาออกงาน";
     	alertend_time.style.color="#ff5252";
       return false;
     }
    if(end_date < toTime) {
-		alertend_time.innerText="ต้องไม่ใช่เวลาปัจจุบันหรืออดีต";
+		alertend_time.innerText="*ต้องไม่ใช่เวลาปัจจุบันหรืออดีต";
 		addshift.endTime.value= ""
 	    alertend_time.style.color="#ff5252";
       return false;
@@ -76,12 +74,8 @@
 <jsp:include page="basic/header.jsp"/>
     <form class="fit" name="addshift" action="insertAddshift" method="POST" >
         <div align="center">
+        			<h3 class="ptext">บันทึกเวลาการทำงาน</h3>
             <table>
-                <tr>
-	                <td colspan="2" align="center"><img class="img1" src="img/logo.png"><br>
-	                	<b>บันทึกเวลาการทำงาน</b>
-	                </td>
-                </tr>
                    <%if( resultAddshift != null) {%>
 		              <div class="col-md-12">
 			            <div class="bg-light rounded p-3">	    		
@@ -89,34 +83,31 @@
 			            </div> <br> 
 		          	</div> 
               	   <%} %>
+              	   <div><b><label class="alert-label" id="alertEnddate"></label>
+              	   <label class="alert-label" id="alertTask_name"></label></b></div>  
 	            <tr>
 	                <td> รหัสนักศึกษา <br>
 	                    <input type="text" value="<%=mb.getStudent_code() %>"  name="stucode" id="stucode" class="form-control addShift" placeholder="รหัสนักศึกษา"readonly>
-	                	<label></label>
 	                </td>
 	                <td>ชื่อ-นามสกุล <br>
 	                    <input type="text" value="<%=mb.getMember_name() %>" name="name" id="name" class="form-control addShift" placeholder="ชื่อ-นามสกุล"readonly>
-	                	<label></label>
 	                </td>
 	            </tr>
             <tr>
                 <td>วันที่ทำงาน <br>
                     <input type="date" value="<%= dateshift %>" name="date" id="date" class="form-control addShift"readonly>
-                	<label></label>
+                	
                 </td>
                 <td>รับหน้าที่ <br>
-                    <input type="text" name="task_name" id="task_name" class="form-control addShift" placeholder="รับหน้าที่">
-               		<label class="alert-label" id="alertTask_name"></label>
+                    <input type="text" name="task_name" id="task_name" class="form-control addShift" placeholder="รับหน้าที่">  
                 </td>
             </tr>
             <tr>
                 <td>เวลาเข้างาน <br>
                     <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift" min="09:00" max="18:00"  required readonly>
-                	<label></label>
                 </td>
                 <td>เวลาออกงาน <br>
                     <input type="time" name="endTime" id="endTime"   min="09:00" max="18:00" class="form-control addShift" required>
-                    <label class="alert-label" id="alertEnddate"></label>
                 </td>
             </tr>
             <tr>
@@ -133,4 +124,46 @@
     </form>
     <jsp:include page="basic/footer.jsp" />
     </body>
+    <style>
+    @charset "UTF-8";
+body{
+    font-family: 'Mitr', sans-serif;
+    
+}
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+}
+.img1{
+    width: 120px;
+    height: 120px; 
+}
+.alert-label{
+    font-size: 18px;
+}
+.ptext{
+	font-size: 26px;
+}
+.addShift{
+    width:215px;
+    margin: 5px;
+}
+.fit {
+	background-color: #ECECEC;
+    border-radius: 10px;
+    margin-left: 486px;
+    margin-right: 479px;
+    margin-bottom: 90px;
+    margin-top: 180px;
+    padding: 54px;
+    padding-top: 46px;
+    display: flex;
+    justify-items: center;
+}
+table{
+margin-top: 1px;
+}
+</style>
 </html>
