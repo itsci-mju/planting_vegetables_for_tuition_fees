@@ -62,8 +62,8 @@
 <body>
 <jsp:include page="basic/header.jsp" /> 
 	<div class="container" align="center"> 
-	 <h3>รายรับรายจ่ายของโครงการ</h3>
-	 <h4>"โครงการปลูกผักแลกค่าเทอม"</h4>
+	 <h2>รายรับรายจ่ายของโครงการ</h2>
+	 <h3>"โครงการปลูกผักแลกค่าเทอม"</h3>
 	<form action="search_income_expense"  method="POST">
 		<table class="fit2">
 		<tr>

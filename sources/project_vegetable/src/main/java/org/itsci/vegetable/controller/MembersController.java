@@ -47,6 +47,7 @@ public class MembersController {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		int rr=-1;
 		Calendar cal = new GregorianCalendar();
 		Calendar cal_date = new GregorianCalendar();
 		
@@ -85,11 +86,14 @@ public class MembersController {
         Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,0,r);
    
         MembershiftManager msm = new MembershiftManager();
-		msm.insertShift(ms);
-        
-		session.setAttribute("message", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
-		return "content";
-
+		rr=msm.insertShift(ms);
+		 if(rr==1) {
+			 request.setAttribute("resultAddshift", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
+				return "content";
+			}else {
+			 request.setAttribute("resultAddshift", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+				return "addshift";
+			}
 	}
 	
 	/*end addshift*/
@@ -101,7 +105,7 @@ public class MembersController {
 	return "listShift";
 	}
 	
-	/*approveShift*/
+	
 	@RequestMapping(value="/approveShift", method=RequestMethod.GET)
 	public String goapproveShift(HttpServletRequest request,HttpSession session) {
 		String mid = request.getParameter("id");
@@ -113,15 +117,14 @@ public class MembersController {
 	return "approveShift";
 
 	}
-	
+	/*approveShift*/
 	@RequestMapping(value="/updateApproveshift", method=RequestMethod.POST)
 	public String updateApproveshift(HttpServletRequest request,HttpSession session) throws ParseException {
 		try {
 			request.setCharacterEncoding("UTF-8");
 				} catch (UnsupportedEncodingException e1) {
 			// TODO Auto-generated catch block
-			e1.printStackTrace();
-			
+			e1.printStackTrace();			
 		}
 		int r=-1;
 		Calendar cal = new GregorianCalendar();
@@ -159,14 +162,14 @@ public class MembersController {
    
         
         MembershiftManager msm = new MembershiftManager();
-		msm.ApproveShift(ms);
+		r=msm.ApproveShift(ms);
 		
 		 if(r==1) {
-			 session.setAttribute("resultAddshift", "บันทึกเวลาทำงานเสร็จสิ้น รอการอนุมัติ");
-				return "content";
+			 request.setAttribute("resultApproveshift", "การตรวจสอบสำเสร็จ");
+				return "listShift";
 			}else {
-				request.setAttribute("resultAddshift", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
-				return "addshift";
+			 request.setAttribute("resultApproveshift", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+				return "approveShift";
 			}
 	}
 	/*my profile*/

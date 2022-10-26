@@ -16,6 +16,13 @@
 	    Member mb = rg.getMember_shift(m.getStudent_code());
 		Register r = rg.getRegisterID(mb.getMember_id());
 	   	Member_shifts mbs = ms.getMShifts_byRegis(r.getRegister_id());
+		
+	   	String resultApproveshift = null;
+    	try{
+    		resultApproveshift = (String) request.getAttribute("resultApproveshift");
+    	}catch(Exception e){
+    	}
+	   
 	   %>	
 	   
 <!DOCTYPE html>
@@ -28,23 +35,20 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
     <title>ตรวจสอบเวลาการทำงาน</title>
-    <link rel="stylesheet" href="css/addshift.css">
-    <script>
-    
-    </script>
 </head>
 <body>
 
 <jsp:include page="basic/header.jsp"/>
     <form class="fit" name="fm2" action="updateApproveshift" method="POST" >
         <div align="center">
-        
-            <table>
-                <tr>
-	                <td colspan="2" align="center"><img class="img1" src="img/logo.png"><br>
-	                	<b>ตรวจสอบเวลาการทำงาน</b> <input type="hidden" value="<%= mbs.getMember_shift_id() %>"  name="member_shift_id" id="member_shift_id" >
-	                </td>
-                </tr>
+        <h3>ตรวจสอบเวลาการทำงาน</h3>   
+        <%if( resultApproveshift != null) {%>
+			<div>	
+				<p class="mb-0 d-inline-block" style="color:red"><%= resultApproveshift %></p>            
+			</div>	
+       <%} %>
+            <table> 
+				<input type="hidden" value="<%= mbs.getMember_shift_id() %>"  name="member_shift_id" id="member_shift_id" >
 	            <tr>
 	                <td> รหัสนักศึกษา <br>
 	                    <input type="text" value="<%= m.getStudent_code() %>"  name="stucode" id="stucode" class="form-control addShift" placeholder="รหัสนักศึกษา"readonly>
@@ -79,4 +83,61 @@
     </form>
     <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+body{
+    font-family: 'Mitr', sans-serif; 
+}
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+   z-index:2;
+}
+.fit {
+	background-color: #ECECEC;
+    border-radius: 10px;
+    margin-left: 486px;
+    margin-right: 479px;
+    margin-bottom: 90px;
+    margin-top: 180px;
+    padding: 54px;
+    padding-top: 46px;
+    display: flex;
+    justify-items: center;
+}
+table{
+margin-top: 1px;
+}
+.addShift{
+   width:215px;
+    margin: 5px;
+}
+.select{
+    padding:5px ;
+    width: 250px;
+    border-radius: 5px;
+    margin-left:10px;
+}
+textarea{
+    height: 150px !important;
+}
+
+a.button {
+    -webkit-appearance: button;
+    -moz-appearance: button;
+   	 appearance: button;
+    text-decoration: none;
+    color: initial;
+}
+button{
+    height: 40px;
+    width: 200px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 5px; 
+}
+
+</style>
 </html>

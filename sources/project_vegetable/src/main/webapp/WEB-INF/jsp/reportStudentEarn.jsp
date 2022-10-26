@@ -198,9 +198,8 @@
 </script>
 
 <style  id="table_style" >
-    body{
-    font-family: 'Mitr', sans-serif;
-    
+body{
+    font-family: 'Mitr', sans-serif;  
 }
 *{
    margin: 0;
@@ -217,6 +216,9 @@ td{
 table{
     margin-top: 30px;
         
+}
+thead{
+   background-color:#EEEEEE;
 }
 .form-control{
     width: 200px;
