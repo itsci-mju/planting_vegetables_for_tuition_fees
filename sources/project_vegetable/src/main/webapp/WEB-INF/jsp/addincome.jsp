@@ -77,11 +77,11 @@
 	    	  labelAlertAmount.innerText="กรุณากรอกจำนวน";
 	    	  labelAlertAmount.style.color="#ff5252";
 	          return false;
-	        }else if(!addincome.amount.value.match(amount)){
+	        }/*else if(!addincome.amount.value.match(amount)){
 	        	labelAlertAmount.style.color="#ff5252";
 	        	labelAlertAmount.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
 		        return false; 
-		      }
+		      }*/
 		}
 	</script>
 
@@ -112,8 +112,8 @@
             </tr>           
             <tr>
                 <td>
-                     <div>
-	                     <select name="product_name" id="product_name" class="custom-select" style="height:58px;" onchange="autoPrice()">                 
+                     <div>ชื่อสินค้า<br>
+	                     <select name="product_name" id="product_name" class="custom-select" onchange="autoPrice()">                 
 		                    <option value disabled selected>เลือกสินค้า</option>
 		                    <% for(int i=0;i<as.size();i++){ 
 		                    	if(!as.get(i).getProduct_name().equals("-")){
