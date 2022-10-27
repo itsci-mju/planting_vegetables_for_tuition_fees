@@ -30,7 +30,7 @@
         <h2 >รายนักศึกษาโครงการ</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
    	 <div class="container-fluid" >       
-        <table class="table table-hover" >
+        <table class="table table-bordered" >
         <thead  align="center">
             <tr>
             <th>รหัสนักศึกษา</th>
@@ -50,11 +50,8 @@
             <td>
                 <a href="goSetPermissions?id=<%= mm.getMember_id() %>" class="btn btn-warning" > ดูรายละเอียด</a>
             </td>
-            </tr> 
-           		
-           <%} 
-           		session.setAttribute("member", member);
-           %>                             
+            </tr>	
+           <%} session.setAttribute("member", member); %>                             
         </tbody>
         </table>
         </div>
@@ -88,6 +85,10 @@ a {
   border: 2px solid #4CAF50; /* Green */
   text-decoration: none;
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+ thead{
+   
+    background-color:#EEEEEE;
 }
 </style>
 </html>

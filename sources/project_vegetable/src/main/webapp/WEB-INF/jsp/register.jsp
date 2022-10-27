@@ -121,8 +121,8 @@
             return false;
           }
 
-        var Birthday = new Date;
-        Birthday.setHours(0,0,0,0);
+        var today = new Date;
+        today.setHours(0,0,0,0);
         alertBirth = document.getElementById("alertBirthday");
         alertBirth.innerText="";
         var date = new Date(regis.birthday.value)
@@ -148,7 +148,7 @@
           labelAlertfaculty.style.color="#ff5252";
           return false;
         }
-
+        
 	
 	  // เหตุผลในการเข้าโครงการ //
 	   var Reason = /^([ก-์]{10,255})$/;
@@ -169,6 +169,8 @@
 	    var Email = /^(mju|MJU)[0-9]{10}([@mju.ac.th]{10})$/;
 	    var labelAlertemail  = document.getElementById("alertEmail");
 	    labelAlertemail.innerText="";
+	    
+	    
 	    if(regis.email.value==("")){
 	      labelAlertemail.innerText="กรุณากรอกอีเมล";
 	      labelAlertemail.style.color="#ff5252";
@@ -179,16 +181,14 @@
 	        labelAlertemail.innerText="อีเมลต้องเป็นตัวอักษรภาษาอังกฤษและตัวเลขต้องขึ้นต้นด้วย mju เท่านั้นและมีความยาว 23 ตัวเท่านั้น";
 	        return false;
 	      }
-	 	
+	    
 	    <%for(Logins lg : l){%>
 	  	  if(regis.email.value == '<%= lg.getEmail() %>' ){
-	  	    document.getElementById('alertEmail').innerHTML = "อีเมล์นี้ถูกใช้แล้ว";
+	  		 labelAlertemail.innerText="อีเมล์นี้ถูกใช้แล้ว";
 	  	    labelAlertemail.style.color="#ff5252";
 	  	  return false;
 	  	  }
 	  	<%}%>
-	  	
-	 
 	
 	   // รหัสผ่าน //
 	 
@@ -275,7 +275,7 @@
                     <td>สังกัดคณะ/โครงการ:<br>
                       <div class="form-floating">
                         <select name="faculty" id="faculty" class="custom-select registered">
-                            <option value disabled selected>สังกัดคณะ/โครงการ</option>
+                            <option value="" disabled selected>สังกัดคณะ/โครงการ</option>
                             <% for(int i=0;i<pj.size();i++){%>
                             <option value="<%= pj.get(i).getProject_id() %>"><%= pj.get(i).getName() %></option>
                             <%}%>

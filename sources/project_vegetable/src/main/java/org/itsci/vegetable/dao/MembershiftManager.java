@@ -86,7 +86,7 @@ public class MembershiftManager {
             Statement stmt = con.createStatement();
             
             String column = "member_shift_id,date,endTime,startTime,status,task_name,register_id";
-            String sql = "select "+column+" from member_shifts";
+            String sql = "select "+column+" from member_shifts order by status ";
             ResultSet rs = stmt.executeQuery(sql);
             while(rs.next()) {
                 String member_shift_id = rs.getString(1);  

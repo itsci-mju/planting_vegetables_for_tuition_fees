@@ -57,13 +57,35 @@
 			document.getElementById("sum").value = amount*document.getElementById("asset_price").value;	
 			
 		}
-
+		function check(addExpense){
+			  // select option กรุณาเลือกสินค้า//
+			  
+		    var labelAlertProduct_name  = document.getElementById("alertProduct_name");
+		    	labelAlertProduct_name.innerText="";
+		    if(addExpense.product_name.value==("")){
+		    	labelAlertProduct_name.innerText="กรุณาเลือกสินค้า";
+		    	labelAlertProduct_name.style.color="#ff5252";
+		      return false;
+		    }
+		    var amount = /^[1-9]{1}([0-9]{)$/;
+		      var labelAlertAmount  = document.getElementById("alertAmount");
+		      labelAlertAmount.innerText="";
+		      if(addExpense.amount.value==("")){
+		    	  labelAlertAmount.innerText="กรุณากรอกจำนวน";
+		    	  labelAlertAmount.style.color="#ff5252";
+		          return false;
+		        }else if(!addExpense.amount.value.match(amount)){
+		        	labelAlertAmount.style.color="#ff5252";
+		        	labelAlertAmount.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
+			        return false; 
+			      }
+			}
 	</script>
 </head>
 
 <body>
 <jsp:include page="basic/header.jsp" /> 
-    <form align="center" action="addExpense"  method="POST" > 
+    <form align="center" action="addExpense" name="addexpense" method="POST" > 
     <div  class="main">
         <h3>บันทึกรายจ่าย</h3>
         <h4>"โครงการปลูกผักเเลกค่าเทอม"</h4>

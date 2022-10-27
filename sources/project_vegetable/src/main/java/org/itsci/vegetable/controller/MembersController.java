@@ -31,6 +31,7 @@ public class MembersController {
 		Logins log = (Logins) session.getAttribute("login");
 		MemberManager lmem = new MemberManager();
 		System.out.println(log.getMember().getMember_id());
+		
 		Member listmember = lmem.getMember(log.getMember().getMember_id());
 		
 		session.setAttribute("member", listmember);
@@ -159,6 +160,45 @@ public class MembersController {
        rg.setRegister_id(register_id);
         
         Member_shifts ms = new Member_shifts(msid,task_name,cal_date,cal,cal_e_date,1,rg);
+   
+        
+        MembershiftManager msm = new MembershiftManager();
+		r=msm.ApproveShift(ms);
+		
+		 if(r==1) {
+			 request.setAttribute("resultApproveshift", "การตรวจสอบสำเสร็จ");
+				return "listShift";
+			}else {
+			 request.setAttribute("resultApproveshift", "เกิดข้อผิดพลาด กรุณาลองใหม่อีกครั้ง !!!");
+				return "approveShift";
+			}
+	}
+	/*approvecancelShift*/
+	@RequestMapping(value="/updateApproveCancelshift", method=RequestMethod.GET)
+	public String updateApproveCancelshift(HttpServletRequest request,HttpSession session) throws ParseException {
+		try {
+			request.setCharacterEncoding("UTF-8");
+				} catch (UnsupportedEncodingException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();			
+		}
+		int r=-1;
+		Calendar cal_e_date = new GregorianCalendar();
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+		
+	    String msid = request.getParameter("msid");    
+        String task_name = request.getParameter("tn");  
+        String endTime = request.getParameter("eT");		
+	
+		String[] et = endTime.split(":");
+		int et_hour = Integer.parseInt(et[0]);
+		int et_min = Integer.parseInt(et[1]);
+		cal_e_date.set(Calendar.HOUR_OF_DAY, et_hour);
+		cal_e_date.set(Calendar.MINUTE, et_min);
+	
+       
+        
+        Member_shifts ms = new Member_shifts(msid,task_name,cal_e_date,3);
    
         
         MembershiftManager msm = new MembershiftManager();

@@ -100,9 +100,12 @@
 		            </td>
 		        </tr>
 	    	</table>
-        </form> 
+        </form>  
+        
     <div id="dvContents" >
-        <table class="table table-bordered" id="dvContents" border="1">
+        <div class="scoll-list">   
+        <table class="table table-bordered" id="dvContents" border="1" >
+         
             <thead>
               <tr>
                 <th>วันที่</th>
@@ -154,9 +157,12 @@
              	<% } %>
              <% } %>
             </tbody>
+           
           </table>
+          </div> 
+          </div>
     </div>
-    </div>
+    
 <jsp:include page="basic/footer.jsp" />
 </body>
 <script type="text/javascript">
@@ -220,6 +226,13 @@ thead{
 .tr3 {
     margin-top: 39px;
 }
+.scoll-list{
+ 	max-height:500px ;
+	overflow:scroll;
+	overflow-x:hidden;	 
+	padding-top:0;
+	margin-bottom:20px;
+ }
     /*button search*/
 .button-search{
   align-items: center;

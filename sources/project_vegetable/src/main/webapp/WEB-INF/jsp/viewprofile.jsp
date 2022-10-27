@@ -20,6 +20,13 @@
     	
     	ProjectsManager pjm = new ProjectsManager();
     	Projects pj = pjm.getprojectName(r.getProjects().getProject_id());
+    	
+    	String edit_profile = null;
+    	try{
+    		edit_profile= (String) request.getAttribute("Editresult");
+    	}catch(Exception e){
+    		
+    	}
    	%>
     
 <!DOCTYPE html>
@@ -34,6 +41,16 @@
 	<!-- JavaScript Bundle with Popper -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
 <title>ข้อมูลส่วนตัว</title>
+
+	<script>  
+   				
+				 <%if( edit_profile != null) {%>
+					 $(document).ready(function(){
+						  alert('แก้ไขข้อมูลส่วนตัวสำเร็จ');
+					
+			  		});  
+				 <%}%>
+  		</script>
 </head>
 <body>
 <jsp:include page="basic/header.jsp" />   

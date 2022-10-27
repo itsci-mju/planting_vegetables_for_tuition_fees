@@ -53,7 +53,14 @@ public Member_shifts(String member_shift_id, String task_name, Calendar date, Ca
 	this.status = status;
 	this.register = register;
 }
+public Member_shifts(String member_shift_id, String task_name, Calendar endTime,int status) {
+	super();
+	this.member_shift_id = member_shift_id;
+	this.task_name = task_name;
+	this.endTime = endTime;
+	this.status = status;
 
+}
 public String getMember_shift_id() {
 	return member_shift_id;
 }

@@ -125,7 +125,7 @@ public class TransactionManager {
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
-			String sql = "select * from assets";
+			String sql = "select * from assets  ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int asset_id = rs.getInt(1);

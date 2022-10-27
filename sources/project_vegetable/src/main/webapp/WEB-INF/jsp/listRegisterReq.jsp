@@ -21,7 +21,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
     <title>รายนักศึกษาที่ขอเข้าร่วมโครงการ</title>
-    <link rel="stylesheet" href="css/listRegisterReq.css">
 </head>
 <body>
 	<jsp:include page="basic/header.jsp" /> 
@@ -30,16 +29,15 @@
         <h2 >รายนักศึกษาที่ขอเข้าร่วมโครงการ</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
     <div class="container-fluid" >       
-        <table class="table table-hover" >
+        <table class="table table-bordered" >
         <thead  align="center">
-        
             <tr>
             <th>ลำดับที่</th>
             <th>รหัสนักศึกษา</th>
             <th>ชื่อ-นามสกุล</th>
             <th>คณะ</th>
             <th>สาขา</th>
-            <th>###</th>
+            <th></th>
             </tr>
            
         </thead>
@@ -78,4 +76,28 @@
     </form>
     <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+	@charset "UTF-8";
+body{
+    font-family: 'Mitr', sans-serif;
+    position: relative;
+}
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Mitr', sans-serif;
+ }
+ 
+ thead{
+    background-color:#EEEEEE;
+}
+p{
+    font-size: 25px;
+}
+.fit{
+	margin-top: 150px;
+	margin-bottom: 330px;
+}
+</style>
 </html>

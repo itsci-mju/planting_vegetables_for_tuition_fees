@@ -89,7 +89,7 @@ public class RegisterController {
 			 
 			r=  mm.insertMembers(mb);
 			r=  rm.insertRegister(reg);
-			 mm.insertLogins(log, mb);
+			r= mm.insertLogins(log, mb);
 			 if(r==1) {
 					request.setAttribute("resultRegis", "สมัครสมาชิกสำเร็จ รอการอนุมัติ");
 					return "login";

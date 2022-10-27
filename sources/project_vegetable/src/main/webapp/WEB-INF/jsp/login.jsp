@@ -14,7 +14,7 @@
 	}
 	String resultRegis = null;
 	try{
-		resultRegis = (String) session.getAttribute("resultRegis");
+		resultRegis = (String) request.getAttribute("resultRegis");
 	}catch(Exception e){
 	
 	}

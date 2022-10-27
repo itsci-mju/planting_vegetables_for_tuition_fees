@@ -42,7 +42,7 @@
             <th>รหัสนักศึกษา</th>
             <th>ชื่อ-นามสกุล</th>
             <th>วันที่ทำงาน</th>
-            <th></th>
+            <th>สถานะ</th>
             </tr>
         </thead>
         
@@ -52,12 +52,18 @@
             <td><%= rg.getstuCode(ms.getRegister().getRegister_id()).getStudent_code()%></td>
             <td><%= rg.getstuCode(ms.getRegister().getRegister_id()).getMember_name() %></td>
             <td><%= sdf.format(ms.getDate().getTime()) %></td>   
-            <td>
-                <a href="approveShift?id=<%=rg.getstuCode(ms.getRegister().getRegister_id()).getStudent_code()%>">
-                    <button type="button" class="button-17" role="button">ตรวจสอบ
-				&nbsp; 	<i class="gg-eye"></i></button>
-                </a>
+            <td><% if(ms.getStatus()==1) {%>
+            		อนุมัติ
+            <%}else if(ms.getStatus()==3){ %>
+            		ไม่อนุมัติ
+            <%}else{ %>
+             <a href="approveShift?id=<%=rg.getstuCode(ms.getRegister().getRegister_id()).getStudent_code()%>">
+                 <button type="button" class="button-17" role="button">ตรวจสอบ
+				&nbsp;<i class="gg-eye"></i></button>
+             </a>
+           	<%} %>
             </td>
+            
             </tr> 
             <% } %> 
         </tbody> 

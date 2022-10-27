@@ -39,6 +39,7 @@
 
 <title>บันทึกรายรับ</title>
 	<script type="text/javascript">
+	/*เลือกสินค้า*/
 		function autoPrice(){
 			var product_name = document.getElementById("product_name").value;
 			var asset_price = document.getElementById("asset_price").innerHTML;
@@ -57,10 +58,31 @@
 			var amount = document.getElementById("amount").value;
 			var asset_price = document.getElementById("asset_price").innerHTML;
 			console.log(product_name);
-			document.getElementById("sum").value = amount*document.getElementById("asset_price").value;	
-			
+			document.getElementById("sum").value = amount*document.getElementById("asset_price").value;		
 		}
-
+		function check(addincome){
+		  // select option กรุณาเลือกสินค้า//
+		  
+	    var labelAlertProduct_name  = document.getElementById("alertProduct_name");
+	    	labelAlertProduct_name.innerText="";
+	    if(addincome.product_name.value==("")){
+	    	labelAlertProduct_name.innerText="กรุณาเลือกสินค้า";
+	    	labelAlertProduct_name.style.color="#ff5252";
+	      return false;
+	    }
+	    var amount = /^[1-9]{1}([0-9]{)$/;
+	      var labelAlertAmount  = document.getElementById("alertAmount");
+	      labelAlertAmount.innerText="";
+	      if(addincome.amount.value==("")){
+	    	  labelAlertAmount.innerText="กรุณากรอกจำนวน";
+	    	  labelAlertAmount.style.color="#ff5252";
+	          return false;
+	        }else if(!addincome.amount.value.match(amount)){
+	        	labelAlertAmount.style.color="#ff5252";
+	        	labelAlertAmount.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
+		        return false; 
+		      }
+		}
 	</script>
 
 </head>
@@ -68,7 +90,7 @@
 
 <body> 
 <jsp:include page="basic/header.jsp" /> 
-    <form align="center" action="addIncome"  method="POST" > 
+    <form align="center" action="addIncome" name="addincome"  method="POST" > 
     <div  class="main">
         <h3>บันทึกรายรับ</h3>
         <h4>"โครงการปลูกผักเเลกค่าเทอม"</h4>
@@ -78,10 +100,11 @@
                 <td>
                     <p class="p2">รายละเอียดข้อมูล</p>
                 </td>
+ 
             </tr>   
             <tr> 
-            	<td><input type="hidden" name="term" id="term">
-            	</td>
+            	<td><input type="hidden" name="term" id="term"></td>
+            	
             	<td>
             	<input type="hidden" name="type" id="type">
             	</td>
@@ -92,52 +115,56 @@
                      <div>
 	                     <select name="product_name" id="product_name" class="custom-select" style="height:58px;" onchange="autoPrice()">                 
 		                    <option value disabled selected>เลือกสินค้า</option>
-		                    <% for(int i=0;i<as.size();i++){%>
+		                    <% for(int i=0;i<as.size();i++){ 
+		                    	if(!as.get(i).getProduct_name().equals("-")){
+		                    %>
+		                    
                             <option value="<%= as.get(i).getAsset_id() %>"><%= as.get(i).getProduct_name() %></option>
-                            <%}%>
-		                </select>         
+                            <%} }%>
+		                </select>
+		                       
                       </div>
+                      <label class="alert-label" id="alertProduct_name"></label>  
                 </td>
-                <td>
-                     <div class="form-floating">
-                   		
+                <td>ราคา<br>
+                     <div>
                         <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" readonly>
-                        <label for="floating">ราคา</label>
+                    	  <label ></label>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div class="form-floating" >
+                <td>จำนวน<br>
+                  <div>
                         <input type="text" name="amount" id="amount" class="form-control registered" placeholder="จำนวน" value="" onkeyup="calTotalprice()" >
-                        <label for="floating">จำนวน</label>
-                    </div>
+                        <label class="alert-label" id="alertAmount"></label>
+                  </div>
                 </td>
-                <td>
-                    <div class="form-floating" >
+                <td>รวม<br>
+                    <div>
                         <input type="text" name="sum" id="sum" class="form-control registered" placeholder="รวม" value="" readonly >
-                        <label for="floating">รวม</label>
+                        <label ></label>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div class="form-floating">
+                <td>หน่วย<br>
+                    <div>
                         <input type="text" name="product_unit" id="product_unit" class="form-control registered" placeholder="หน่วย" readonly >
-                        <label for="floating">หน่วย</label>              
+                        <label></label>              
                       </div>
                 </td>
-                <td>
-                    <div class="form-floating" >
+                <td>ผู้บันทึก<br>
+                    <div>
                         <input type="text" name="name" id="name" class="form-control registered" placeholder="ผู้บันทึก" value="<%= mb.getMember_name() %>" readonly>
-                        <label for="floating">ผู้บันทึก</label>
+                        <label></label>
                     </div>
                 </td>
             </tr>
             <tr colapan="2" align="center">
                 <td></td>
                 <td>
-                    <input type="submit" class="btn btn-success" value="เพิ่มรายการ" id="add" name="add" onclick="clearValue()">
+                    <input type="submit" class="btn btn-success" value="เพิ่มรายการ" id="add" name="add" onclick="return check(addincome)">
                 </td> 
             </tr> 
         </table>   
@@ -211,7 +238,6 @@
 }
 .custom-select{
     width: 215px;
-    height: 58px;
     margin: 5px;
 }
 .list{

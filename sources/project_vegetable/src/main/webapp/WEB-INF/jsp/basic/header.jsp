@@ -6,6 +6,23 @@
     SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
     sdf.setTimeZone(TimeZone.getTimeZone("UTC+7"));
     MemberManager mbm = new MemberManager();
+    Logins log = null;
+	Member mb = null;
+	
+	try{
+		if(session.getAttribute("login")!=null){
+		log = (Logins)session.getAttribute("login");
+		mb = mbm.getMember(log.getMember().getMember_id());	
+		
+		session.setAttribute("login", log);	
+		}
+	}catch (Exception e) {	
+	}
+	
+	
+	
+    
+    /*
 	Logins log = new Logins();
 	Member mb = new Member();
 	String member_type = null;
@@ -15,7 +32,7 @@
 	}catch (Exception e) {	
 			session.setAttribute("login", log);
 	}
-	
+	*/
 	
 
     %>

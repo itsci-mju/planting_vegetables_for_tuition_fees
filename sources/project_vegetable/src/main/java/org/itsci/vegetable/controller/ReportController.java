@@ -111,6 +111,7 @@ public class ReportController {
 		 	List<Assets> listasset = tm.getAssets();
 		 	System.out.println(listwork);
 		 	
+		 	
 		 	request.setAttribute("listwork",listwork);
 		 	request.setAttribute("listasset",listasset);
 				

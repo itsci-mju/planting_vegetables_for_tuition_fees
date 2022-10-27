@@ -5,6 +5,18 @@
     <% ProjectsManager pjm = new ProjectsManager();
 	List<Projects> pj = pjm.getProjects();
 	Member member = (Member) session.getAttribute("showmember");
+	
+	RegisterManager rg = new RegisterManager();
+	List<Member> m = rg.getMember();
+	
+	Boolean haveBoss= false;
+	for(Member mm : m){
+		if(mm.getMember_type().equals("หัวหน้าโครงการ")){
+			haveBoss =true;
+			break;
+		}
+	}
+	
 	%>
 <!DOCTYPE html>
 <html>
@@ -67,15 +79,22 @@
 	                  </div>
 	            </td>
 	            <td>
-	                <select name="setpermission" id="setpermission" class="custom-select" style="height:58px;">                 
-	                    <option value="1" selected>สมาชิก</option>
-	                    <option value="2">หัวหน้าโครงการ</option>
+	            <% if(member.getMember_type().equals("หัวหน้าโครงการ") || haveBoss==false ){ %>
+	                <select name="setpermission" id="setpermission" class="custom-select" style="height:58px;">
+	                    <option value="1" <% if(member.getMember_type().equals("สมาชิก") ){ %> selected <%} %> >สมาชิก</option>
+	                    <option value="2" <% if(member.getMember_type().equals("หัวหน้าโครงการ") ){ %> selected <%} %> >หัวหน้าโครงการ</option>
 	                </select>
+	             <%}else  {%>
+	             	 <input type="text" name="setpermission" id="setpermission" class="form-control registered"value="<%= member.getMember_type() %>" readonly >
+	             
+	             <% } %>
 	            </td>
 	        </tr>
 	  
 	    </table> 
+	    <% if(member.getMember_type().equals("หัวหน้าโครงการ") || haveBoss==false ){ %>
 	        <button type="submit" class="btn btn-success" id="submit" name="submit">ยืนยัน</button>
+	    <% } %>
 	</div>			
 	</form>
  
