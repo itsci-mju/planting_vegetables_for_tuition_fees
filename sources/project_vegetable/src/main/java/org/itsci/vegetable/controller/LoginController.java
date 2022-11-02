@@ -36,6 +36,8 @@ public class LoginController {
 		String password = request.getParameter("pwd");
 		LoginManager lm = new LoginManager();
 		Logins log = lm.verifyLogin(email, password);
+		session.setMaxInactiveInterval(60 * 60);
+		
 		if(log == null) {
 			request.setAttribute("result", "Email หรือ Paswordไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
 			return "login"; 

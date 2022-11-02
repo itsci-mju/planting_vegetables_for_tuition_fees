@@ -36,88 +36,91 @@
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Mitr&family=Roboto+Condensed:wght@300;400;700&display=swap" >
     <title>ตรวจสอบเวลาการทำงาน</title>
 </head>
-     <script type="text/javascript">
+     <!--  script type="text/javascript">
   function check(addshift){
     var task_name = /^([ก-์]{2,50})$/;
     var labelAlert1  = document.getElementById("alertTask_name");
-    labelAlert1.innerText="";
-    if(addshift.task_name.value==("")){
-      labelAlert1.innerText="*กรุณากรอกการรับหน้าที่";
-      labelAlert1.style.color="#ff5252";
-      return false;
-      }
+   
     if(!addshift.task_name.value.match(task_name)){
         labelAlert1.style.color="#ff5252";
         labelAlert1.innerText="*กรุณากรอกการรับหน้าที่เป็นภาษาไทยเท่านั้น";
-        addshift.task_name.value = "";
         return false;
       }
     var toTime= new Time;
 	    end_time.setHours(0,0,0,0);
 	    alertend_time= document.getElementById("alertEnddate");
-	    alertend_time.innerText="";
     var end_time = new Date(addshift.endTime.value)
-    if(addshift.endTime.value==""){
-    	alertend_time.innerText="*กรุณากรอกเวลาออกงาน";
-    	alertend_time.style.color="#ff5252";
-      return false;
-    }
+
    if(end_date < toTime) {
 		alertend_time.innerText="*ต้องไม่ใช่เวลาปัจจุบันหรืออดีต";
-		addshift.endTime.value= ""
 	    alertend_time.style.color="#ff5252";
       return false;
     }
     }
-    </script>
+    </script>-->
 <body>
 
 <jsp:include page="basic/header.jsp"/>
-    <form class="fit" name="addshift" action="updateApproveshift" method="POST" >
-        <div align="center">
-        <h3>ตรวจสอบเวลาการทำงาน</h3>   
-        <%if( resultApproveshift != null) {%>
+    <form  name="addshift" action="updateApproveshift" method="POST" >
+    <div class="fit"  align="center">
+    <table>
+       <%if( resultApproveshift != null) {%>
 			<div>	
 				<p class="mb-0 d-inline-block" style="color:red"><%= resultApproveshift %></p>            
 			</div>	
        <%} %>
-            <table>
-	            <div>
-	             	<b><label class="alert-label" id="alertEnddate"></label>
-	              	   <label class="alert-label" id="alertTask_name"></label></b>
-	            </div>  
-				<input type="hidden" value="<%= mbs.getMember_shift_id() %>"  name="member_shift_id" id="member_shift_id" >
-	            <tr>
-	                <td> รหัสนักศึกษา <br>
-	                    <input type="text" value="<%= m.getStudent_code() %>"  name="stucode" id="stucode" class="form-control addShift" placeholder="รหัสนักศึกษา"readonly>
-	                </td>
-	                <td>ชื่อ-นามสกุล <br>
-	                    <input type="text" value="<%= m.getMember_name() %>" name="name" id="name" class="form-control addShift" placeholder="ชื่อ-นามสกุล"readonly>
-	                </td>
-	            </tr>
+	        <div>
+	            <b><label class="alert-label" id="alertEnddate"></label>
+	              <label class="alert-label" id="alertTask_name"></label></b>
+	        </div>  
+			<input type="hidden" value="<%= mbs.getMember_shift_id() %>"  name="member_shift_id" id="member_shift_id" >
+	        <tr align="center">
+	        	<td colspan="2"><h4>ตรวจสอบการทำงาน</h4></td>
+	        	<td></td>
+	        </tr>
+	        <tr>
+	            <td> รหัสนักศึกษา 
+	                <input type="text" value="<%= m.getStudent_code() %>"  name="stucode" id="stucode" class="form-control addShift" placeholder="รหัสนักศึกษา"readonly>
+	            </td>
+	            <td>ชื่อ-นามสกุล
+	                <input type="text" value="<%= m.getMember_name() %>" name="name" id="name" class="form-control addShift" placeholder="ชื่อ-นามสกุล"readonly>
+	            </td>
+	        </tr>
             <tr>
-                <td>วันที่ทำงาน <br>
+                <td>วันที่ทำงาน
                     <input type="text" value="<%= sdf.format(mbs.getDate().getTime())%>" name="date" id="date" class="form-control addShift"readonly>
                 </td>
-                <td>รับหน้าที่ <br>
-                    <input type="text" value="<%= mbs.getTask_name() %>" name="task_name" id="task_name" class="form-control addShift" placeholder="รับหน้าที่">
+                <td>รับหน้าที่
+                    <input type="text" value="<%= mbs.getTask_name() %>" class="form-control addShift" placeholder="รับหน้าที่" readonly>
                 </td>
             </tr>
             <tr>
-                <td>เวลาเข้างาน <br>
+                <td>เวลาเข้างาน
                     <input type="time" value="<%= sdtf.format(mbs.getStartTime().getTime()) %>" name="startTime" id="startTime" class="form-control addShift"readonly>
                 </td>
-                <td>เวลาเข้าออกงาน <br>
+                <td>เวลาเข้าออกงาน
+                    <input type="time" value="<%= sdtf.format(mbs.getEndTime().getTime()) %>" class="form-control addShift"readonly>
+                </td>
+            </tr>
+            <tr>
+            	<td><h5>แก้ไขรายละเอียด</h5></td>	
+            </tr>
+            <tr>
+            	<td>รับหน้าที่
+            		  <input type="text" value="<%= mbs.getTask_name() %>" name="task_name" id="task_name" class="form-control addShift" placeholder="รับหน้าที่" >
+            	</td>
+            	 <td>เวลาเข้าออกงาน
                     <input type="time" value="<%= sdtf.format(mbs.getEndTime().getTime()) %>" name="endTime" id="endTime" class="form-control addShift">
                 </td>
             </tr>
+            
             <tr>
                 <td align="right"><input type="submit" name="submit" value="อนุมัติ" class="btn btn-success"  Onclick="return check(addshift)"></td>
                 <td><a href="updateApproveCancelshift?msid=<%= mbs.getMember_shift_id()%>&&tn=<%= mbs.getTask_name() %>&&eT=<%= sdtf.format(mbs.getEndTime().getTime()) %>"><input type="button" name="submit" value="ไม่อนุมัติ" class="btn btn-danger" ></a></td>
             </tr>
             
             </table>
-        </div>
+       </div>
     </form>
     <jsp:include page="basic/footer.jsp" />
 </body>
@@ -135,20 +138,22 @@ body{
 .fit {
 	background-color: #ECECEC;
     border-radius: 10px;
-    margin-left: 486px;
-    margin-right: 479px;
-    margin-bottom: 90px;
-    margin-top: 180px;
+    margin-left: 499px;
+    margin-right: 464px;
     padding: 54px;
-    padding-top: 46px;
+    padding-top: 46px; 
+    margin-bottom: 60px;
+    margin-top: 150px;
     display: flex;
     justify-items: center;
 }
+
 table{
-margin-top: 1px;
+	margin-top: 1px;
+	
 }
 .addShift{
-   width:215px;
+    width:215px;
     margin: 5px;
 }
 .select{

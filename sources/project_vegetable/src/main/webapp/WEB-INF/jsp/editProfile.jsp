@@ -120,7 +120,7 @@
             </td>
             <td>สังกัดคณะ/โครงการ<br>
                 <input type="text" name="faculty" id="faculty" class="form-control registered" placeholder="สังกัดคณะ/โครงการ" value="<%= pj.getName() %>" readonly >
-            
+            <label></label>
             </td>
         </tr>
          <tr>

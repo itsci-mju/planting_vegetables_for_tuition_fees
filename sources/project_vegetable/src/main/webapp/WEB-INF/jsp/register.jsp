@@ -24,6 +24,19 @@
     			err_login = (String) request.getAttribute("result");			
     	}catch (Exception e) {	
     	}
+    	
+    	Calendar today = Calendar.getInstance();
+    	int year = today.get(Calendar.YEAR);
+    	String term = "";
+    	String termval = "";
+    	if((today.getTime().getMonth()+1) >= 7 && (today.getTime().getMonth()+1) <= 10){
+    		term = "ปีการศึกษา " + year + "/1";
+    		termval = "1-" + year;
+    	}else{
+    		term = "ปีการศึกษา "+ year + "/2";
+    		termval = "2-" + year;
+    	}
+    	 
     %>
 <!DOCTYPE html>
 <html>
@@ -235,11 +248,8 @@
                    
                     <td>ปีการศึกษา/เทอม: <br> 
                     <div class="form-floating">
-                            <select name="term" id="term" class="custom-select registered">
-                                <option value disabled selected>เลือกปีการศึกษา/เทอม</option>
-                                <option value="1-2565">ปีการศึกษา2565/เทอม1</option>
-                                <option value="2-2565">ปีการศึกษา2565/เทอม2</option>
-                            </select> 
+                            <input name="term" id="term" class="form-control registered"value="<%= term%>"readonly>
+
                             <label class="alert-label" id="alertTerm"></label>
                             </div> 
                     </td>
@@ -279,7 +289,6 @@
                             <% for(int i=0;i<pj.size();i++){%>
                             <option value="<%= pj.get(i).getProject_id() %>"><%= pj.get(i).getName() %></option>
                             <%}%>
-   
                         </select> 
                         <label class="alert-label" id="alertFaculty"></label>
                         </div>

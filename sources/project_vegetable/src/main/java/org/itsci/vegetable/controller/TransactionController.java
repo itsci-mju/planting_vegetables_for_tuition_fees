@@ -142,7 +142,7 @@ public class TransactionController {
 		
 		Calendar date = Calendar.getInstance(); 	
 		String term ;
-		if( date.get(Calendar.MONTH)>= 7 && date.get(Calendar.MONTH) <= 10 ) {
+		if( date.get(Calendar.MONTH)+1 >= 7 && date.get(Calendar.MONTH)+1 <= 10 ) {
 			term = "1";
 		}else{
 			term = "2";
@@ -155,10 +155,6 @@ public class TransactionController {
 		Assets as = t.assetID(asset_id);
 		Transaction_details tsd = new Transaction_details(1,"สินค้า",amount,sum,tc,as);
 		t.addincome_tsac_detail(tsd);
-		
-		
-	
-		
 	return "addincome";
 	}
 	/*end addincome*/
@@ -194,7 +190,7 @@ public class TransactionController {
 		
 		Calendar date = Calendar.getInstance(); 	
 		String term ;
-		if( date.get(Calendar.MONTH)>= 7 && date.get(Calendar.MONTH) <= 10 ) {
+		if( date.get(Calendar.MONTH)+1 >= 7 && date.get(Calendar.MONTH)+1 <= 10 ) {
 			term = "1";
 		}else{
 			term = "2";
@@ -212,7 +208,18 @@ public class TransactionController {
 	}
 	@RequestMapping(value="/search_income_expense", method=RequestMethod.POST)
 	public String search_income_expense(HttpServletRequest request,HttpSession session) {
+		String yearterm = request.getParameter("term_year");
+		String term;
+		String y;
 		
+		if(yearterm == null || yearterm.isEmpty() ||  yearterm.equals("")) {
+			term = "";
+			y = "";
+		}else {
+			String yeartermArray[] = yearterm.split("-");
+			term = yeartermArray[0];
+			y = yeartermArray[1];
+		}
 		String date = request.getParameter("date");
 		String new_date = "";
 		if(date.isEmpty()||date == null) {
@@ -226,21 +233,21 @@ public class TransactionController {
 		String type = request.getParameter("type");
 		
 		TransactionManager t = new TransactionManager();
-		List<Transaction_details> listtran =  t.Alltransaction_by_search();
-		List<Transaction_details> list_details =  t.transaction_details_by_search(type,new_date);
+		List<Transaction_details> listtran =  t.Alltransaction_by_search(term,y);
+		List<Transaction_details> list_details =  t.transaction_details_by_search(type,new_date,term,y);
 		if(date.equals("")) {	
 			if(type.equals("1")) {
-				listtran =  t.Alltransaction_by_search();
+				listtran =  t.Alltransaction_by_search(term,y);
 			}else{
-				listtran = t.transaction_by_search(type,new_date);
+				listtran = t.transaction_by_search(type,new_date,term,y);
 			}
 		}else{
 			if(type.equals("1")) {	
-				listtran =  t.transaction_by_search(type,new_date);
-				list_details =  t.Alltransaction_details_by_search(new_date);
+				listtran =  t.transaction_by_search(type,new_date,term,y);
+				list_details =  t.Alltransaction_details_by_search(new_date,term,y);
 			}else {
-				listtran =  t.transaction_by_search(type,new_date);
-				list_details =  t.transaction_details_by_search(type,new_date);
+				listtran =  t.transaction_by_search(type,new_date,term,y);
+				list_details =  t.transaction_details_by_search(type,new_date,term,y);
 			}
 		}
 		
@@ -255,6 +262,7 @@ public class TransactionController {
 		}
 		request.setAttribute("ListTran", listtran);
 		request.setAttribute("list_details", list_details);
+		request.setAttribute("term_year", yearterm);
 		request.setAttribute("type", type);
 		request.setAttribute("new_date", new_date);
 		return "listIncomeandExpense";

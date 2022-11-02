@@ -129,9 +129,65 @@ public class MembershiftManager {
         }
 
         return list;
-
-
     }
+    
+    public List<Member_shifts> SearchListShifts(String s){
+        List<Member_shifts> list = new ArrayList<>();
+        ConnectionDB condb = new ConnectionDB();
+        Connection con = condb.getConnection();
+       try {
+           Statement stmt = con.createStatement();
+           
+           String column = "member_shift_id,date,endTime,startTime,status,task_name,register_id";
+           String sql = "";
+           if(s.equals("all")) {
+               sql = "select "+column+" from member_shifts order by status "; 
+           }else {
+               sql = "select "+column+" from member_shifts where status = "+ s +" order by status "; 
+           }
+           ResultSet rs = stmt.executeQuery(sql);
+           while(rs.next()) {
+               String member_shift_id = rs.getString(1);  
+               String date = rs.getString(2);
+               String endTime  = rs.getString(3);
+               String startTime = rs.getString(4);
+               int status = rs.getInt(5);
+               String task_name = rs.getString(6);
+               String register_id = rs.getString(7);
+                
+				Calendar sdate = Calendar.getInstance();
+               Calendar stime = Calendar.getInstance(); 
+				Calendar etime = Calendar.getInstance();
+				
+				String date1[] = date.split("-");
+						sdate.set(Integer.parseInt(date1[0]), Integer.parseInt(date1[1])-1, Integer.parseInt(date1[2]));
+				
+				String date4[] = endTime.split(":");
+				int eth = Integer.parseInt( date4[0]);
+				int etm = Integer.parseInt( date4[1]);
+						 etime.set(Calendar.HOUR,eth);
+						 etime.set(Calendar.MINUTE,etm);
+						 
+				String date5[] = startTime.split(":");
+				int sth = Integer.parseInt( date5[0]);
+				int stm = Integer.parseInt( date5[1]);
+						 stime.set(Calendar.HOUR,sth);
+						 stime.set(Calendar.MINUTE,stm);
+						 
+             Register reg = new Register();
+             reg.setRegister_id(register_id);
+               Member_shifts st = new Member_shifts(member_shift_id,task_name,sdate,stime,etime,status,reg);
+
+               list.add(st);
+           }
+
+           con.close();
+       }catch(SQLException e){
+           e.printStackTrace();
+       }
+
+       return list;
+   }
     
    
     public Member_shifts getMShifts_byRegis(String r){

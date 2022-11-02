@@ -5,6 +5,7 @@
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.*" %>
      <%
      	MemberManager mbm = new MemberManager();
+     	ReportManager rpm = new ReportManager();
 		Logins log = new Logins();
 		Member mb = new Member();	
 		try{
@@ -18,11 +19,18 @@
     	List<Transaction_details> tsd = (List<Transaction_details>) request.getAttribute("list_details");
 	    TransactionManager tm = new TransactionManager(); 
 	    String type = (String) request.getAttribute("type");
+	    System.out.println("555555555555555"+type);
 	    String select_date = (String) request.getAttribute("new_date");
+	    List<String> ty = rpm.options_term_year();
+	    String term_year = (String) request.getAttribute("term_year");
+	    String[] last_ty = ty.get(ty.size()-1).split("-");
+	    String last_term = last_ty[0];
+	    String last_year = last_ty[1];
 		/*ค่าเริ่มต้นที่เเสดง*/
 	    if(ts == null){
-	    	ts = tm.Alltransaction_by_search();
+	    	ts = tm.Alltransaction_by_search(last_term,last_year);
 	    	type = "1";	 
+	    	term_year = last_term+"-"+last_year;
 	    }
 	    %>
 	    <%
@@ -63,10 +71,23 @@
 <jsp:include page="basic/header.jsp" /> 
 	<div class="container" align="center"> 
 	 <h2>รายรับรายจ่ายของโครงการ</h2>
-	 <h3>"โครงการปลูกผักแลกค่าเทอม"</h3>
+	 <h3 style="color:#FFDD00;">"โครงการปลูกผักแลกค่าเทอม"</h3>
 	<form action="search_income_expense"  method="POST">
 		<table class="fit2">
 		<tr>
+			<td><label class="tr2">เทอมปีการศึกษา :</label> 
+		          <div class="form-floating">
+		              <select name="term_year" class="custom-select" style="width:200px;">
+			                <% for(String i : ty){ %>
+			                	<% if(term_year.equals(i)){ %>    
+			                     	<option value="<%= i %>" selected><%= i %></option>
+			                     <% }else{ %>
+			                     	<option value="<%= i %>"><%= i %></option>
+			                     <% } %>
+			                <% } %>
+		              </select>      
+		          </div> 
+		      </td> 
 			<td style="width:250px;">
 			<label>วันที่: </label>
 				<input type="date" name="date" value="<%= select_date %>" class="form-control tr1" >
@@ -100,7 +121,7 @@
 	  </table>
 	        
 	</form>
-	  
+	<div class="scoll-list">     
     <table class="table table-bordered" border="1">
     <thead  align="center">
       <tr>
@@ -114,7 +135,7 @@
     </thead>
     <tbody align="center">
     <% if(ts.size() > 0) { %>
-    <% for(Transaction_details td : ts ) {%>  
+    <% for(Transaction_details td : ts ) { %>  
     <% Transaction t = tm.transactionID(td.getTransaction().getTransaction_id()); %>
       <tr>
         <td><%= sdf.format(t.getDate_time().getTime()) %></td>
@@ -123,14 +144,20 @@
 			 String date1[]=date.split("-");
 			 int year = Integer.parseInt(date1[0]);
 			 String new_date = date.replace(date1[0],String.valueOf(year));
-             tsd = tm.Alltransaction_details_by_search(new_date);
+             tsd = tm.Alltransaction_details_by_search(new_date,t.getTerm().toString(),String.valueOf(year));
           %>
       	  <td> 
       	  	  <% for(Transaction_details detail : tsd ) {%>
 	      	  	  <% if(type.equals(detail.getType())){ %>
-			        	<div><%= detail.getType() %></div>
+			        	<div style="color:<% if(detail.getType().equals("สินค้า")) { %> green <% }else {  %> red <% }%> ;">
+			        		<%= detail.getType() %>
+			        		<% if(detail.getType().equals("สินค้า")) { %> (+) <% }else{ %> (-) <% } %>
+			        	</div>
 			      <%}else if (type.equals("1")){%>
-			      		<div><%= detail.getType() %></div>
+			      		<div style="color:<% if(detail.getType().equals("สินค้า")) { %> green <% }else {  %> red <% }%> ;">
+			        		<%= detail.getType() %>
+			        		<% if(detail.getType().equals("สินค้า")) { %> (+) <% }else{ %> (-) <% } %>
+			        	</div>
 			      <%} %>	
 	          <%}%>
 	      </td>
@@ -187,6 +214,7 @@
       <%} %>
     </tbody>
   </table>
+  </div>
 </div>
 <jsp:include page="basic/footer.jsp" />
 </body>
@@ -201,15 +229,15 @@
  }
 
 .container{
-	margin-top:180px;
-	margin-bottom:200px;
+	margin-top:150px;
+	margin-bottom:50px;
 }
 .btn{
 	width:50px;
 }
 
 table{
-	width:700px;
+
 	margin-top:50px;
 }
 .th-width{
@@ -443,10 +471,13 @@ td{
 .registered{
 	width:260px;
 }
-.table1{
-
-}
-
+ .scoll-list{
+ 	max-height:300px ;
+	overflow:scroll;
+	overflow-x:hidden;	 
+	padding-top:0;
+	margin-bottom:20px;
+ }
 </style>
 
 </html>

@@ -65,8 +65,13 @@ public class RegisterController {
 		 String reason = request.getParameter("reason");
 		 
 		 Calendar rd = Calendar.getInstance();
-		 
-		 String term = request.getParameter("term");
+		 String term ;
+			if( rd.get(Calendar.MONTH)+1 >= 7 && rd.get(Calendar.MONTH)+1 <= 10 ) {
+				term = "1";
+			}else{
+				term = "2";
+			}
+		 	
 		 String stucode = request.getParameter("stucode");
 		 String major = request.getParameter("major");
 		 String faculty = request.getParameter("faculty");

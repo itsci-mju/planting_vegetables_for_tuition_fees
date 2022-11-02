@@ -11,10 +11,16 @@
     	
       	MembershiftManager mgs = new MembershiftManager(); 
     	
-      	List<Member_shifts> mbs = mgs.getListShifts();
+      	List<Member_shifts> mbs = (List<Member_shifts>) request.getAttribute("ListMemberShift");
       	
       	Member mb = (Member)session.getAttribute("member"); 
     	
+      	String status = (String) request.getAttribute("status");
+
+      	if(mbs == null){
+      		mbs = mgs.getListShifts();
+      		status = "all";
+      	}
     %>
 <!DOCTYPE html>
 <html>
@@ -31,10 +37,37 @@
 <body>
 <jsp:include page="basic/header.jsp" />   
 	
-	<form class="fit">
    	<div class="container" align="center">
         <h2 >รายชื่อสมาชิกที่มาทำงาน</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p> 
+        <form action="search_status_membershift" method="POST">
+        <div class="form-floating" style="width:200px;">
+             <select name="status" id="status" class="custom-select" align="center" onchange="this.form.submit()">
+             		<% if(status.equals("0")){ %>
+	             		<option value="all">ทั้งหมด</option>
+	                    <option value="0" selected>รอการอนุมัติ</option>
+	                    <option value="1">อนุมัติ</option>
+	                    <option value="3">ไม่อนุมัติ</option>
+                    <% }else if(status.equals("1")){ %>
+                    	<option value="all">ทั้งหมด</option>
+	                    <option value="0">รอการอนุมัติ</option>
+	                    <option value="1" selected>อนุมัติ</option>
+	                    <option value="3">ไม่อนุมัติ</option>
+                    <% }else if(status.equals("3")){ %>
+                    	<option value="all">ทั้งหมด</option>
+	                    <option value="0">รอการอนุมัติ</option>
+	                    <option value="1">อนุมัติ</option>
+	                    <option value="3" selected>ไม่อนุมัติ</option>
+                    <% }else{ %>
+                    	<option value="all" selected>ทั้งหมด</option>
+	                    <option value="0">รอการอนุมัติ</option>
+	                    <option value="1">อนุมัติ</option>
+	                    <option value="3">ไม่อนุมัติ</option>
+                    <% } %>
+             </select>             
+        </div>
+        
+        </form>
         <div class="scoll-list">           
         <table class="table table-bordered" border="1" style="width:800;">
         <thead  align="center">
@@ -72,8 +105,6 @@
         </div>
     </div>
      
-    </form>
-  
     <jsp:include page="basic/footer.jsp" />
 </body>
 <style>
@@ -106,6 +137,11 @@ p{
 	overflow-x:hidden;	 
 	padding-top:0;
 	margin-bottom:20px;
+ }
+ .custom-select{
+ 	margin-left: 450px;
+    margin-bottom: 10px;
+
  }
 /*button view*/
 .button-17 {
@@ -174,6 +210,10 @@ p{
 
 .button-17:disabled {
   box-shadow: rgba(60, 64, 67, .3) 0 1px 3px 0, rgba(60, 64, 67, .15) 0 4px 8px 3px;
+}
+.container{
+	margin-top:150px;
+	margin-bottom:50px;
 }
 </style>
 </html>

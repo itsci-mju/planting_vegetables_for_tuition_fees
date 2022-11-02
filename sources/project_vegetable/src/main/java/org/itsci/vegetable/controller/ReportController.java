@@ -6,9 +6,12 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.itsci.vegetable.dao.MemberManager;
 import org.itsci.vegetable.dao.ReportManager;
 import org.itsci.vegetable.dao.TransactionManager;
 import org.itsci.vegetable.model.Assets;
+import org.itsci.vegetable.model.Logins;
+import org.itsci.vegetable.model.Member;
 import org.itsci.vegetable.model.Member_shifts;
 import org.itsci.vegetable.model.Transaction_details;
 import org.springframework.stereotype.Controller;
@@ -72,10 +75,24 @@ public class ReportController {
 			
 			String type = request.getParameter("cars");
 			
+			String yearterm = request.getParameter("term");
+			String term;
+			String y;
+			
+			if(yearterm == null || yearterm.isEmpty() ||  yearterm.equals("")) {
+				term = "";
+				y = "";
+			}else {
+				String yeartermArray[] = yearterm.split("-");
+				term = yeartermArray[0];
+				y = yeartermArray[1];
+			}
+			
 			ReportManager rm = new ReportManager();
 			TransactionManager t = new TransactionManager();
-			List<Transaction_details> listtran =  t.Alltransaction_by_search();
-			List<Transaction_details> list_details =  rm.report_summary_by_search(type, new_startdate, new_enddate);
+			List<Transaction_details> listtran =  t.Alltransaction_by_search(term, y);
+			List<Transaction_details> list_details =  rm.report_summary_by_search(type, new_startdate, new_enddate, term, y);
+						
 			
 			Calendar cal = Calendar.getInstance();
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -95,6 +112,7 @@ public class ReportController {
 			}
 			request.setAttribute("ListTran", listtran);
 			request.setAttribute("list_details", list_details);
+			request.setAttribute("term_year", yearterm);
 			request.setAttribute("type", type);
 			request.setAttribute("startdate", new_startdate);
 			request.setAttribute("enddate", new_enddate);
@@ -109,11 +127,27 @@ public class ReportController {
 		 	List<Member_shifts> listwork = rpm.getAllWorkStatistics();
 		 	TransactionManager tm = new TransactionManager();
 		 	List<Assets> listasset = tm.getAssets();
+		 	
+		 	/*List<Member_shifts> work_id = rpm.getWorkStatisticsByID("stuCode");*/
 		 	System.out.println(listwork);
 		 	
-		 	
+		 	List<String> ty = rpm.options_term_year();
+		    String[] last_ty = ty.get(ty.size()-1).split("-");
+		    String last_term = last_ty[0];
+		    String last_year = last_ty[1];
+		    
+		    MemberManager mbm = new MemberManager();
+			Logins log = (Logins)session.getAttribute("login");
+			Member mb = mbm.getMember(log.getMember().getMember_id());	
+			
+		    Member_shifts statistic =rpm.getStatistics(mb.getStudent_code(),Integer.parseInt(last_term), Integer.parseInt(last_year));
+		    request.setAttribute("statistic", statistic);
+		    
+		    
+		
 		 	request.setAttribute("listwork",listwork);
 		 	request.setAttribute("listasset",listasset);
+		 //	request.setAttribute("statistic", ms.getEndTime().getTime());
 				
 		       return"reportStudentEarn";
 		}
@@ -135,9 +169,18 @@ public class ReportController {
 			ReportManager rm = new ReportManager();
 			TransactionManager t = new TransactionManager();
 			List<Transaction_details> list_details =  rm.report_student_earn_by_search(term, year);
+			List<Member_shifts> listwork = rm.search_WorkStatistics(term, year);
 			
+			MemberManager mbm = new MemberManager();
+			Logins log = (Logins)session.getAttribute("login");
+			Member mb = mbm.getMember(log.getMember().getMember_id());	
+			Member_shifts statistic = rm.getStatistics(mb.getStudent_code(),term,year);
+		
+			
+			request.setAttribute("listwork", listwork);
 			request.setAttribute("list_details", list_details);
 			request.setAttribute("term_year", term_year);
+			request.setAttribute("statistic", statistic);
 			
 			return "reportStudentEarn";
 

@@ -4,15 +4,35 @@
     <%@ page import="java.util.*,org.itsci.vegetable.dao.*,org.itsci.vegetable.model.*,java.text.*" %>
 	    <%
 		    ReportManager rpm = new ReportManager(); 
-		    List<Member_shifts> listwork = rpm.getAllWorkStatistics();
+		    List<Member_shifts> listwork = (List<Member_shifts>) request.getAttribute("listwork");
+		    String sid = (String) request.getAttribute("stuCode");
+		   //List<Member_shifts> work_id = rpm.getWorkStatisticsByID(sid);
 		    TransactionManager tm = new TransactionManager(); 
 			List<Transaction_details> ts = (List<Transaction_details>) request.getAttribute("list_details");
 		    List<String> ty = rpm.options_term_year();
 		    String term_year = (String) request.getAttribute("term_year");
+		    String[] last_ty = ty.get(ty.size()-1).split("-");
+		    String last_term = last_ty[0];
+		    String last_year = last_ty[1];
+		    
+		    Member_shifts statistic  = (Member_shifts) request.getAttribute("statistic");
+		    
+		    MemberManager mbm = new MemberManager();
+			Logins log = (Logins)session.getAttribute("login");
+			Member mb = mbm.getMember(log.getMember().getMember_id());	
+		    
 		    if(ts == null){
-		    	ts = rpm.list_Alltransaction_details();
-		    	term_year = "";	 
+		    	ts = rpm.report_student_earn_by_search(Integer.parseInt(last_term), Integer.parseInt(last_year));
+		    	listwork = rpm.search_WorkStatistics(Integer.parseInt(last_term), Integer.parseInt(last_year));
+		    	term_year = last_term+"-"+last_year;
+		    	
+		    	statistic =  rpm.getStatistics(mb.getStudent_code(),Integer.parseInt(last_term), Integer.parseInt(last_year));	
 		    }
+		    
+		    
+		    
+		   
+		    
 	    %>
 	    <%
 	    SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
@@ -22,11 +42,10 @@
 		SimpleDateFormat min = new SimpleDateFormat("m");
 	    sdf.setTimeZone(TimeZone.getTimeZone("GMT+7"));
 
-	    DecimalFormat df = new DecimalFormat("###,###,###");
+	    DecimalFormat df = new DecimalFormat("###,###,###.00");
+	    DecimalFormat df2 = new DecimalFormat("###,###,###.000");
 	  %> 
-	  <%  MemberManager mbm = new MemberManager();
-		Logins log = new Logins();
-		Member mb = new Member();
+	  <% 
 		String member_type = null;
 		try{
 				log = (Logins)session.getAttribute("login");
@@ -35,6 +54,7 @@
 		}
 		
 		session.setAttribute("login", log);
+
  %>
 <!DOCTYPE html>
 <html>
@@ -63,14 +83,23 @@
 <body>
 <jsp:include page="basic/header.jsp" /> 
     <div class="container" align="center">
-        <h3 >รายงานรายได้นักศึกษา</h3>
-        <h4>" โครงการปลูกผักเเลกค่าเทอม "</h4>  
-        <form action="search_report_student_earn"  method="POST">
-		    <table>	
-		        <tr >
-		            <td><label class="tr2">เทอมปีการศึกษา :</label> 
-		            <div class="form-floating">
-		                <select name="term_year" class="custom-select" style="width:200px;">
+	      <h2>รายงานรายได้นักศึกษา</h2>
+	      <h3 style="color:#FFDD00;">" โครงการปลูกผักเเลกค่าเทอม "</h3>  
+      <form action="search_report_student_earn"  method="POST">
+		  <table>	
+		      <tr>
+		       <%if(log.getStatus()==1||log.getStatus()==2){ %>
+		      <td>
+		      	 <div class="fitB">
+		      		<label class="tr2">สถิติของตัวเอง : </label> <br>
+		      		<label><%= hour.format(statistic.getEndTime().getTime())+"ชั่วโมง "+min.format(statistic.getEndTime().getTime())+"นาที" %></label>
+		      	
+		         </div>
+		      </td>
+		      <%} %>  
+		      <td><label class="tr2">เทอมปีการศึกษา :</label> 
+		          <div class="form-floating">
+		              <select name="term_year" class="custom-select" style="width:200px;">
 			                <% for(String i : ty){ %>
 			                	<% if(term_year.equals(i)){ %>    
 			                     	<option value="<%= i %>" selected><%= i %></option>
@@ -78,20 +107,21 @@
 			                     	<option value="<%= i %>"><%= i %></option>
 			                     <% } %>
 			                <% } %>
-		                  </select>                 
-		              </div> 
-		              </td> 
-		              <td><button type="submit" class="form-control  button-search" role="button" >ค้นหา 
-		                    &nbsp;<i class="gg-search"></i>
-		                </button>
-		              </td>
-		              <%if(log.getStatus()==3){ %>
-		              <td><a href="reportSummary">
-		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานรายได้ของนักศึกษา
+		              </select>                 
+		          </div> 
+		      </td> 
+		           <td><button type="submit" class="form-control  button-search" role="button" >ค้นหา 
+		               &nbsp;<i class="gg-search"></i>
+		               </button>
+		           </td>
+		      <%if(log.getStatus()==3){ %>
+		           <td><a href="reportSummary">
+		        	   <button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานรายได้ของนักศึกษา
 		                    &nbsp;<img class="img_print" src="img/print.png">
-		                </button>
-		                </a></td>
-		              <%} %>
+		               </button>
+		               </a>
+		           </td>
+		      <%} %>
 		        </tr>
 		    </table>
    		</form>
@@ -105,7 +135,7 @@
                 <th>สาขา</th>
                 <th>สถิติ</th>
                 <%if(log.getStatus()==3){ %>
-                <th>ค่าตอบเเทน</th>
+                <th>ค่าตอบเเทน (ต่อ ชม.)</th>
                 <%} %>
               </tr>
             </thead>
@@ -116,6 +146,9 @@
              	int all_minute = 0;
              	double all_income = 0;
              	double all_expense = 0;
+             	
+             	int sum_hour = 0;
+             	int sum_minute = 0;
              %>
              <% for(int i = 0; i < listwork.size(); i++){ %>
 	          	<% 
@@ -137,7 +170,7 @@
              	total = all_income/all_hour;
              %>
              <%int num = 1; for(int i = 0; i < listwork.size(); i++){ %>
-              <tr>
+              <tr <% if(listwork.get(i).getRegister().getMember().getStudent_code().equals(mb.getStudent_code()) ) { %> style="background-color:#FF8A80" <% } %>>
                 <td><%= num %></td>
                 <td><%= listwork.get(i).getRegister().getMember().getStudent_code() %></td>
                 <td><%= listwork.get(i).getRegister().getMember().getMember_name() %></td>
@@ -152,10 +185,11 @@
 			          		all_minute += Integer.parseInt(min.format(listwork.get(j).getEndTime().getTime()));
 			          	} %>
 	             <% } all_hour += (all_minute/60); 
-	             
-             	System.out.println("hour "+all_hour);%>
+	             sum_hour += all_hour;
+	             sum_minute += all_minute ;
+	             %>
              	<%if(log.getStatus()==3){ %>
-              	<td><%= df.format(total*all_hour) %></td>
+              	<td><%= df.format(total*all_hour) + " (" + df2.format(total) + ")"  %></td>
               	<%} %>
               </tr>
             <% num++;} %>
@@ -164,6 +198,14 @@
             </tbody>
           </table>
           </div>
+          <table border="1" class="tablewoke table-bordered">
+              <tr>
+                <td class="woke">สถิติรวมทั้งหมด</td>
+               
+             
+                <td><input type="text" class="form-control woke1" value="<%= sum_hour+ (sum_minute/60) %> ชั่วโมง <%= sum_minute%60 %> นาที"></td>
+               </tr>
+          </table>
     </div>
     <jsp:include page="basic/footer.jsp" />
 </body>
@@ -193,8 +235,6 @@
         
     }
     
-    
-    
 </script>
 
 <style  id="table_style" >
@@ -209,23 +249,42 @@ body{
    z-index: 2;
 }
 td{
-    align-items: center;
-    margin-top: 29px;
-    padding: 10px;
+  align-items: center;
+  margin-top: 29px;
+  padding: 10px;
 }
 table{
     margin-top: 30px;
         
 }
 thead{
-   background-color:#EEEEEE;
+  background-color:#EEEEEE;
 }
 .form-control{
-    width: 200px;
+  width: 200px;
 }
 .container{
-    margin-top: 150px;
-    margin-bottom: 80px;
+  margin-top: 150px;
+  margin-bottom: 80px;
+}
+.fitB{
+  background-color:#FF8A80;
+  border-radius: 10px;
+  align-items: center;
+  height: 90px;
+  padding: 15px;
+}
+.tablewoke{
+  
+  margin-left:700px;
+}
+.woke{
+	background-color: #BDBDBD;
+	width: 170px;
+
+}
+.woke1{
+	    width: 234px;
 }
     /*button search*/
 .button-search{

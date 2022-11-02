@@ -6,7 +6,9 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.TimeZone;
+import java.util.Vector;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -277,4 +279,17 @@ public class MembersController {
 				return "editProfile";
 			}
 	 	}
+	 
+		 @RequestMapping(value="/search_status_membershift", method=RequestMethod.POST)
+		    public String search_status_membershift(HttpServletRequest request, Model md, HttpSession session) {
+			 	List<Member_shifts> ms = new Vector<>(); 
+			 	String status = request.getParameter("status");
+			 
+			 	MembershiftManager mm = new MembershiftManager();
+			 
+			 	ms = mm.SearchListShifts(status);
+			 	request.setAttribute("ListMemberShift", ms);
+			 	request.setAttribute("status", status);
+		        return "listShift";
+		 	}
 }

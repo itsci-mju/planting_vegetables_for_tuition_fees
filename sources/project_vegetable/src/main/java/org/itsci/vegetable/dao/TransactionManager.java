@@ -387,7 +387,7 @@ public class TransactionManager {
 		return tsd;
 	}*/
 	
-	public List<Transaction_details> transaction_by_search(String t,String d) {
+	public List<Transaction_details> transaction_by_search(String t,String d,String term,String year) {
 		List<Transaction_details> td = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -396,17 +396,21 @@ public class TransactionManager {
 			Statement stmt = con.createStatement();
 			String sql = "";
 			if(t.equals("1")&& !d.equals("")) {
-				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum)"
+				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum) "
 						+ " from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
-						+ "where CAST(t.date_time AS date) = '"+d+"'group by CAST(t.date_time AS date);";
+						+ "where CAST(t.date_time AS date) = '"+d+"' and year(t.date_time) = '"+year+"' and t.term = "+term+" group by CAST(t.date_time AS date);";
 			}else if(!t.equals("1")&& d.equals("")){
-				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum)"
+				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum) "
 							+ " from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
-							+ "where td.type = '"+t+"'group by CAST(t.date_time AS date);";
-			}else {
-				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum)"
+							+ "where td.type = '"+t+"' and year(t.date_time) = '"+year+"' and t.term = "+term+" group by CAST(t.date_time AS date);";
+			}else if(t.equals("1")&& d.equals("")){
+				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum) "
 						+ " from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
-						+ "where CAST(t.date_time AS date) = '"+d+"' and td.type = '"+t+"'group by CAST(t.date_time AS date);";
+						+ "where and year(t.date_time) = '"+year+"' and t.term = "+term+" group by CAST(t.date_time AS date);";
+			}else {
+				 sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum) "
+						+ " from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
+						+ "where CAST(t.date_time AS date) = '"+d+"' and year(t.date_time) = '"+year+"' and t.term = "+term+" and td.type = '"+t+"' group by CAST(t.date_time AS date);";
 			}
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -435,7 +439,7 @@ public class TransactionManager {
 	}
 	
 
-	public List<Transaction_details> transaction_details_by_search(String t,String d) {
+	public List<Transaction_details> transaction_details_by_search(String t,String d,String term,String year) {
 		List<Transaction_details> td = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -443,7 +447,7 @@ public class TransactionManager {
 		try {
 			Statement stmt = con.createStatement();
 			String sql = "select * from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
-					+ "where CAST(t.date_time AS date) = '"+d+"' and td.type = '"+t+"';";
+					+ "where CAST(t.date_time AS date) = '"+d+"' and year(t.date_time) = '"+year+"' and t.term = "+term+" and td.type = '"+t+"';";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int transaction_detail_id = rs.getInt(1);
@@ -469,7 +473,7 @@ public class TransactionManager {
 		}	
 		return td;
 	}
-	public List<Transaction_details> Alltransaction_by_search() {
+	public List<Transaction_details> Alltransaction_by_search(String t, String y) {
 		List<Transaction_details> td = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -478,6 +482,7 @@ public class TransactionManager {
 			Statement stmt = con.createStatement();
 			String sql = "select td.transaction_detail_id,td.amount,td.sum,td.type,td.asset_id,td.transaction_id,sum(td.sum)"
 					+ " from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id   "
+					+ "where YEAR(t.date_time) = '"+y+"' and t.term = "+ t +" "
 					+ "group by CAST(t.date_time AS date);";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
@@ -506,7 +511,7 @@ public class TransactionManager {
 	}
 	
 
-	public List<Transaction_details> Alltransaction_details_by_search(String d) {
+	public List<Transaction_details> Alltransaction_details_by_search(String d,String term,String year) {
 		List<Transaction_details> td = new Vector<>();
 		ConnectionDB condb = new ConnectionDB();
 		Connection con = condb.getConnection();
@@ -514,7 +519,7 @@ public class TransactionManager {
 		try {
 			Statement stmt = con.createStatement();
 			String sql = "select * from transaction_details td inner join transaction t on t.transaction_id = td.transaction_id "
-					+ "where CAST(t.date_time AS date) = '"+d+"' ;";
+					+ "where CAST(t.date_time AS date) = '"+d+"' and year(t.date_time) = '"+year+"' and t.term = "+term+"  ;";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {
 				int transaction_detail_id = rs.getInt(1);

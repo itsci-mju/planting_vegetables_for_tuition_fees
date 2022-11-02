@@ -37,49 +37,61 @@
 <meta charset="UTF-8">
 <title>บันทึกรายจ่าย</title>
 	<script type="text/javascript">
-		function autoPrice(){
-			var product_name = document.getElementById("equipment_name").value;
-			var asset_price = document.getElementById("asset_price").innerHTML;
-			console.log(product_name);
-			 <% for(int i=0;i<as.size();i++){%>
-				if( product_name == <%= as.get(i).getAsset_id() %>)	{	
-					document.getElementById("equipment_unit").value = "<%= as.get(i).getEquipment_unit() %>";
-				}else{
-					asset_price = 0 ;
-				}		 
-			 <%}%>
-		}
+	function autoPrice(){
+		var product_name = document.getElementById("equipment_name").value;
+		var asset_price = document.getElementById("asset_price").innerHTML;
+		console.log(product_name);
+		 <% for(int i=0;i<as.size();i++){%>
+			if( product_name == <%= as.get(i).getAsset_id() %>)	{	
+				document.getElementById("equipment_unit").value = "<%= as.get(i).getEquipment_unit() %>";
+			}else{
+				asset_price = 0 ;
+			}		 
+		 <%}%>
+	}
+	
+	function calTotalprice(){
+		var amount = document.getElementById("amount").value;
+		var asset_price = document.getElementById("asset_price").innerHTML;
+		console.log(equipment_name);
+		document.getElementById("sum").value = amount*document.getElementById("asset_price").value;	
 		
-		function calTotalprice(){
-			var amount = document.getElementById("amount").value;
-			var asset_price = document.getElementById("asset_price").innerHTML;
-			console.log(equipment_name);
-			document.getElementById("sum").value = amount*document.getElementById("asset_price").value;	
-			
-		}
+	}
 		function check(addExpense){
-			  // select option กรุณาเลือกสินค้า//
+			  // select option กรุณาเลือกอุปกรณ์//
 			  
-		    var labelAlertProduct_name  = document.getElementById("alertProduct_name");
-		    	labelAlertProduct_name.innerText="";
-		    if(addExpense.product_name.value==("")){
-		    	labelAlertProduct_name.innerText="กรุณาเลือกสินค้า";
-		    	labelAlertProduct_name.style.color="#ff5252";
+		    var labelAlertEquipment_name = document.getElementById("alertEquipment_name");
+		    	labelAlertEquipment_name.innerText="";
+		    if(addexpense.equipment_name.value==("")){
+		    	labelAlertEquipment_name.innerText="กรุณาเลือกอุปกรณ์";
+		    	labelAlertEquipment_name.style.color="#ff5252";
 		      return false;
 		    }
-		    var amount = /^[1-9]{1}([0-9]{)$/;
+		      var asset_price = /^[1-9]{1}([0-9])$/;
+		      var labelAlertPrice = document.getElementById("alertPrice");
+		      labelAlertPrice.innerText="";
+		      if(addexpense.asset_price.value==("")){
+		    	  labelAlertPrice.innerText="กรุณากรอกราคา";
+		    	  labelAlertPrice.style.color="#ff5252";
+		          return false;
+		       }else if(!addexpense.asset_price.value.match(asset_price)){
+		    	   labelAlertPrice.style.color="#ff5252";
+		    	   labelAlertPrice.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
+			        return false; 
+			   }
+		      var amount = /^[1-9]{1}([0-9])$/;
 		      var labelAlertAmount  = document.getElementById("alertAmount");
 		      labelAlertAmount.innerText="";
-		      if(addExpense.amount.value==("")){
+		      if(addexpense.amount.value==("")){
 		    	  labelAlertAmount.innerText="กรุณากรอกจำนวน";
 		    	  labelAlertAmount.style.color="#ff5252";
 		          return false;
-		        }else if(!addExpense.amount.value.match(amount)){
+		       }else if(!addexpense.amount.value.match(amount)){
 		        	labelAlertAmount.style.color="#ff5252";
 		        	labelAlertAmount.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
 			        return false; 
-			      }
-			}
+			   }
+		}
 	</script>
 </head>
 
@@ -106,8 +118,8 @@
             </tr>           
             <tr>
                 <td>
-                     <div>
-	                     <select name="equipment_name" id="equipment_name" class="custom-select" style="height:58px;" onchange="autoPrice()">                 
+                     <div>ชื่ออุปกรณ์<br>
+	                     <select name="equipment_name" id="equipment_name" class="custom-select" onchange="autoPrice()">                 
 		                    <option value disabled selected>เลือกอุปกรณ์</option>
 		                    <% for(int i=0;i<as.size();i++){%>
 		                    <% if( !as.get(i).getEquipment_name().equals("-")){ %>
@@ -116,47 +128,45 @@
                             <%}%>
 		                </select>         
                       </div>
+                      <label class="alert-label" id="alertProduct_name"></label>  
                 </td>
-                <td>
-                     <div class="form-floating">
-                   		
+                <td>ราคา<br>
+                     <div>
                         <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" onkeyup="calTotalprice()">
-                        <label for="floating">ราคา</label>
+                        <label class="alert-label" id="alertPrice"></label>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div class="form-floating" >
+                <td>จำนวน<br>
+                    <div>
                         <input type="text" name="amount" id="amount" class="form-control registered" placeholder="จำนวน" value="" onkeyup="calTotalprice()" >
-                        <label for="floating">จำนวน</label>
+                        <label class="alert-label" id="alertAmount"></label>
                     </div>
                 </td>
-                <td>
-                    <div class="form-floating" >
+                <td>รวม<br>
+                    <div>
                         <input type="text" name="sum" id="sum" class="form-control registered" placeholder="รวม" value="" readonly >
-                        <label for="floating">รวม</label>
+                        <label></label>
                     </div>
                 </td>
             </tr>
             <tr>
-                <td>
-                    <div class="form-floating">
-                        <input type="text" name="equipment_unit" id="equipment_unit" class="form-control registered" placeholder="หน่วย" readonly >
-                        <label for="floating">หน่วย</label>              
-                      </div>
+                <td>หน่วย<br>
+                    <div>
+                        <input type="text" name="equipment_unit" id="equipment_unit" class="form-control registered" placeholder="หน่วย" readonly >            
+                    </div>
                 </td>
-                <td>
-                    <div class="form-floating" >
+                <td>ผู้บันทึก<br>
+                    <div>
                         <input type="text" name="name" id="name" class="form-control registered" placeholder="ผู้บันทึก" value="<%= mb.getMember_name() %>" readonly>
-                        <label for="floating">ผู้บันทึก</label>
                     </div>
                 </td>
             </tr>
             <tr colapan="2" align="center">
                 <td></td>
                 <td>
-                    <input type="submit" class="btn btn-success" value="เพิ่มรายการ" id="add" name="add" onclick="clearValue()">
+                    <input type="submit" class="btn btn-success" value="เพิ่มรายการ" id="add" name="add" onclick="return check(addexpense)">
                 </td> 
             </tr> 
         </table>   
@@ -230,7 +240,6 @@
 }
 .custom-select{
     width: 215px;
-    height: 58px;
     margin: 5px;
 }
 .list{

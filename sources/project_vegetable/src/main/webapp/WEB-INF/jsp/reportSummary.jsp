@@ -19,16 +19,27 @@
     	//List<Transaction_details> tsd = (List<Transaction_details>) request.getAttribute("ListTran");
 	    TransactionManager tm = new TransactionManager(); 
 	    ReportManager rm = new ReportManager();
+	    List<String> ty = rm.options_term_year();
+	    String term_year = (String) request.getAttribute("term_year");
 	    String type = (String) request.getAttribute("type");
 	    String startdate = (String) request.getAttribute("startdate");
 	    String enddate = (String) request.getAttribute("enddate");
-	
+	    String[] last_ty = ty.get(ty.size()-1).split("-");
+	    String last_term = last_ty[0];
+	    String last_year = last_ty[1];
 	    /*ค่าเริ่มต้นที่เเสดง*/
 	    
 	    if(ts == null){
 	    	ts = rm.list_Alltransaction_details();
 	    	type = "1";	 
+	    	term_year = last_term+"-"+last_year;
 	    }
+	    
+	      	
+	    	double expenses=0.0;
+	    	double income=0.0;
+ 
+	    
 	%>
 	<%
 	 	SimpleDateFormat sdf = new SimpleDateFormat("dd-MM-yyyy");
@@ -63,28 +74,45 @@
 <link href='https://cdn.jsdelivr.net/npm/css.gg/icons/all.css' rel='stylesheet'>
     <title>รายงานผลประกอบการของโครงการ</title>
 </head>
-<body>
+<body >
 <jsp:include page="basic/header.jsp" /> 
     <div class="container" align="center">
-        <h3 >รายงานผลประกอบการ</h3>
-        <h4>" โครงการปลูกผักเเลกค่าเทอม "</h4> 
+        <h2 >รายงานผลประกอบการ</h2>
+        <h3 style="color:#FFDD00;">" โครงการปลูกผักเเลกค่าเทอม "</h3> 
         <form action="search_report_summary"  method="POST">
 	        <table>
-	        
-		        <tr>
-		            <%if(log.getStatus()==3){ %>
+		        <tr>  
+		        <%if(log.getStatus()==3){ %>
+		        	<% if(ts.size() > 0){ %>
 		        	<td><a href="reportSummary">
 		        		<button type="submit" class="form-control  button-print" role="button" onclick="PrintTable()">รายงานผลประกอบการ 
 		                    &nbsp;<img class="img_print" src="img/print.png">
 		                </button>
-		                </a></td>
-		            <%} %>
-		            <td><label class="tr1">วันที่ทำรายการ : </label><input type="date"  name="startdate" class="form-control  search_stucode" value="<%= startdate %>"></td>
+		                </a>
+		             </td>
+		            <% } %>
+		       <%}%>
+		        	<td><label >ปีการศึกษา/เทอม:</label><br> 
+                    <div class="form-floating">
+                          <select name="term" id="term" class="custom-select seterm" style="width:191px;">
+	                           <% for(String i : ty){ %>
+				                	<% if(term_year.equals(i)){ %>    
+				                     	<option value="<%= i %>" selected><%= i %></option>
+				                     <% }else{ %>
+				                     	<option value="<%= i %>"><%= i %></option>
+				                     <% } %>
+				                <% } %>
+	                          </select> 
+                          <label class="alert-label" id="alertTerm"></label>
+                    </div> 
+                    </td>
+		          
+		            <td><label class="tr1">วันที่ทำรายการ : </label><input type="date"  name="startdate" class="form-control  search_stucode" value="<%= startdate %>" style="width:150px;"></td>
 		            <td><label class="tr3">ถึง</label></td>
-		            <td><label class="tr1">วันที่สิ้นสุดทำรายการ : </label><input type="date" name="enddate"  class="form-control  search_stucode" value="<%= enddate %>"></td>
+		            <td><label class="tr1">วันที่สิ้นสุดทำรายการ : </label><input type="date" name="enddate"  class="form-control  search_stucode" value="<%= enddate %>" style="width:150px;"></td>
 		            <td><label class="tr2">ประเภท :</label>
 		                <div class="form-floating">
-		                <select name="cars" class="custom-select" style="width:200px;">
+		                <select name="cars" class="custom-select" style="width:100px;">
 		                    
 			                     <option value="1" <% if(type.equals("1")) {%> selected  <%} %>>ทั้งหมด</option>
 			                     <option value="สินค้า" <% if(type.equals("สินค้า")) {%> selected  <%} %>>รายรับ</option>
@@ -102,9 +130,9 @@
 	    	</table>
         </form>  
         
-    <div id="dvContents" >
+    
         <div class="scoll-list">   
-        <table class="table table-bordered" id="dvContents" border="1" >
+        <table class="table table-bordered"  border="1" >
          
             <thead>
               <tr>
@@ -114,21 +142,36 @@
                 <th>ราคา</th>
                 <th>รายละเอียด</th>
                 <th>รวม</th>
-                <th>ต้นทุน</th>
                 <th>ยอดคงเหลือสุทธิ</th>
               </tr>
             </thead>
             <tbody>
             <% if(ts.size() > 0) { %>
             <% double total = 0; %>
+         	<%   
+      	    	 expenses=0.0;
+      	    	 income=0.0;
+      	    %>
             	<% for(int i = 0; i < ts.size(); i++) {%>  
+            	<%
+            	   if(ts.get(i).getType().equals("สินค้า")){
+            		   income += ts.get(i).getTransaction().getTotal_price();
+            	   }else{
+            		   expenses += ts.get(i).getTransaction().getTotal_price();
+            	   }
+            	   
+            	%>
+            	
             	<% if(i == 0) {%>  
             		<% total = ts.get(i).getAssets().getProjects().getCost_amount(); %>
             	<% } %>
 	              <tr>
 	                <td><%= sdf.format(ts.get(i).getTransaction().getDate_time().getTime()) %></td>
 	                <td><%= sdt.format(ts.get(i).getTransaction().getDate_time().getTime()) %></td>
-	                <td><%= ts.get(i).getType() %></td>
+	                <td style="color:<% if(ts.get(i).getType().equals("สินค้า")) { %> green <% }else {  %> red <% }%> ;">
+	                	<%= ts.get(i).getType() %>
+	                	<% if(ts.get(i).getType().equals("สินค้า")) { %> (+) <% }else{ %> (-) <% } %>
+	                 </td>
 	                <% if(ts.get(i).getType().equals("สินค้า")){ %>
 	                <td><%= df.format(Integer.parseInt(ts.get(i).getAssets().getAsset_price())) %></td>
 	                <% }else{ %>
@@ -143,7 +186,7 @@
 	                       
 	                <td><%= df.format(ts.get(i).getTransaction().getTotal_price()) %></td>
 	                
-	                <td><%= df.format( ts.get(i).getAssets().getProjects().getCost_amount() ) %></td>
+	               
 	                <% 
 	                	if(ts.get(i).getType().equals("สินค้า")){
 		                	total += (ts.get(i).getTransaction().getTotal_price());
@@ -153,6 +196,7 @@
 	                %>
 	                <td><%= df.format( total ) %></td>
 	                
+               
 	              </tr>
              	<% } %>
              <% } %>
@@ -160,21 +204,49 @@
            
           </table>
           </div> 
+          <div id="dvContents" >
+          <% if(ts!=null  && ts.size()>0){  %>
+		  <table class="table table-bordered" border="1"  id="dvContents">
+		    <thead  align="center">
+		      <tr>
+		        <th>ต้นทุน</th>  
+		        <th>รายจ่าย</th>
+		        <th>รายรับ</th>
+		        <th>ยอดรวมทั้งหมด</th>
+		      </tr>
+		    </thead>
+		    <tbody align="center">
+		    	
+		    	<tr > 
+		    		<td > <%= ts.get(0).getAssets().getProjects().getCost_amount() %></td>
+		    		<td > <%= df.format(expenses) %></td>
+		    		<td > <%= df.format(income) %></td>
+		    		<td > <%= df.format(income-ts.get(0).getAssets().getProjects().getCost_amount()-expenses ) %></td>		    	
+		    	</tr>
+		    			    			    
+		    </tbody>
+		 </table>          
+         <% } %>
           </div>
     </div>
     
 <jsp:include page="basic/footer.jsp" />
 </body>
 <script type="text/javascript">
-    function PrintTable() {
+	function PrintTable() {
     	
         var printWindow = window.open('', '','height=700,width=1200');
         printWindow.document.write('<html><head><title>.</title></head>');
 
         printWindow.document.write('<body> <div align="center"> <h3>รายงานผลประกอบการ</h3> <h4> โครงการปลูกผักเเลกค่าเทอม </h4>  ');
-        var divContents = document.getElementById("dvContents").innerHTML;
         
+        printWindow.document.write(' <h5> เทอม <%= term_year %> </h5>  ');
+
+        
+        var divContents = document.getElementById("dvContents").innerHTML;
         printWindow.document.write(divContents);
+        
+        
         printWindow.document.write('</div> </body>');
  
         printWindow.document.write('</html>');
@@ -182,13 +254,7 @@
         printWindow.print();
         
     }
-    
-    
-    
 </script>
-
-
-
 
 <style >
     body{
@@ -211,23 +277,22 @@ table{
     margin-top: 30px;
 }
 thead{
-	 background-color: #EEEEEE;
+	background-color:#EEEEEE;
 }
 .form-control{
     width: 200px;
 }
 .container{
-    margin-top: 180px;
-    margin-bottom:150px;
+    margin-top: 150px;
+    margin-bottom:50px;
 }
-.h4{
-	
-}
+
 .tr3 {
     margin-top: 39px;
 }
+
 .scoll-list{
- 	max-height:500px ;
+ 	max-height:300px ;
 	overflow:scroll;
 	overflow-x:hidden;	 
 	padding-top:0;
