@@ -30,8 +30,8 @@
 	    /*ค่าเริ่มต้นที่เเสดง*/
 	    
 	    if(ts == null){
-	    	ts = rm.list_Alltransaction_details();
-	    	type = "1";	 
+	    	type = "1";
+	    	ts = rm.report_summary_by_search(type, "", "", last_term, last_year);
 	    	term_year = last_term+"-"+last_year;
 	    }
 	    

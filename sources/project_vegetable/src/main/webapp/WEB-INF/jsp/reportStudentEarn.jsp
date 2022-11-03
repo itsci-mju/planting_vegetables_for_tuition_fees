@@ -21,12 +21,25 @@
 			Logins log = (Logins)session.getAttribute("login");
 			Member mb = mbm.getMember(log.getMember().getMember_id());	
 		    
+			double expenses=0.0;
+			double income=0.0;
+			double summary=0.0;
+ 	    	
 		    if(ts == null){
 		    	ts = rpm.report_student_earn_by_search(Integer.parseInt(last_term), Integer.parseInt(last_year));
 		    	listwork = rpm.search_WorkStatistics(Integer.parseInt(last_term), Integer.parseInt(last_year));
 		    	term_year = last_term+"-"+last_year;
 		    	
 		    	statistic =  rpm.getStatistics(mb.getStudent_code(),Integer.parseInt(last_term), Integer.parseInt(last_year));	
+		    }else{
+		    	for(int i = 0; i < ts.size(); i++) {
+            	   if(ts.get(i).getType().equals("สินค้า")){
+            		   income += ts.get(i).getTransaction().getTotal_price();
+            	   }else{
+            		   expenses += ts.get(i).getTransaction().getTotal_price();
+            	   }
+		    	}
+		    	summary = income-ts.get(0).getAssets().getProjects().getCost_amount()-expenses;
 		    }
 		    
 		    
@@ -189,7 +202,11 @@
 	             sum_minute += all_minute ;
 	             %>
              	<%if(log.getStatus()==3){ %>
-              	<td><%= df.format(total*all_hour) + " (" + df2.format(total) + ")"  %></td>
+             		<% if(summary > 0){ %>
+              			<td><%= df.format(total*all_hour) + " (" + df2.format(total) + ")"  %></td>
+              		<% }else{ %>
+              		    <td><label style="color: red;"><%= "ยังไม่สามารถนำจ่ายได้"  %></label></td>
+              		<% } %>
               	<%} %>
               </tr>
             <% num++;} %>

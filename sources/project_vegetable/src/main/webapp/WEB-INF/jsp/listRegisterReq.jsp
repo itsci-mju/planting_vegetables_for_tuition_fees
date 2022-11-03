@@ -97,7 +97,7 @@ p{
 }
 .fit{
 	margin-top: 150px;
-	margin-bottom: 330px;
+	margin-bottom: 50px;
 }
 </style>
 </html>
