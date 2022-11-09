@@ -39,7 +39,7 @@ public class LoginController {
 		session.setMaxInactiveInterval(60 * 60);
 		
 		if(log == null) {
-			request.setAttribute("result", "Email หรือ Paswordไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
+			request.setAttribute("result", "Email หรือ Passwordไม่ถูกต้อง กรุณาลองใหม่อีกครั้ง");
 			return "login"; 
 		}
 		else {

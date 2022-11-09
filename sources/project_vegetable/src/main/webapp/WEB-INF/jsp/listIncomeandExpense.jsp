@@ -199,10 +199,33 @@
 				<button type="button" class="button-17" role="button" >ดู 
 				&nbsp; 	<i class="gg-eye"></i></button></a>
 		<%} %>
-        	<a href="delete_income_expense?date=<%= sdf2.format(t.getDate_time().getTime()) %>">
-				<button type="button" class="button-19" role="button" >ลบ
+        	
+				<button type="button" class="button-19" role="button" data-toggle="modal" data-target="#exampleModal" >ลบ
 				&nbsp; &nbsp;	<i class="gg-trash"></i>
-				</button></a>
+				</button>
+				
+								<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">แจ้งเตือน</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <h5 class="text-danger">ต้องการลบใช่หรือไม่ ?</h5> 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">ไม่ใช่</button>
+				        <a href="delete_income_expense?date=<%= sdf2.format(t.getDate_time().getTime()) %>">
+				        	<button name="btnAdd"  class="btn btn-primary">ใช่</button>
+				        </a>
+				      </div>
+				    </div>
+				  </div>
+				</div>	 
    
         </td>
       </tr> 

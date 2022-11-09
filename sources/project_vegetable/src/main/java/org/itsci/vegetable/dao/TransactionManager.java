@@ -155,6 +155,11 @@ public class TransactionManager {
 		Connection con = condb.getConnection();
 		try {
 			Statement stmt = con.createStatement();
+			ResultSet rs2 = stmt.executeQuery("select CURRENT_TIMESTAMP() ");
+			while (rs2.next()) {
+				String gg = rs2.getString(1);
+				System.out.println(gg);
+			}
 			String sql = "select * from transaction where   DATE_ADD(CURRENT_TIMESTAMP(), INTERVAL 543 year) < DATE_ADD(date_time,INTERVAL 24 HOUR) ";
 			ResultSet rs = stmt.executeQuery(sql);
 			while (rs.next()) {

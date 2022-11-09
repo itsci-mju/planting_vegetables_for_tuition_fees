@@ -60,37 +60,31 @@
 		function check(addExpense){
 			  // select option กรุณาเลือกอุปกรณ์//
 			  
-		    var labelAlertEquipment_name = document.getElementById("alertEquipment_name");
+		    var labelAlertEquipment_name = document.getElementById("alertProduct_name");
 		    	labelAlertEquipment_name.innerText="";
-		    if(addexpense.equipment_name.value==("")){
+		    if(addExpense.equipment_name.value ==("")){
 		    	labelAlertEquipment_name.innerText="กรุณาเลือกอุปกรณ์";
 		    	labelAlertEquipment_name.style.color="#ff5252";
 		      return false;
 		    }
-		      var asset_price = /^[1-9]{1}([0-9])$/;
+		    
+		    
+		    
+
 		      var labelAlertPrice = document.getElementById("alertPrice");
 		      labelAlertPrice.innerText="";
 		      if(addexpense.asset_price.value==("")){
 		    	  labelAlertPrice.innerText="กรุณากรอกราคา";
 		    	  labelAlertPrice.style.color="#ff5252";
 		          return false;
-		       }else if(!addexpense.asset_price.value.match(asset_price)){
-		    	   labelAlertPrice.style.color="#ff5252";
-		    	   labelAlertPrice.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
-			        return false; 
-			   }
-		      var amount = /^[1-9]{1}([0-9])$/;
+		       }
 		      var labelAlertAmount  = document.getElementById("alertAmount");
 		      labelAlertAmount.innerText="";
 		      if(addexpense.amount.value==("")){
 		    	  labelAlertAmount.innerText="กรุณากรอกจำนวน";
 		    	  labelAlertAmount.style.color="#ff5252";
 		          return false;
-		       }else if(!addexpense.amount.value.match(amount)){
-		        	labelAlertAmount.style.color="#ff5252";
-		        	labelAlertAmount.innerText="จำนวนต้องเป็นตัวเลขเท่านั้น";
-			        return false; 
-			   }
+		       }
 		}
 	</script>
 </head>
@@ -132,7 +126,7 @@
                 </td>
                 <td>ราคา<br>
                      <div>
-                        <input type="text" name="asset_price" id="asset_price" class="form-control registered" value=""  placeholder="ราคา" onkeyup="calTotalprice()">
+                        <input type="number" name="asset_price" id="asset_price" class="form-control registered" value="" min="1"  placeholder="ราคา" onkeyup="calTotalprice()">
                         <label class="alert-label" id="alertPrice"></label>
                     </div>
                 </td>
@@ -140,7 +134,7 @@
             <tr>
                 <td>จำนวน<br>
                     <div>
-                        <input type="text" name="amount" id="amount" class="form-control registered" placeholder="จำนวน" value="" onkeyup="calTotalprice()" >
+                        <input type="number" name="number" id="amount" class="form-control registered" placeholder="จำนวน" value="" min="1" onkeyup="calTotalprice()" >
                         <label class="alert-label" id="alertAmount"></label>
                     </div>
                 </td>

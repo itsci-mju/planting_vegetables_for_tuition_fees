@@ -224,7 +224,6 @@
 	  </script>
 <title>ลงทะเบียนเข้าร่วมโครงการปลูกผักเเลกค่าเทอม</title>
 </head>
-<link rel="stylesheet" href="css/register.css">
 <body>
 <jsp:include page="basic/header.jsp" />
   <form class="fit" name="regis" method="POST" action="insertRegister">
@@ -315,4 +314,74 @@
     </form>   
 <jsp:include page="basic/footer.jsp" />
 </body>
+<style>
+@charset "UTF-8";
+body{
+    font-family: 'Mitr', sans-serif;
+ 
+}
+*{
+   margin: 0;
+   padding: 0;
+   box-sizing: border-box;
+   font-family: 'Mitr', sans-serif;
+}
+.fit {
+	background-color: #ECECEC;
+	border-radius: 10px;
+	margin-left: 440px;
+	margin-right: 410px;
+    margin-top: 150px;
+    margin-bottom: 50px;
+	padding: 99px;
+	padding-top: 80px;
+	display: flex;
+	justify-items: center; 
+	box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+   
+}
+.registered{
+        width:215px;
+        margin: 5px;
+}
+.h{
+    color:#336E37;
+    font-size: 20px;
+}
+.t{
+    font-size: 20px;
+}
+.btnSite{
+    height: 40px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-radius: 10px;
+    margin-bottom: 5;
+    background-color: #E8F5E9;
+    border: 0;
+    color: #336E37;
+    margin: 0;
+    margin-top:20px;
+}
+
+.btnSite:hover{
+    background-color: #C8E6C9;
+}
+
+.btnSelect:hover{
+    background-color: #66BB6A;
+    color: white;
+}
+
+.btnsubmit{
+    background-color: rgb(123, 188, 127); 
+    color: white;
+}
+
+.btnsubmit:hover{
+    background-color: #5B9845;
+}
+
+
+</style>
 </html>
