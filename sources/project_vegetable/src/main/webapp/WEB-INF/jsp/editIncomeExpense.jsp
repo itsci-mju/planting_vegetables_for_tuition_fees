@@ -39,8 +39,8 @@
 <body>
 <jsp:include page="basic/header.jsp" /> 
     <div class="container" align="center">
-        <h1>แก้ไขรายรับรายจ่าย</h1>
-        <h3>" โครงการปลูกผักเเลกค่าเทอม "</h3>            
+        <h2>แก้ไขรายรับรายจ่าย</h2>
+        <h3 style="color:#FFDD00;" class="mg-bt">" โครงการปลูกผักเเลกค่าเทอม "</h3>            
         <table class="table table-bordered" >
           <thead  align="center">
             <tr>
@@ -75,8 +75,31 @@
               <td align="center">
               	<a href="edit_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&asid=<%= td.getAssets().getAsset_id() %>&&tdid=<%= td.getTransaction_detail_id() %>">
 				<button type="button" class="button-edit" role="button" >แก้ไข</button></a>
-				<a href="delete_Colume_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&date=<%= sdf2.format(td.getTransaction().getDate_time().getTime()) %>&&type=<%= td.getType() %>"><button type="button" class="button-remove" role="button" >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
-				</button></a>
+				<button type="button" class="button-remove" role="button"  data-toggle="modal" data-target="#exampleModal"  >ลบ&nbsp; &nbsp;	<i class="gg-trash"></i>
+				</button>
+				
+								<!-- Modal -->
+				<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+				  <div class="modal-dialog" role="document">
+				    <div class="modal-content">
+				      <div class="modal-header">
+				        <h5 class="modal-title" id="exampleModalLabel">แจ้งเตือน</h5>
+				        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+				          <span aria-hidden="true">&times;</span>
+				        </button>
+				      </div>
+				      <div class="modal-body">
+				        <h5 class="text-danger">ต้องการลบใช่หรือไม่ ?</h5> 
+				      </div>
+				      <div class="modal-footer">
+				        <button type="button" class="btn btn-secondary" data-dismiss="modal">ไม่ใช่</button>
+				        <a href="delete_Colume_income_expense?tid=<%= td.getTransaction().getTransaction_id()%>&&date=<%= sdf2.format(td.getTransaction().getDate_time().getTime()) %>&&type=<%= td.getType() %>">
+				        	<button name="btnAdd"  class="btn btn-primary">ใช่</button>
+				        </a>
+				      </div>
+				    </div>
+				  </div>
+				</div>	
 				</td>
             </tr>
             <%num++;} %>   
@@ -112,6 +135,10 @@
 }
 .table-bordered{
     width: 800px;
+   
+}
+thead{
+   background-color:#EEEEEE;
 }
 .custom-select{
     width: 215px;
@@ -156,6 +183,8 @@
   width: auto;
   will-change: transform,opacity;
   z-index: 0;
+  margin-buttom:100px;
+  margin-top:80px;
 }
 
 .button-back:hover {

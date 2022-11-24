@@ -28,6 +28,7 @@ CREATE TABLE `logins` (
   `status` int NOT NULL,
   `member_id` varchar(11) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`email`),
+  UNIQUE KEY `email_UNIQUE` (`email`),
   KEY `FKdk7affunrltqt5m4kktbt1x9t` (`member_id`),
   CONSTRAINT `FKdk7affunrltqt5m4kktbt1x9t` FOREIGN KEY (`member_id`) REFERENCES `member` (`member_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3 COLLATE=utf8_unicode_ci;
@@ -39,7 +40,7 @@ CREATE TABLE `logins` (
 
 LOCK TABLES `logins` WRITE;
 /*!40000 ALTER TABLE `logins` DISABLE KEYS */;
-INSERT INTO `logins` VALUES ('mju6204106302@mju.ac.th','111111',1,'m1665559914'),('mju6204106311@mju.ac.th','123456789',1,'m1664631095'),('mju6204106314@mju.ac.th','123456789',2,'m1664630709'),('mju6204106341@mju.ac.th','111111',1,'m1665385729'),('officer1503@mju.ac.th','1503',3,'f1503556926');
+INSERT INTO `logins` VALUES ('mju6204106301@mju.ac.th','111111',1,'m1668493514'),('mju6204106317@mju.ac.th','111111',2,'m1666855024'),('mju6204106340@mju.ac.th','111111',0,'m1666620611'),('mju6204106341@mju.ac.th','111111',1,'m1665385729'),('mju6204106342@mju.ac.th','111111',1,'m1667287744'),('mju6204106349@mju.ac.th','123456789',1,'m1664631095'),('mju6204106355@mju.ac.th','111111',0,'m1666619366'),('mju6204106377@mju.ac.th','',0,'m1666800141'),('mju6204106388@mju.ac.th','888888',0,'m1666618692'),('mju6204106390@mju.ac.th','111111',0,'m1669283291'),('officer1503@mju.ac.th','1503',3,'f1503556926');
 /*!40000 ALTER TABLE `logins` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-18 14:15:59
+-- Dump completed on 2022-11-24 20:06:18

@@ -90,15 +90,16 @@
 
 <body> 
 <jsp:include page="basic/header.jsp" /> 
-    <form align="center" action="addIncome" name="addincome"  method="POST" > 
+<div  class="container">
+    <form align="center" name="addincome" action="addIncome" method="POST" > 
     <div  class="main">
-        <h3>บันทึกรายรับ</h3>
-        <h4>"โครงการปลูกผักเเลกค่าเทอม"</h4>
+        <h2>บันทึกรายรับ</h2>
+        <h3 style="color:#FFDD00;">"โครงการปลูกผักเเลกค่าเทอม"</h3>
        <div class="fit"align="center">
         <table >  
             <tr>
                 <td>
-                    <p class="p2">รายละเอียดข้อมูล</p>
+                    <h5 class="p2">รายละเอียดข้อมูล</h5>
                 </td>
  
             </tr>   
@@ -174,7 +175,7 @@
     </form>
         <div class="list" align="center" >
             <h3>รายการขายสินค้า</h3>
-         <div style="width:800px;  height:100px; overflow:auto;">
+         <div class="list1" style="width:800px;">
         <table class="table table-bordered" id="table-bordered" align="center" >
         <thead>
             <tr>
@@ -208,6 +209,7 @@
         </tbody>
         </table>
         </div>   
+    </div>
     </div>    
     <jsp:include page="basic/footer.jsp" />
 </body>
@@ -240,13 +242,13 @@
     width: 215px;
     margin: 5px;
 }
-.list{
+/*.list{
  	max-height:400px ;
 	overflow:scroll;
 	overflow-x:hidden;	 
 	padding-top:0;
 	margin-bottom:90px;
-}
+}*/
 thead{
   background-color: #E0E0E0;
 }
@@ -257,5 +259,24 @@ h4{
 	margin-top: 10px;
     margin-bottom: 10px;
 }
+.fit{
+	background-color: #f5f4f4;
+    border-radius: 8px;
+    margin-left: 366px;
+    margin-right: 338px;;
+    margin-top: 47px;
+    margin-bottom: 57px;
+    padding: 72px;
+    padding-top: 46px;
+    padding-bottom: 48px;
+    display: flex;
+    justify-items: center;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
+}
+
+.list1{
+	margin-bottom: 150px;
+}
+
 </style>
 </html>

@@ -13,6 +13,8 @@
 	    String  timeshift =  sdtf.format(cd.getTime());  
 	  %>  
 	   <% 
+	   
+	   
 	 	RegisterManager rgm = new RegisterManager();
 	   	Member mb = (Member)session.getAttribute("member"); 
 		Register rg = rgm.getRegisterID(mb.getMember_id());
@@ -95,7 +97,7 @@
 	            </tr>
             <tr>
                 <td>วันที่ทำงาน <br>
-                    <input type="date" value="<%= dateshift %>" name="date" id="date" class="form-control addShift"readonly>
+                    <input type="date" value="<%= dateshift %>" name="date" id="date" class="form-control addShift">
                 	
                 </td>
                 <td>รับหน้าที่ <br>
@@ -104,10 +106,10 @@
             </tr>
             <tr>
                 <td>เวลาเข้างาน <br>
-                    <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift" min="09:00" max="18:00"  required readonly>
+                    <input type="time" value="<%= timeshift %>" name="startTime" id="startTime" class="form-control addShift"  required >
                 </td>
                 <td>เวลาออกงาน <br>
-                    <input type="time" name="endTime" id="endTime"   min="09:00" max="18:00" class="form-control addShift" required>
+                    <input type="time" name="endTime" id="endTime"  class="form-control addShift" required>
                 </td>
             </tr>
             <tr>
@@ -151,16 +153,17 @@ body{
     margin: 5px;
 }
 .fit {
-	background-color: #ECECEC;
-    border-radius: 10px;
+	background-color: #f5f4f4;
+    border-radius: 8px;
     margin-left: 486px;
     margin-right: 479px;
-    margin-bottom: 90px;
+    margin-bottom: 100px;
     margin-top: 180px;
     padding: 54px;
     padding-top: 46px;
     display: flex;
     justify-items: center;
+    box-shadow: 0 4px 8px 0 rgb(0 0 0 / 20%), 0 6px 20px 0 rgb(0 0 0 / 19%);
 }
 table{
 margin-top: 1px;

@@ -26,8 +26,8 @@
 	<jsp:include page="basic/header.jsp" /> 
 	<form class="fit"> 
     <div class="container" align="center">
-        <h2 >รายนักศึกษาที่ขอเข้าร่วมโครงการ</h2>
-        <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
+        <h2 >รายชื่อนักศึกษาที่ขอเข้าร่วมโครงการ</h2>
+        <h3 style="color:#FFDD00; margin-buttom:50px;" >"โครงการปลูกผักเเลกค่าเทอม"</h3>
     <div class="container-fluid" >       
         <table class="table table-bordered" >
         <thead  align="center">

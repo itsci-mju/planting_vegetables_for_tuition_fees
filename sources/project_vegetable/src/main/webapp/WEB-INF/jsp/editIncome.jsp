@@ -155,11 +155,22 @@
 .btn{
     width: 150px;
 }
-.fit{
-    margin-top: 100px;
+.fit {
+    background-color: #f5f4f4;
+    border-radius: 2px;
+    margin-left: 369px;
+    margin-right: 367px;
+    margin-top: 150px;
+    margin-bottom: 150px;
+    padding: 54px;
+    padding-top: 49px;
+    display: flex;
+    justify-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
+
 .p3{
-    font-size: 20px;
+    font-size: 30px;
 }
 </style>
 </html>

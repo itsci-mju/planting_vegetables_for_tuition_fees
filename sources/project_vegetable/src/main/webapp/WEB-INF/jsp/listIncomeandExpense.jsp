@@ -122,7 +122,7 @@
 	        
 	</form>
 	<div class="scoll-list">     
-    <table class="table table-bordered" border="1">
+    <table class="table table-bordered ts1" border="1" >
     <thead  align="center">
       <tr>
         <th>วันที่ทำรายการ</th>
@@ -253,16 +253,12 @@
 
 .container{
 	margin-top:150px;
-	margin-bottom:50px;
+	margin-bottom:150px;
 }
 .btn{
 	width:50px;
 }
 
-table{
-
-	margin-top:50px;
-}
 .th-width{
 	width:400px;
 }
@@ -501,6 +497,7 @@ td{
 	padding-top:0;
 	margin-bottom:20px;
  }
+ 
 </style>
 
 </html>

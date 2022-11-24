@@ -27,7 +27,7 @@
 <jsp:include page="basic/header.jsp" />
 	<form class="fit">
 	   <div class="container" align="center">
-        <h2 >รายนักศึกษาโครงการ</h2>
+        <h2 >รายชื่อนักศึกษาโครงการ</h2>
         <p>" โครงการปลูกผักเเลกค่าเทอม "</p>  
    	 <div class="container-fluid" >       
         <table class="table table-bordered" >

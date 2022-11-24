@@ -154,16 +154,17 @@ font-size: 16px;
 }
 
 .fit {
-    background-color: #f2f2f25e;
+    background-color: #f5f4f4;
     border-radius: 2px;
     margin-left: 480px;
     margin-right: 457px;
-    margin-top: 155px;
-    margin-bottom: 99px;
+    margin-top: 130px;
+    margin-bottom: 150px;
     padding: 64px;
-    padding-top: 30px;
+    padding-top: 44px;
     display: flex;
     justify-items: center;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
 }
 
 .registered{

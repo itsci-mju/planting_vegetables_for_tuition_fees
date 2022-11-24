@@ -11,8 +11,12 @@
 			List<Transaction_details> ts = (List<Transaction_details>) request.getAttribute("list_details");
 		    List<String> ty = rpm.options_term_year();
 		    String term_year = (String) request.getAttribute("term_year");
+		    System.out.println(term_year);
+		    
 		    String[] last_ty = ty.get(ty.size()-1).split("-");
 		    String last_term = last_ty[0];
+		    
+		    
 		    String last_year = last_ty[1];
 		    
 		    Member_shifts statistic  = (Member_shifts) request.getAttribute("statistic");
@@ -41,11 +45,7 @@
 		    	}
 		    	summary = income-ts.get(0).getAssets().getProjects().getCost_amount()-expenses;
 		    }
-		    
-		    
-		    
-		   
-		    
+   
 	    %>
 	    <%
 	    SimpleDateFormat sdfy = new SimpleDateFormat("yyyy");
@@ -104,9 +104,8 @@
 		       <%if(log.getStatus()==1||log.getStatus()==2){ %>
 		      <td>
 		      	 <div class="fitB">
-		      		<label class="tr2">สถิติของตัวเอง : </label> <br>
+		      		<label class="tr2">ชั่วโมงการทำงานตัวเอง : </label> <br>
 		      		<label><%= hour.format(statistic.getEndTime().getTime())+"ชั่วโมง "+min.format(statistic.getEndTime().getTime())+"นาที" %></label>
-		      	
 		         </div>
 		      </td>
 		      <%} %>  
@@ -114,7 +113,7 @@
 		          <div class="form-floating">
 		              <select name="term_year" class="custom-select" style="width:200px;">
 			                <% for(String i : ty){ %>
-			                	<% if(term_year.equals(i)){ %>    
+			                	<% if(term_year.equals(i)){ %>
 			                     	<option value="<%= i %>" selected><%= i %></option>
 			                     <% }else{ %>
 			                     	<option value="<%= i %>"><%= i %></option>
@@ -146,7 +145,7 @@
                 <th>รหัสนักศึกษา</th>
                 <th>ชื่อ-นามสกุล</th>
                 <th>สาขา</th>
-                <th>สถิติ</th>
+                <th>ชั่วโมงการทำงาน</th>
                 <%if(log.getStatus()==3){ %>
                 <th>ค่าตอบเเทน (ต่อ ชม.)</th>
                 <%} %>
@@ -162,6 +161,8 @@
              	
              	int sum_hour = 0;
              	int sum_minute = 0;
+             	
+             	double sum_Compensation=0;
              %>
              <% for(int i = 0; i < listwork.size(); i++){ %>
 	          	<% 
@@ -183,7 +184,7 @@
              	total = all_income/all_hour;
              %>
              <%int num = 1; for(int i = 0; i < listwork.size(); i++){ %>
-              <tr <% if(listwork.get(i).getRegister().getMember().getStudent_code().equals(mb.getStudent_code()) ) { %> style="background-color:#FF8A80" <% } %>>
+              <tr <% if(listwork.get(i).getRegister().getMember().getStudent_code().equals(mb.getStudent_code()) ) { %> style="background-color:#FFCDD2" <% } %>>
                 <td><%= num %></td>
                 <td><%= listwork.get(i).getRegister().getMember().getStudent_code() %></td>
                 <td><%= listwork.get(i).getRegister().getMember().getMember_name() %></td>
@@ -202,27 +203,31 @@
 	             sum_minute += all_minute ;
 	             %>
              	<%if(log.getStatus()==3){ %>
-             		<% if(summary > 0){ %>
-              			<td><%= df.format(total*all_hour) + " (" + df2.format(total) + ")"  %></td>
+             		<% if(summary > 0){ 
+             			sum_Compensation += (total*all_hour); %>
+              			<td><%= df.format(total*all_hour) + " (" + df2.format(total) + ")" %></td>
               		<% }else{ %>
               		    <td><label style="color: red;"><%= "ยังไม่สามารถนำจ่ายได้"  %></label></td>
               		<% } %>
               	<%} %>
+              	
               </tr>
             <% num++;} %>
-           
-            
+    		<tr>
+    			
+    			<td colspan="4" align="right" style="background-color: #BDBDBD;" >รวมทั้งหมด</td>
+    			<td><%= sum_hour+ (sum_minute/60) %> ชั่วโมง <%= sum_minute%60 %> นาที</td>
+    			<%if(log.getStatus()==3){ %>
+    			<% if(summary > 0){ %>	 
+              			<td><%= df.format(sum_Compensation) %></td>
+              	<% }else{ %>
+              		    <td><label style="color: red;"><%= "ยังไม่สามารถสรุปยอดรวมได้"  %></label></td>
+              	<% } }%>
+    		</tr>
             </tbody>
           </table>
           </div>
-          <table border="1" class="tablewoke table-bordered">
-              <tr>
-                <td class="woke">สถิติรวมทั้งหมด</td>
-               
-             
-                <td><input type="text" class="form-control woke1" value="<%= sum_hour+ (sum_minute/60) %> ชั่วโมง <%= sum_minute%60 %> นาที"></td>
-               </tr>
-          </table>
+     
     </div>
     <jsp:include page="basic/footer.jsp" />
 </body>
@@ -282,27 +287,16 @@ thead{
 }
 .container{
   margin-top: 150px;
-  margin-bottom: 80px;
+  margin-bottom: 150px;
 }
 .fitB{
-  background-color:#FF8A80;
+  background-color:#FFCDD2;
   border-radius: 10px;
   align-items: center;
   height: 90px;
   padding: 15px;
 }
-.tablewoke{
-  
-  margin-left:700px;
-}
-.woke{
-	background-color: #BDBDBD;
-	width: 170px;
 
-}
-.woke1{
-	    width: 234px;
-}
     /*button search*/
 .button-search{
   align-items: center;

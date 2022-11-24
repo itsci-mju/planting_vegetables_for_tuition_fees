@@ -195,10 +195,13 @@
 	                	}
 	                %>
 	                <td><%= df.format( total ) %></td>
-	                
-               
+
 	              </tr>
              	<% } %>
+             	<%}else{%>
+		      	<tr>
+		      		<td colspan="7"><h3 align="center">ไม่มีรายการเเสดง</h3></td>
+		      	</tr>
              <% } %>
             </tbody>
            
@@ -223,10 +226,11 @@
 		    		<td > <%= df.format(income) %></td>
 		    		<td > <%= df.format(income-ts.get(0).getAssets().getProjects().getCost_amount()-expenses ) %></td>		    	
 		    	</tr>
+		    	
+      			<%} %>
 		    			    			    
 		    </tbody>
 		 </table>          
-         <% } %>
           </div>
     </div>
     
@@ -273,9 +277,7 @@ td{
     margin-top: 29px;
     padding: 10px;
 }
-table{
-    margin-top: 30px;
-}
+
 thead{
 	background-color:#EEEEEE;
 }
@@ -284,7 +286,7 @@ thead{
 }
 .container{
     margin-top: 150px;
-    margin-bottom:50px;
+    margin-bottom:150px;
 }
 
 .tr3 {

@@ -36,7 +36,7 @@ CREATE TABLE `projects` (
 
 LOCK TABLES `projects` WRITE;
 /*!40000 ALTER TABLE `projects` DISABLE KEYS */;
-INSERT INTO `projects` VALUES ('1112',3000,'เทตโนโลยีการประมงเเละทรัพยากรทางน้ำ');
+INSERT INTO `projects` VALUES ('1112',3000,'เทคโนโลยีการประมงเเละทรัพยากรทางน้ำ');
 /*!40000 ALTER TABLE `projects` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -49,4 +49,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2022-10-18 14:15:58
+-- Dump completed on 2022-11-24 20:06:17

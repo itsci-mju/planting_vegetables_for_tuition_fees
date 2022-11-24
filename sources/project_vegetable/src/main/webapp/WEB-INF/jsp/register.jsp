@@ -51,6 +51,65 @@
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-kQtW33rZJAHjgefvhyyzcGF3C5TFyBQBA13V1RKPf4uH+bwyzQxZ6CmMZHmNBEfJ" crossorigin="anonymous"></script>
   
   <script type="text/javascript">
+  function stuMajor(regis) {
+	  var Stuid = /^[1-9]{1}([0-9]{9})$/;
+      var labelAlert2  = document.getElementById("alertStuID");
+      labelAlert2.innerText="";
+      if(regis.stucode.value==("")){
+          document.getElementById('major').value = "";
+			document.querySelector('#faculty').value = "";
+
+          labelAlert2.innerText="กรุณากรอกรหัสนักศึกษา";
+          labelAlert2.style.color="#ff5252";
+          return false;
+        }
+       if(!regis.stucode.value.match(Stuid)){
+           document.getElementById('major').value = "";
+			document.querySelector('#faculty').value = "";
+
+          labelAlert2.style.color="#ff5252";
+          labelAlert2.innerText="กรุณากรอกรหัสนักศึกษาเป็นตัวเลข 10 ตัวเลขเท่านั้นและไม่ขึ้นต้นด้วยเลข 0 " ;
+          regis.stucode.value = "";
+          return false;
+        }
+      	<%for(Member mb : listmem ){%>
+  	  	if(regis.stucode.value =='<%= mb.getStudent_code() %>' ){
+            document.getElementById('major').value = "";
+ 			document.querySelector('#faculty').value = "";
+
+    	    document.getElementById('alertStuID').innerHTML = "รหัสนักศึกษานี้เคยสมัครแล้ว";
+    	    labelAlert2.style.color="#ff5252";
+    	    return false;
+    	  }
+    	<%}%>
+    	if(regis.stucode.value.match(Stuid)){
+    		if(regis.stucode.value.substring(2, 8) == "101023"){
+    			document.querySelector('#faculty').value = "1112";
+    			 document.getElementById('major').value = "นวัตกรรมการจัดการธุรกิจประมง 4 ปี";
+    		}else if(regis.stucode.value.substring(2, 8) == "101013"){
+    			document.querySelector('#faculty').value = "1112";
+   			 	document.getElementById('major').value = "การประมงและนวัตกรรมการผลิต 4 ปี";
+   			}else if(regis.stucode.value.substring(2, 8) == "101010"){
+    			document.querySelector('#faculty').value = "1112";
+   			 	document.getElementById('major').value = "การประมงและนวัตกรรมการผลิตสัตว์น้ำ 2 ปี";
+   			}else if(regis.stucode.value.substring(2, 8) == "102010"){
+    			document.querySelector('#faculty').value = "1112";
+   			 	document.getElementById('major').value = "การประมงและนวัตกรรมการผลิตสัตว์น้ำ 2 ปี (สมทบ)";
+   			}else{
+   			 document.getElementById('major').value = "";
+ 			document.querySelector('#faculty').value = "";
+
+    			 document.getElementById('alertStuID').innerHTML = "กรุณากรอกรหัสนักศึกษาให้ถูกต้อง";
+    	    	 labelAlert2.style.color="#ff5252";
+    	    	 
+    		}
+    			
+           
+            return false;
+          }
+	  
+  }
+  
   function check(regis){
 	  // select option ปีการศึกษา/เทอม//
 	  
@@ -247,8 +306,11 @@
                    
                     <td>ปีการศึกษา/เทอม: <br> 
                     <div class="form-floating">
-                            <input name="term" id="term" class="form-control registered"value="<%= term%>"readonly>
-
+                            <select name="term" id="term" class="form-control registered" >
+									<option disabled selected>เลือกปีการศึกษา/เทอม</option>	
+									<option value="2565-2">ปีการศึกษา <%= year %>/2</option>
+									<option value="2566-1">ปีการศึกษา 2566/1</option>
+							</select>
                             <label class="alert-label" id="alertTerm"></label>
                             </div> 
                     </td>
@@ -262,7 +324,7 @@
                         </div>
                     </td>
                     <td>รหัสนักศึกษา: <br>
-                        <input type="text" name=stucode id="stucode" placeholder="รหัสนักศึกษา" maxlength="10" class="form-control registered" >
+                        <input type="text" name=stucode id="stucode" placeholder="รหัสนักศึกษา" maxlength="10" class="form-control registered" Onblur="stuMajor(regis)" >
                     	<label class="alert-label" id="alertStuID"></label>
                     </td>
                </tr>

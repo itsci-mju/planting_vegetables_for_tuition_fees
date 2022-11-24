@@ -80,6 +80,7 @@
         </thead>
         
         <tbody  align="center">
+        <% if(mbs.size() > 0) { %>
         	<% for(Member_shifts ms : mbs ) {%>
             <tr>
             <td><%= rg.getstuCode(ms.getRegister().getRegister_id()).getStudent_code()%></td>
@@ -99,6 +100,11 @@
             
             </tr> 
             <% } %> 
+            <%}else{%>
+      	<tr>
+      		<td colspan="4"><h3 align="center">ไม่มีรายการเเสดง</h3></td>
+      	</tr>
+      <%} %>
         </tbody> 
         
         </table>
@@ -213,7 +219,7 @@ p{
 }
 .container{
 	margin-top:150px;
-	margin-bottom:50px;
+	margin-bottom:150px;
 }
 </style>
 </html>
